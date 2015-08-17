@@ -77,6 +77,7 @@ define(function () {
         /**
          * Updates element placed on the canvas
          * @param {Map} map New map from which needed to update element
+         * @todo: refactor this
          */
         updateElement: function (map) {
             if (!this._maps[map.hash]) {
@@ -126,8 +127,17 @@ define(function () {
         },
 
 
+        /**
+         * Update sizes and redraws all registered elements
+         */
         redraw: function () {
             this._setSizes();
+
+            for (var hash in this._maps) {
+                if (this._maps.hasOwnProperty(hash)) {
+                    this.updateElement(this._maps[hash]);
+                }
+            }
         },
 
 
