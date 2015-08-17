@@ -14,7 +14,7 @@ define(function () {
      * @param {HTMLElement} settings.node Node to hold canvas. Should have 'clientHeight', 'clientWidth', 'clientTop' and 'clientLeft' as they are used to calculate coefficients
      * @param {number} [settings.width = 10] Virtual width of the canvas
      * @param {number} [settings.height = 20] Virtual height of the canvas
-     * @param {string} [settings.tag = 'span'] Tag for creation elements on the canvas
+     * @param {string} [settings.tag = 'div'] Tag for creation elements on the canvas
      * @constructor
      * @alias module:canvas
      */
@@ -22,7 +22,7 @@ define(function () {
             this._node   = settings.node;
             this._width  = settings.width  || 10;
             this._height = settings.height || 20;
-            this._tag    = settings.tag    || 'span';
+            this._tag    = settings.tag    || 'div';
 
             this._maps     = {};
             this._elements = {};
@@ -77,6 +77,7 @@ define(function () {
         /**
          * Updates element placed on the canvas
          * @param {Map} map New map from which needed to update element
+         * @todo: refactor this
          */
         updateElement: function (map) {
             if (!this._maps[map.hash]) {
@@ -126,8 +127,17 @@ define(function () {
         },
 
 
+        /**
+         * Update sizes and redraws all registered elements
+         */
         redraw: function () {
             this._setSizes();
+
+            for (var hash in this._maps) {
+                if (this._maps.hasOwnProperty(hash)) {
+                    this.updateElement(this._maps[hash]);
+                }
+            }
         },
 
 

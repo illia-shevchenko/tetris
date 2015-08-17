@@ -241,7 +241,7 @@ define(['canvas'],function (Canvas) {
                 expect(cNode.className).toEqual('element element-1');
 
 
-                cNode  = container.children[0];
+                cNode  = container.children[1];
                 cStyle = cNode.style;
 
                 expect(cStyle.left).toEqual('45px');
@@ -251,7 +251,7 @@ define(['canvas'],function (Canvas) {
                 expect(cNode.className).toEqual('element element-2');
 
 
-                cNode  = container.children[0];
+                cNode  = container.children[2];
                 cStyle = cNode.style;
 
                 expect(cStyle.left).toEqual('90px');
