@@ -16,7 +16,7 @@ define(function () {
      * @param {number} [settings.height = 20] Virtual height of the canvas
      * @param {string} [settings.tag = 'div'] Tag for creation elements on the canvas
      * @constructor
-     * @alias module:canvas
+     * @alias module#Canvas
      */
     var Canvas = function (settings) {
             this._node   = settings.node;

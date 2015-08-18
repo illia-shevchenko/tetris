@@ -17,7 +17,7 @@ define(function () {
      * @param {Object} [settings.baseClass = 'element] Base class of the element
      *
      * @constructor
-     * @alias module:game-element
+     * @alias module#GameElement
      */
     var GameElement = function (settings) {
         this._hash = new Date().valueOf();
