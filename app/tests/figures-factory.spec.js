@@ -4,7 +4,7 @@
 //
 define(['Squire'], function (Squire) {
     var FigureMock = function (settings) {
-        this.allowedConfigurations = settings.allowedConfigurations;
+        //this.allowedConfigurations = settings.allowedConfigurations;
     };
 
     FigureMock.prototype = {
@@ -12,20 +12,23 @@ define(['Squire'], function (Squire) {
     };
 
     describe('Figures Factory', function () {
-        var injector,
-            mocked;
+        var injector;
 
         beforeEach(function () {
             injector = new Squire();
-            mocked   = injector.mock('figure', FigureMock);
         });
 
         afterEach(function () {
             injector.remove();
         });
 
-        it('should be working with squire', function () {
-            expect(true).toBeTruthy();
+        it('should be working with squire', function (done) {
+            injector
+                .mock('figure', FigureMock)
+                .require(['figures-factory'], function (figuresFactory) {
+                    expect(figuresFactory.getFigure()).toEqual(jasmine.any(FigureMock));
+                    done();
+                });
         });
     });
 });

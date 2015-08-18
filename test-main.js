@@ -18,10 +18,9 @@ require.config({
     baseUrl: '/base/app/src',
     paths: {
         Squire: '../../node_modules/squirejs/src/Squire'
-    },
-    // dynamically load all test files
-    deps: allTestFiles,
+    }
+});
 
-    // we have to kickoff jasmine, as it is asynchronous
-    callback: window.__karma__.start
+require(allTestFiles, function() {
+    window.__karma__.start();
 });
