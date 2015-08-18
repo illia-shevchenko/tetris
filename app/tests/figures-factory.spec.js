@@ -12,23 +12,25 @@ define(['Squire'], function (Squire) {
     };
 
     describe('Figures Factory', function () {
-        var injector;
+        var injector,
+            figuresFactory;
 
-        beforeEach(function () {
+        beforeEach(function (done) {
             injector = new Squire();
+            injector.mock('figure', FigureMock)
+                .require(['figures-factory'], function (figuresFactoryLoaded) {
+                    figuresFactory = figuresFactoryLoaded;
+                    done();
+                });
         });
 
         afterEach(function () {
             injector.remove();
+            figuresFactory = null;
         });
 
-        it('should be working with squire', function (done) {
-            injector
-                .mock('figure', FigureMock)
-                .require(['figures-factory'], function (figuresFactory) {
-                    expect(figuresFactory.getFigure()).toEqual(jasmine.any(FigureMock));
-                    done();
-                });
+        it('should create instances of Figure class', function () {
+            expect(figuresFactory.getFigure()).toEqual(jasmine.any(FigureMock));
         });
     });
 });
