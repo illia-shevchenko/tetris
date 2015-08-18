@@ -23,7 +23,7 @@ define(['element'], function (GameElement) {
                 expect(map.width).toBe(4);
                 expect(map.baseClass).toBe('element');
 
-                expect(typeof map.hash).toBe('number');
+                expect(map.hash).toEqual(jasmine.any(Number));
 
                 expect(map.points).toEqual([]);
             });
