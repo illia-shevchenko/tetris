@@ -9,16 +9,19 @@ define(['figure'], function (Figure) {
             figure = new Figure({
                 left: 2,
                 top : 4,
-                maps: [
-                    [0, 1,
-                     0, 1,
-                     0, 1,
-                     0, 1],
-                    [0, 0, 0, 0,
-                     1, 1, 1, 1]
-                ],
-                startMapIndex: 1,
-                value: 3
+                allowedConfigurations: [{
+                    points: [0, 1,
+                             0, 1,
+                             0, 1,
+                             0, 1],
+                    width: 2
+                }, {
+                    points: [0, 0, 0, 0,
+                             1, 1, 1, 1],
+                    width : 4
+                }],
+                configurationIndex: 1,
+                pointsValue: 3
             });
         });
 
