@@ -4,19 +4,21 @@
 "use strict";
 
 /**
- * A module representing canvas class
- * Canvas can paint elements in node using virtual coordinates (map object)
+ * A module representing Canvas class
  * @module canvas
+ * @see Canvas
  */
 define(function () {
     /**
+     * Class instances can paint elements in node using virtual coordinates (map object)
+     * @see module:canvas
      * @param {Object} settings Settings for instantiate canvas
      * @param {HTMLElement} settings.node Node to hold canvas. Should have 'clientHeight', 'clientWidth', 'clientTop' and 'clientLeft' as they are used to calculate coefficients
      * @param {number} [settings.width = 10] Virtual width of the canvas
      * @param {number} [settings.height = 20] Virtual height of the canvas
      * @param {string} [settings.tag = 'div'] Tag for creation elements on the canvas
      * @constructor
-     * @alias module#Canvas
+     * @alias Canvas
      */
     var Canvas = function (settings) {
             this._node   = settings.node;

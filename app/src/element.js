@@ -7,6 +7,7 @@
 /**
  * A module representing GameElement class
  * @module game-element
+ * @see GameElement
  */
 define(function () {
     /**
@@ -17,7 +18,7 @@ define(function () {
      * @param {Object} [settings.baseClass = 'element] Base class of the element
      *
      * @constructor
-     * @alias module#GameElement
+     * @alias GameElement
      */
     var GameElement = function (settings) {
         this._hash = new Date().valueOf();
@@ -26,12 +27,13 @@ define(function () {
         this._top   = settings.top  || 0;
 
         this._width = settings.width || 0;
-        this._points = [];
-
         this._baseClass = settings.baseClass || 'element';
     };
 
     GameElement.prototype = {
+        _points: [],
+
+
         /**
          * Generates and returns map object for an element
          * @returns {Map}
