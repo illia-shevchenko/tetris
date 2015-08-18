@@ -40,11 +40,11 @@ define(function () {
          */
         getMap: function () {
             return {
-                hash : this._hash,
-                left : this._left,
-                top  : this._top,
-                width: this._width,
-                points: this._points.slice(),
+                hash     : this._hash,
+                left     : this._left,
+                top      : this._top,
+                width    : this._width,
+                points   : this._points.slice(),
                 baseClass: this._baseClass
             };
         },
