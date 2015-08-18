@@ -36,7 +36,7 @@ define(function () {
         /**
          * @global
          * @typedef {Object} Map
-         * @property {string|number} hash Hash of the object map. For some operations only hash property may be needed
+         * @property {string|number} [hash] Hash of the object map. For some operations only hash property may be needed. For some hash can be not allowed to use
          * @property {number} [left] Left position of the map
          * @property {number} [top] Top position of the map
          * @property {number} [width] Width of the map
