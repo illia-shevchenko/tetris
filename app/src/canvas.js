@@ -29,12 +29,12 @@ define(function () {
             this._setSizes();
         };
 
-    Canvas.prototype = /**@lends Canvas.prototype*/{
+    Canvas.prototype = {
         _containerClass: 'container',
 
 
         /**
-         *
+         * @global
          * @typedef {Object} Map
          * @property {string|number} hash Hash of the object map. For some operations only hash property may be needed
          * @property {number} [left] Left position of the map
@@ -145,7 +145,7 @@ define(function () {
          * Gets size by X axy in pixel from virtual
          * @param val Virtual size or coordinate
          * @returns {string} Size in pixel
-         * @private
+         * @protected
          */
         _getRealX: function (val) {
             return val * this._unitWidth + 'px';
@@ -156,7 +156,7 @@ define(function () {
          * Gets size by Y axy in pixel from virtual
          * @param {number} val Virtual size or coordinate
          * @returns {string} Size in pixel
-         * @private
+         * @protected
          */
         _getRealY: function (val) {
             return val * this._unitHeight + 'px';
@@ -165,7 +165,8 @@ define(function () {
 
         /**
          * Sets sizes for units
-         * @private
+         * @protected
+         *
          */
         _setSizes: function () {
             this._unitWidth  = Math.round(this._node.clientWidth  / this._width);
@@ -177,7 +178,7 @@ define(function () {
          * Creates new element with given class
          * @param {string} [className] Class name to add to new element
          * @returns {Element} New element with tag provided in private property _tag
-         * @private
+         * @protected
          */
         _createElement: function (className) {
             var element = document.createElement(this._tag);
