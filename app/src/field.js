@@ -46,7 +46,9 @@ define(['./element'], function (GameElement) {
      * @private
      */
     Field.prototype._getAllPositions = function (pointIndex, map) {
-        var top  = Math.floor(pointIndex / map.width),
+        var fieldHeight = Math.floor(this._points.length / this._width),
+
+            top  = Math.floor(pointIndex / map.width),
             left = pointIndex % map.width,
 
             fieldTop = map.top + top,
@@ -59,7 +61,8 @@ define(['./element'], function (GameElement) {
             fieldTop : fieldTop,
             fieldLeft: fieldLeft,
 
-            fieldValueIndex: fieldValueIndex
+            fieldValueIndex: fieldValueIndex,
+            indexInField   : fieldTop < fieldHeight && fieldLeft >= 0 && fieldLeft < this._width
         };
     };
 
@@ -74,15 +77,11 @@ define(['./element'], function (GameElement) {
 
         return this._normalizePoints(map.points)
             .every(function (point, index) {
-                var positions   = this._getAllPositions(index, map),
-                    fieldHeight = Math.floor(this._points.length / this._width),
-                    fieldValue = fieldPoints[positions.fieldValueIndex];
-
-                if (positions.fieldTop >= fieldHeight
-                 || positions.fieldLeft < 0
-                 || positions.fieldLeft >= this._width)
-                {
+                var positions  = this._getAllPositions(index, map),
                     fieldValue = 1;
+
+                if (positions.indexInField) {
+                    fieldValue = fieldPoints[positions.fieldValueIndex];
                 }
 
                 return point + fieldValue < 2;
