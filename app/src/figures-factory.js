@@ -113,9 +113,10 @@ define(['figure'], function (Figure) {
          * Returns Figure class instance with given position
          * @param {number} left Left position for a figure
          * @param {number} top Top position for a figure
+         * @param {string} baseClass Base class for a figure
          * @returns {Figure}
          */
-        getFigure: function (left, top) {
+        getFigure: function (left, top, baseClass) {
             var configNumber = getRandom(configurations.length),
                 allowedConfiguration = configurations[configNumber],
                 startIndex = getRandom(allowedConfiguration.length);
@@ -125,7 +126,8 @@ define(['figure'], function (Figure) {
                 top : top,
                 allowedConfigurations: allowedConfiguration,
                 startIndex : startIndex,
-                pointsValue: configNumber
+                pointsValue: configNumber,
+                baseClass  : baseClass
             });
         }
     };
