@@ -25,13 +25,14 @@ define(['canvas'],function (Canvas) {
                 left  : 1,
                 top   : 1,
                 width : 3,
-                points: [1, 0, 0,
-                         0, 2, 0,
-                         0, 0, 3],
+                points: [
+                    1, 0, 0,
+                    0, 2, 0,
+                    0, 0, 3],
                 baseClass: 'element'
             });
         });
-        
+
         describe('Remove element', function () {
             it('should delete existing element', function () {
                 canvas.removeElement({
@@ -104,8 +105,8 @@ define(['canvas'],function (Canvas) {
                     top   : 3,
                     width : 4,
                     points: [0, 0, 0, 5,
-                             0, 0, 6, 0,
-                             7, 8, 0, 0],
+                        0, 0, 6, 0,
+                        7, 8, 0, 0],
                     baseClass: 'element-updated'
                 });
 
@@ -167,8 +168,8 @@ define(['canvas'],function (Canvas) {
                     top   : 7,
                     width : 2,
                     points: [0, 0,
-                             0, 4,
-                             0, 9],
+                        0, 4,
+                        0, 9],
                     baseClass: 'element'
                 });
 

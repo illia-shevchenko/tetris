@@ -10,14 +10,16 @@ define(['figure'], function (Figure) {
                 left: 2,
                 top : 4,
                 allowedConfigurations: [{
-                    points: [0, 1,
-                             0, 1,
-                             0, 1,
-                             0, 1],
+                    points: [
+                        0, 1,
+                        0, 1,
+                        0, 1,
+                        0, 1],
                     width: 2
                 }, {
-                    points: [0, 0, 0, 0,
-                             1, 1, 1, 1],
+                    points: [
+                        0, 0, 0, 0,
+                        1, 1, 1, 1],
                     width : 4
                 }],
                 configurationIndex: 1,
@@ -42,13 +44,15 @@ define(['figure'], function (Figure) {
             it('should set index to zero if it is greater than allowedConfigurations length', function () {
                 figure = new Figure({
                     allowedConfigurations: [{
-                        points: [0, 1,
+                        points: [
+                            0, 1,
                             0, 1,
                             0, 1,
                             0, 1],
                         width: 2
                     }, {
-                        points: [0, 0, 0, 0,
+                        points: [
+                            0, 0, 0, 0,
                             1, 1, 1, 1],
                         width : 4
                     }],
@@ -64,13 +68,15 @@ define(['figure'], function (Figure) {
             it('should set index to zero if it is less than 0', function () {
                 figure = new Figure({
                     allowedConfigurations: [{
-                        points: [0, 1,
+                        points: [
+                            0, 1,
                             0, 1,
                             0, 1,
                             0, 1],
                         width: 2
                     }, {
-                        points: [0, 0, 0, 0,
+                        points: [
+                            0, 0, 0, 0,
                             1, 1, 1, 1],
                         width : 4
                     }],

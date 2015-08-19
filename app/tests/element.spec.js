@@ -55,16 +55,18 @@ define(['element'], function (GameElement) {
             it('should be able to change points and width if they are correct', function () {
                 gameElement.setMap({
                     width : 3,
-                    points: [0, 1, 5,
-                             2, 3, 6]
+                    points: [
+                        0, 1, 5,
+                        2, 3, 6]
                 });
 
                 expect(gameElement.getMap()).toEqual({
                     left : 2,
                     top  : 2,
                     width: 3,
-                    points:[0, 1, 5,
-                            2, 3, 6],
+                    points:[
+                        0, 1, 5,
+                        2, 3, 6],
                     hash  : hash,
                     baseClass: 'element'
                 });
@@ -74,8 +76,9 @@ define(['element'], function (GameElement) {
                 var func = function () {
                     gameElement.setMap({
                         width : 4,
-                        points: [0, 1, 5,
-                                 2, 3, 6]
+                        points: [
+                            0, 1, 5,
+                            2, 3, 6]
                     });
                 };
 
