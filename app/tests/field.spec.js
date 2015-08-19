@@ -43,7 +43,7 @@ define(['field'], function (Field) {
 
             it('should successfully check maps that have unsuitable sizes but internally suits free space', function () {
                 var result = field.checkMap({
-                    left: 3,
+                    left: 2,
                     top : 0,
                     points: [
                         0, 0, 0, 0,
