@@ -38,6 +38,50 @@ define(['figure'], function (Figure) {
                 expect(map.top).toBe(4);
                 expect(map.width).toBe(4);
             });
+
+            it('should set index to zero if it is greater than allowedConfigurations length', function () {
+                figure = new Figure({
+                    allowedConfigurations: [{
+                        points: [0, 1,
+                            0, 1,
+                            0, 1,
+                            0, 1],
+                        width: 2
+                    }, {
+                        points: [0, 0, 0, 0,
+                            1, 1, 1, 1],
+                        width : 4
+                    }],
+                    configurationIndex: 3
+                });
+
+                expect(figure.getMap().points).toEqual([0, 1,
+                    0, 1,
+                    0, 1,
+                    0, 1]);
+            });
+
+            it('should set index to zero if it is less than 0', function () {
+                figure = new Figure({
+                    allowedConfigurations: [{
+                        points: [0, 1,
+                            0, 1,
+                            0, 1,
+                            0, 1],
+                        width: 2
+                    }, {
+                        points: [0, 0, 0, 0,
+                            1, 1, 1, 1],
+                        width : 4
+                    }],
+                    configurationIndex: -1
+                });
+
+                expect(figure.getMap().points).toEqual([0, 1,
+                    0, 1,
+                    0, 1,
+                    0, 1]);
+            });
         });
 
 

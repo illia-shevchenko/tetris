@@ -27,6 +27,7 @@ define(['./element'], function (GameElement) {
         this._allowedConfigurations = settings.allowedConfigurations || [];
         this._configurationIndex    = settings.configurationIndex || 0;
 
+        this._configurationIndex = Math.max(this._configurationIndex, 0);
         if (this._configurationIndex >= this._allowedConfigurations.length) {
             this._configurationIndex = 0;
         }
