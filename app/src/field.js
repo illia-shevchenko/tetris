@@ -42,7 +42,7 @@ define(['./element'], function (GameElement) {
      * Get position related to current map and position to
      * @param {number} pointIndex Position (index) in map points related to which positions should be counted
      * @param {Map} map Map according to which positions should be counted
-     * @returns {{top: number, left: number, fieldTop: number, fieldLeft: number, fieldValueIndex: number}}
+     * @returns  {{top: number, left: number, fieldTop: number, fieldLeft: number, fieldValueIndex: number, indexInField: boolean}}
      * @private
      */
     Field.prototype._getAllPositions = function (pointIndex, map) {
@@ -89,11 +89,23 @@ define(['./element'], function (GameElement) {
     };
 
 
+    /**
+     * Lays map to a field (copy values to a proper positions)
+     * @param {Map} map Map to lay to the field
+     */
     Field.prototype.layMap = function (map) {
         map.points.forEach(function (point, index) {
+            if (!point) {
+                return;
+            }
+
             var positions = this._getAllPositions(index, map);
 
+            if (!positions.indexInField) {
+                return;
+            }
 
+            this._points[positions.fieldValueIndex] = point;
         }, this);
 
         this._strikeLines();
