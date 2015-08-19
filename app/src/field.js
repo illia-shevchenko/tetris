@@ -3,7 +3,6 @@
  */
 
 
-
 /**
  * A module represents Field class
  * @module field
@@ -32,6 +31,7 @@ define(['./element'], function (GameElement) {
         };
 
         GameElement.call(this, fieldSettings);
+        this._height = settings.height;
         this._points = this._createPoints(settings.width, settings.height);
     };
 
@@ -46,9 +46,7 @@ define(['./element'], function (GameElement) {
      * @private
      */
     Field.prototype._getAllPositions = function (pointIndex, map) {
-        var fieldHeight = Math.floor(this._points.length / this._width),
-
-            top  = Math.floor(pointIndex / map.width),
+        var top  = Math.floor(pointIndex / map.width),
             left = pointIndex % map.width,
 
             fieldTop = map.top + top,
@@ -62,7 +60,7 @@ define(['./element'], function (GameElement) {
             fieldLeft: fieldLeft,
 
             fieldValueIndex: fieldValueIndex,
-            indexInField   : fieldTop < fieldHeight && fieldLeft >= 0 && fieldLeft < this._width
+            indexInField   : fieldTop < this._height && fieldLeft >= 0 && fieldLeft < this._width
         };
     };
 
@@ -112,18 +110,41 @@ define(['./element'], function (GameElement) {
     };
 
 
-
+    /**
+     * Strikes out completed lines
+     * @private
+     */
     Field.prototype._strikeLines = function () {
-        this._points.forEach(function (point, index) {
-            var left = index % this._width,
-                line = Math.floor(index / this._width);
+        var line = 0,
+            column,
+            offset,
+            completed;
 
+        for (; line < this._height; ++line) {
+            offset = line * this._width;
 
-        }, this);
+            for (completed = true, column = 0; column < this._width; ++column) {
+                if (!this._points[offset  + column]) {
+                    completed = false;
+                    break;
+                }
+            }
+
+            if (completed) {
+                this._strikeLine(offset);
+            }
+        }
     };
 
-    Field.prototype._strikeLine = function (number) {
 
+    /**
+     * Strike a line from points and adds zero line from the beginning
+     * @param {number} start Start position from which line should be stroked
+     * @private
+     */
+    Field.prototype._strikeLine = function (start) {
+        this._points.splice(start, this._width);
+        this._points = this._createPoints(this._width, 1).concat(this._points);
     };
 
 
