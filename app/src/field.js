@@ -90,6 +90,7 @@ define(['./element'], function (GameElement) {
     /**
      * Lays map to a field (copy values to a proper positions)
      * @param {Map} map Map to lay to the field
+     * @return {number} Stroked lines number
      */
     Field.prototype.layMap = function (map) {
         map.points.forEach(function (point, index) {
@@ -106,16 +107,18 @@ define(['./element'], function (GameElement) {
             this._points[positions.fieldValueIndex] = point;
         }, this);
 
-        this._strikeLines();
+        return this._strikeLines();
     };
 
 
     /**
      * Strikes out completed lines
+     * @return {number} Stroked lines number
      * @private
      */
     Field.prototype._strikeLines = function () {
         var line = 0,
+            lines = 0,
             column,
             offset,
             completed;
@@ -132,8 +135,11 @@ define(['./element'], function (GameElement) {
 
             if (completed) {
                 this._strikeLine(offset);
+                lines++;
             }
         }
+
+        return lines;
     };
 
 

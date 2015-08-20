@@ -171,8 +171,8 @@ define(['field'], function (Field) {
 
 
             describe('Strike lines', function () {
-                it('should strike lines after having one fulfilled', function () {
-                    field.layMap({
+                it('should strike lines after having one fulfilled and return stroked lines number ', function () {
+                    var lines = field.layMap({
                         left: 1,
                         top : 2,
                         points: [
@@ -189,6 +189,8 @@ define(['field'], function (Field) {
                         0, 0, 0, 0, 0,
                         2, 2, 3, 3, 0
                     ]);
+
+                    expect(lines).toBe(1);
                 });
             });
         });
