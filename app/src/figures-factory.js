@@ -150,18 +150,21 @@ define(['figure'], function (Figure) {
     return {
         /**
          * Returns Figure class instance with given position
-         * @param {number} left Left position for a figure
-         * @param {number} top Top position for a figure
+         * @param {number} [middleOffset = 0] Offset  of the horizontal center of the created figure
+         * @param {number} [topOffset = 0] Top offset for a figure
          * @returns {Figure}
          */
-        getFigure: function (left, top) {
+        getFigure: function (middleOffset, topOffset) {
             var configNumber = getRandom(configurations.length),
                 allowedConfiguration = configurations[configNumber],
-                startIndex = getRandom(allowedConfiguration.length);
+                startIndex = getRandom(allowedConfiguration.length),
+
+                width  = allowedConfiguration[startIndex].width,
+                height = Math.floor(allowedConfiguration[startIndex].points.length / width);
 
             return new Figure({
-                left: left,
-                top : top,
+                left: (middleOffset || 0) - Math.floor(width / 2),
+                top : -height + (topOffset || 0),
                 allowedConfigurations: allowedConfiguration,
                 startIndex : startIndex,
                 pointsValue: configNumber

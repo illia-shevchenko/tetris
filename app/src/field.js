@@ -82,7 +82,7 @@ define(['./element'], function (GameElement) {
                         fieldValue = 1;
 
                     if (positions.indexInField) {
-                        fieldValue = fieldPoints[positions.fieldValueIndex];
+                        fieldValue = fieldPoints[positions.fieldValueIndex] || 0;
                     }
 
                     if (point && (!positions.nextLineIndexInField || fieldPoints[positions.fieldNextLineIndex])) {

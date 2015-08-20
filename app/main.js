@@ -24,7 +24,7 @@ requirejs(['tetris', 'canvas', 'field', 'figures-factory'], function (Tetris, Ca
         tetris = new Tetris({
             canvas: canvas,
             field : field,
-            onNewFigure: figuresFactory.getFigure.bind(figuresFactory, 4, 0),
+            onNewFigure: figuresFactory.getFigure.bind(figuresFactory, 5),
             onLineStrike: function (lines) {
                 console.log('Stricken lines: ' + lines);
             },
