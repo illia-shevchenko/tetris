@@ -174,7 +174,32 @@ define(['field'], function (Field) {
                         2, 2, 3, 3, 0,
                         2, 2, 2, 0, 0
                     ]);
-                });              
+                });
+
+                it('should detect map to be laid and lay map properly on not empty field', function () {
+                    var map = {
+                        left: 1,
+                        top : 1,
+                        points: [
+                            0, 0, 0, 0, 0,
+                            0, 3, 3, 0, 0,
+                            0, 3, 0, 3, 0,
+                            0, 0, 0, 3, 0],
+                        width : 5
+                    },
+                        result = field.checkMap(map);
+
+                    expect(result).toBe(2);
+                    field.layMap(map);
+
+                    expect(field.getMap().points).toEqual([
+                        0, 0, 0, 0, 0,
+                        0, 0, 0, 0, 0,
+                        0, 0, 3, 3, 0,
+                        2, 2, 3, 0, 3,
+                        2, 2, 2, 0, 3
+                    ]);
+                });
             });
 
 
@@ -200,6 +225,55 @@ define(['field'], function (Field) {
 
                     expect(lines).toBe(1);
                 });
+
+                it('should strike lines in the middle after having one fulfilled and return stricken lines number', function () {
+                    var map = {
+                            left: 1,
+                            top : 1,
+                            points: [
+                                0, 0, 0, 0, 0,
+                                0, 3, 3, 0, 0,
+                                0, 3, 2, 3, 0,
+                                0, 0, 0, 3, 0],
+                            width : 5
+                        },
+                        result = field.checkMap(map),
+                        lines;
+
+                    expect(result).toBe(2);
+                    lines = field.layMap(map);
+
+                    expect(lines).toBe(1);
+                    expect(field.getMap().points).toEqual([
+                        0, 0, 0, 0, 0,
+                        0, 0, 0, 0, 0,
+                        0, 0, 0, 0, 0,
+                        0, 0, 3, 3, 0,
+                        2, 2, 2, 0, 3
+                    ]);
+                });
+
+                //it('should strike lines after having one fulfilled and return stricken lines number', function () {
+                //    var lines = field.layMap({
+                //        left: 1,
+                //        top : 2,
+                //        points: [
+                //            0, 0, 0, 0,
+                //            0, 3, 3, 3,
+                //            0, 0, 0, 3],
+                //        width : 4
+                //    });
+                //
+                //    expect(field.getMap().points).toEqual([
+                //        0, 0, 0, 0, 0,
+                //        0, 0, 0, 0, 0,
+                //        0, 0, 0, 0, 0,
+                //        0, 0, 0, 0, 0,
+                //        2, 2, 3, 3, 0
+                //    ]);
+                //
+                //    expect(lines).toBe(1);
+                //});
             });
         });
 
