@@ -103,7 +103,6 @@ define(['./element'], function (GameElement) {
     };
 
 
-
     /**
      * Fills all allowed configurations with new point arrays filled with 'pointsValue'
      * @private
