@@ -28,7 +28,7 @@ requirejs(['tetris', 'canvas', 'field', 'figures-factory'], function (Tetris, Ca
             onLineStrike: function (lines) {
                 console.log('Stricken lines: ' + lines);
             },
-            onEnd: function () {
+            onFinish: function () {
                 pause();
             }
         }),

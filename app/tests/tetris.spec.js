@@ -34,7 +34,8 @@ define(['tetris'], function (Tetris) {
                     getMap  : function () { return fieldMap; }
                 },
                 onNewFigure : function () { return figure; },
-                onLineStrike: function () {}
+                onLineStrike: function () {},
+                onFinish    : function () {}
             };
 
             tetris = new Tetris(settings);
@@ -194,6 +195,33 @@ define(['tetris'], function (Tetris) {
                     expect(tetris.onNewFigure).toHaveBeenCalled();
                     expect(settings.canvas.addElement).toHaveBeenCalledWith(figureMap);
                 });
+            });
+
+            describe('Finish resolution', function () {
+                beforeEach(function () {
+                    settings.field.checkMap = function () { return -1; };
+                    settings.field.layMap = function () {};
+
+                    spyOn(settings.field, 'layMap').and.callThrough();
+                    spyOn(settings.canvas, 'addElement');
+                    spyOn(settings.canvas, 'removeElement');
+                    spyOn(tetris, 'onLineStrike');
+                    spyOn(tetris, 'onFinish');
+                    spyOn(tetris, 'onNewFigure');
+                });
+
+                it('should call removeElement, layMap, updateFiled and onFinish', function () {
+                    tetris.down();
+                    expect(figure.setMap).not.toHaveBeenCalled();
+                    expect(settings.canvas.removeElement).toHaveBeenCalledWith(figureMap);
+                    expect(settings.field.layMap).toHaveBeenCalledWith(figureMap);
+
+                    expect(settings.canvas.updateElement).toHaveBeenCalledWith(fieldMap);
+                    expect(tetris.onNewFigure).not.toHaveBeenCalled();
+                    expect(settings.canvas.addElement).not.toHaveBeenCalled();
+                    expect(tetris.onFinish).toHaveBeenCalled();
+                });
+
             });
         });
     });

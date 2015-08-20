@@ -29,6 +29,7 @@ define(function () {
      * @param {Field} settings.field Field instance
      * @param {onNewFigure} settings.onNewFigure Callback for getting new Figure
      * @param {onLineStrike} [settings.onLineStrike] Callback on line strikes. Possible for scores
+     * @param {Function} [settings.onFinish] Callback on game is finished
      * @class
      * @alias Tetris
      * @see module:tetris
@@ -41,10 +42,12 @@ define(function () {
 
         this.onNewFigure = settings.onNewFigure;
         this.onLineStrike = settings.onLineStrike;
+        this.onFinish = settings.onFinish;
     };
 
     Tetris.prototype = {
         onLineStrike: function () {},
+        onFinish    : function () {},
 
         /**
          * Sets new figure and adds it to the canvas
@@ -84,6 +87,12 @@ define(function () {
                     this.onLineStrike(strickenLines);
                     this._canvas.updateElement(this._field.getMap());
                     this._setNewFigure();
+                break;
+                case -1:
+                    this._canvas.removeElement(map);
+                    this._field.layMap(map);
+                    this._canvas.updateElement(this._field.getMap());
+                    this.onFinish();
                 break;
             }
         },
