@@ -167,7 +167,7 @@ define(['figure'], function (Figure) {
                 top : -height + (topOffset || 0),
                 allowedConfigurations: allowedConfiguration,
                 startIndex : startIndex,
-                pointsValue: configNumber
+                pointsValue: configNumber + 1
             });
         }
     };

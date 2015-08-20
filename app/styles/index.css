@@ -13,16 +13,12 @@
     position: absolute;
 }
 
-.figure-0 {
+.figure-1 {
     background-color: blue;
 }
 
-.figure-1 {
-    background-color: yellow;
-}
-
 .figure-2 {
-    background-color: green;
+    background-color: yellow;
 }
 
 .figure-3 {
@@ -30,13 +26,17 @@
 }
 
 .figure-4 {
-    background-color: red;
+    background-color: darkgreen;
 }
 
 .figure-5 {
-    background-color: orangered;
+    background-color: red;
 }
 
 .figure-6 {
     background-color: orangered;
+}
+
+.figure-7 {
+    background-color: darkorange;
 }
