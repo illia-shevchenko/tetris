@@ -13,10 +13,10 @@ define(['tetris'], function (Tetris) {
 
         beforeEach(function () {
             figure = {
-                moveLeft : function () {},
-                moveRight: function () {},
-                moveDown : function () {},
-                rotate   : function () {},
+                moveLeft : function () { return figureMap; },
+                moveRight: function () { return figureMap; },
+                moveDown : function () { return figureMap; },
+                rotate   : function () { return figureMap; },
                 getMap   : function () { return figureMap; },
                 setMap   : function () {}
             };
@@ -33,7 +33,7 @@ define(['tetris'], function (Tetris) {
                     layMap  : function () {},
                     getMap  : function () { return fieldMap; }
                 },
-                onNewFigure : function () {},
+                onNewFigure : function () { return figure; },
                 onLineStrike: function () {}
             };
 
@@ -43,12 +43,13 @@ define(['tetris'], function (Tetris) {
         describe('Creating', function () {
             beforeEach(function () {
                 spyOn(settings.canvas, 'addElement');
+                spyOn(tetris, 'onNewFigure').and.callThrough();
             });
 
             it('should call fo new figure on start', function () {
                 tetris.start();
                 expect(settings.canvas.addElement).toHaveBeenCalledWith(fieldMap);
-                expect(settings.onNewFigure).toHaveBeenCalled();
+                expect(tetris.onNewFigure).toHaveBeenCalled();
                 expect(settings.canvas.addElement).toHaveBeenCalledWith(figureMap);
             });
         });
@@ -57,10 +58,10 @@ define(['tetris'], function (Tetris) {
             beforeEach(function () {
                 tetris.start();
 
-                spyOn(figure, 'moveLeft');
-                spyOn(figure, 'moveRight');
-                spyOn(figure, 'moveDown');
-                spyOn(figure, 'rotate');
+                spyOn(figure, 'moveLeft').and.callThrough();
+                spyOn(figure, 'moveRight').and.callThrough();
+                spyOn(figure, 'moveDown').and.callThrough();
+                spyOn(figure, 'rotate').and.callThrough();
                 spyOn(figure, 'setMap');
                 spyOn(settings.canvas, 'updateElement');
             });
@@ -68,7 +69,7 @@ define(['tetris'], function (Tetris) {
             describe('Methods on success map checks', function () {
                 beforeEach(function () {
                     settings.field.checkMap = function () { return 1; };
-                    spyOn(settings.field, 'checkMap');
+                    spyOn(settings.field, 'checkMap').and.callThrough();
                 });
 
                 it('should call down, checkMap, setMap and updateElement', function () {
@@ -140,8 +141,10 @@ define(['tetris'], function (Tetris) {
                     settings.field.layMap = function () { return 1; };
 
                     spyOn(settings.field, 'layMap').and.callThrough();
+                    spyOn(settings.canvas, 'addElement');
                     spyOn(settings.canvas, 'removeElement');
-                    spyOn(settings, 'onLineStrike');
+                    spyOn(tetris, 'onLineStrike');
+                    spyOn(tetris, 'onNewFigure').and.callThrough();
                 });
 
                 it('should not call setMap but should remove figure from canvas, lay it with proper result and update field on canvas on moveDown figure', function () {
@@ -149,9 +152,11 @@ define(['tetris'], function (Tetris) {
                     expect(figure.setMap).not.toHaveBeenCalled();
                     expect(settings.canvas.removeElement).toHaveBeenCalledWith(figureMap);
                     expect(settings.field.layMap).toHaveBeenCalledWith(figureMap);
-                    expect(settings.onLineStrike).toHaveBeenCalledWith(1);
+                    expect(tetris.onLineStrike).toHaveBeenCalledWith(1);
 
                     expect(settings.canvas.updateElement).toHaveBeenCalledWith(fieldMap);
+                    expect(tetris.onNewFigure).toHaveBeenCalled();
+                    expect(settings.canvas.addElement).toHaveBeenCalledWith(figureMap);
                 });
 
                 it('should not call setMap but should remove figure from canvas, lay it with proper result and update field on canvas on moveLeft figure', function () {
@@ -159,9 +164,11 @@ define(['tetris'], function (Tetris) {
                     expect(figure.setMap).not.toHaveBeenCalled();
                     expect(settings.canvas.removeElement).toHaveBeenCalledWith(figureMap);
                     expect(settings.field.layMap).toHaveBeenCalledWith(figureMap);
-                    expect(settings.onLineStrike).toHaveBeenCalledWith(1);
+                    expect(tetris.onLineStrike).toHaveBeenCalledWith(1);
 
                     expect(settings.canvas.updateElement).toHaveBeenCalledWith(fieldMap);
+                    expect(tetris.onNewFigure).toHaveBeenCalled();
+                    expect(settings.canvas.addElement).toHaveBeenCalledWith(figureMap);
                 });
 
                 it('should not call setMap but should remove figure from canvas, lay it with proper result and update field on canvas on moveRight figure', function () {
@@ -169,9 +176,11 @@ define(['tetris'], function (Tetris) {
                     expect(figure.setMap).not.toHaveBeenCalled();
                     expect(settings.canvas.removeElement).toHaveBeenCalledWith(figureMap);
                     expect(settings.field.layMap).toHaveBeenCalledWith(figureMap);
-                    expect(settings.onLineStrike).toHaveBeenCalledWith(1);
+                    expect(tetris.onLineStrike).toHaveBeenCalledWith(1);
 
                     expect(settings.canvas.updateElement).toHaveBeenCalledWith(fieldMap);
+                    expect(tetris.onNewFigure).toHaveBeenCalled();
+                    expect(settings.canvas.addElement).toHaveBeenCalledWith(figureMap);
                 });
 
                 it('should not call setMap but should remove figure from canvas, lay it with proper result and update field on canvas on rotate figure', function () {
@@ -179,9 +188,11 @@ define(['tetris'], function (Tetris) {
                     expect(figure.setMap).not.toHaveBeenCalled();
                     expect(settings.canvas.removeElement).toHaveBeenCalledWith(figureMap);
                     expect(settings.field.layMap).toHaveBeenCalledWith(figureMap);
-                    expect(settings.onLineStrike).toHaveBeenCalledWith(1);
+                    expect(tetris.onLineStrike).toHaveBeenCalledWith(1);
 
                     expect(settings.canvas.updateElement).toHaveBeenCalledWith(fieldMap);
+                    expect(tetris.onNewFigure).toHaveBeenCalled();
+                    expect(settings.canvas.addElement).toHaveBeenCalledWith(figureMap);
                 });
             });
         });
