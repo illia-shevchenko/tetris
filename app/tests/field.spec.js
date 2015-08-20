@@ -38,7 +38,7 @@ define(['field'], function (Field) {
                     width : 4
                 });
 
-                expect(result).toBeTruthy();
+                expect(result).toBe(1);
             });
 
             it('should successfully check maps that have unsuitable sizes but internally suits free space', function () {
@@ -51,7 +51,7 @@ define(['field'], function (Field) {
                     width : 4
                 });
 
-                expect(result).toBeTruthy();
+                expect(result).toBe(1);
             });
 
             it('should reject maps with negative left position', function () {
@@ -64,7 +64,7 @@ define(['field'], function (Field) {
                     width : 4
                 });
 
-                expect(result).toBeFalsy();
+                expect(result).toBe(0);
             });
 
             it('should successfully check maps with negative left position but internally suits free space', function () {
@@ -77,7 +77,7 @@ define(['field'], function (Field) {
                     width : 4
                 });
 
-                expect(result).toBeTruthy();
+                expect(result).toBe(1);
             });
 
             it('should reject maps unsuitable by top position', function () {
@@ -90,10 +90,10 @@ define(['field'], function (Field) {
                     width : 4
                 });
 
-                expect(result).toBeFalsy();
+                expect(result).toBe(0);
             });
 
-            it('should successfully check maps with negative left position but internally suits free space', function () {
+            it('should detect map to be laid to the empty field', function () {
                 var result = field.checkMap({
                     left: 0,
                     top : 3,
@@ -104,7 +104,7 @@ define(['field'], function (Field) {
                     width : 4
                 });
 
-                expect(result).toBeTruthy();
+                expect(result).toBe(2);
             });
         });
 
@@ -145,19 +145,24 @@ define(['field'], function (Field) {
                         width : 4
                     });
 
-                    expect(result).toBeFalsy();
+                    expect(result).toBe(0);
                 });
 
-                it('should lay map properly on not empty field', function () {
-                    field.layMap({
+                it('should detect map to be laid and lay map properly on not empty field', function () {
+                    var map = {
                         left: 1,
                         top : 1,
                         points: [
                             0, 0, 0, 0,
                             0, 3, 3, 0,
-                            0, 3, 3, 0],
+                            0, 3, 3, 0,
+                            0, 0, 0, 0],
                         width : 4
-                    });
+                    },
+                        result = field.checkMap(map);
+
+                    expect(result).toBe(2);
+                    field.layMap(map);
 
                     expect(field.getMap().points).toEqual([
                         0, 0, 0, 0, 0,
@@ -166,12 +171,12 @@ define(['field'], function (Field) {
                         2, 2, 3, 3, 0,
                         2, 2, 2, 0, 0
                     ]);
-                });
+                });              
             });
 
 
             describe('Strike lines', function () {
-                it('should strike lines after having one fulfilled and return stroked lines number ', function () {
+                it('should strike lines after having one fulfilled and return stroked lines number', function () {
                     var lines = field.layMap({
                         left: 1,
                         top : 2,
