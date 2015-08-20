@@ -47,6 +47,18 @@ define(['figure'], function (Figure) {
                     1, 1, 1,
                     1, 0, 0],
                 width : 3
+            }, {
+                points: [
+                    0, 1, 1,
+                    0, 0, 1,
+                    0, 0, 1],
+                width : 3
+            }, {
+                points: [
+                    0, 0, 0,
+                    0, 0, 1,
+                    1, 1, 1],
+                width : 3
             }],
 
             //L reflected
@@ -61,6 +73,17 @@ define(['figure'], function (Figure) {
                     0, 0, 0,
                     1, 0, 0,
                     1, 1, 1],
+                width : 3
+            }, {
+                points: [
+                    1, 1,
+                    1, 0,
+                    1, 0],
+                width : 2
+            }, {
+                points: [
+                    1, 1, 1,
+                    0, 0, 1],
                 width : 3
             }],
 
