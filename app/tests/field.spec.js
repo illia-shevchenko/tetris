@@ -202,5 +202,29 @@ define(['field'], function (Field) {
                 });
             });
         });
+
+        /*describe('Detect full field', function () {
+            it('should detect if field is full and no more maps can be laid', function () {
+                field.layMap({
+                    left: 1,
+                    top : 2,
+                    points: [
+                        0, 0, 0, 0,
+                        0, 3, 3, 0,
+                        0, 0, 3, 3],
+                    width : 4
+                });
+
+                expect(field.getMap().points).toEqual([
+                    0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0,
+                    2, 2, 3, 3, 0
+                ]);
+
+                expect(lines).toBe(1);
+            });
+        });*/
     });
 });
