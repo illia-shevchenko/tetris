@@ -18,14 +18,13 @@ define(['element'], function (GameElement) {
 
         describe('Get map', function () {
             it('should be able to get map object', function () {
-                var map = gameElement.getMap();
-
-                expect(map.left).toBe(2);
-                expect(map.top).toBe(2);
-                expect(map.width).toBe(4);
-                expect(map.hash).toEqual(jasmine.any(Number));
-
-                expect(map.points).toEqual([]);
+                expect(gameElement.getMap()).toEqual({
+                    left  : 2,
+                    top   : 2,
+                    width : 4,
+                    points: [],
+                    hash  : jasmine.any(Number)
+                });
             });
         });
 

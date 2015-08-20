@@ -33,15 +33,16 @@ define(['figure'], function (Figure) {
 
         describe('Init', function () {
             it('should be in init position, points and width', function () {
-                var map = figure.getMap();
-                expect(map.points).toEqual([
-                    0, 0, 0, 0,
-                    3, 3, 3, 3
-                ]);
-
-                expect(map.left).toBe(2);
-                expect(map.top).toBe(4);
-                expect(map.width).toBe(4);
+                expect(figure.getMap()).toEqual({
+                    left  : 2,
+                    top   : 4,
+                    width : 4,
+                    points: [
+                        0, 0, 0, 0,
+                        3, 3, 3, 3
+                    ],
+                    hash  : jasmine.any(Number)
+                });
             });
 
             it('should set index to zero if it is greater than allowedConfigurations length', function () {
@@ -96,82 +97,79 @@ define(['figure'], function (Figure) {
 
         describe('Rotate', function () {
             it('should return second position with the same coordinates for rotation', function () {
-                var map = figure.rotate();
-
-                expect(map.points).toEqual([
-                    0, 3,
-                    0, 3,
-                    0, 3,
-                    0, 3
-                ]);
-
-                expect(map.left).toBe(2);
-                expect(map.top).toBe(4);
-                expect(map.width).toBe(2);
+                expect(figure.rotate()).toEqual({
+                    left  : 2,
+                    top   : 4,
+                    width : 2,
+                    points: [
+                        0, 3,
+                        0, 3,
+                        0, 3,
+                        0, 3
+                    ],
+                    hash  : jasmine.any(Number)
+                });
             });
 
             it('should return first position with the same coordinates for double rotation', function () {
-                var map;
+                figure.setMap(figure.rotate());
 
-                map = figure.rotate();
-                figure.setMap(map);
-
-                map = figure.rotate();
-
-                expect(map.points).toEqual([
-                    0, 0, 0, 0,
-                    3, 3, 3, 3
-                ]);
-
-                expect(map.left).toBe(2);
-                expect(map.top).toBe(4);
-                expect(map.width).toBe(4);
+                expect(figure.rotate()).toEqual({
+                    left  : 2,
+                    top   : 4,
+                    width : 4,
+                    points: [
+                        0, 0, 0, 0,
+                        3, 3, 3, 3
+                    ],
+                    hash  : jasmine.any(Number)
+                });
             });
         });
 
         describe('Move', function () {
             describe('Down', function () {
                 it('should return the same points and width but new top coordinate', function () {
-                    var map = figure.moveDown();
-
-                    expect(map.points).toEqual([
-                        0, 0, 0, 0,
-                        3, 3, 3, 3
-                    ]);
-
-                    expect(map.left).toBe(2);
-                    expect(map.top).toBe(5);
-                    expect(map.width).toBe(4);
+                    expect(figure.moveDown()).toEqual({
+                        left  : 2,
+                        top   : 5,
+                        width : 4,
+                        points: [
+                            0, 0, 0, 0,
+                            3, 3, 3, 3
+                        ],
+                        hash  : jasmine.any(Number)
+                    });
                 });
             });
 
             describe('Left', function () {
                 it('should return the same points and width but new left coordinate', function () {
-                    var map = figure.moveLeft();
-
-                    expect(map.points).toEqual([
-                        0, 0, 0, 0,
-                        3, 3, 3, 3
-                    ]);
-
-                    expect(map.left).toBe(1);
-                    expect(map.top).toBe(4);
-                    expect(map.width).toBe(4);
+                    expect(figure.moveLeft()).toEqual({
+                        left  : 1,
+                        top   : 4,
+                        width : 4,
+                        points: [
+                            0, 0, 0, 0,
+                            3, 3, 3, 3
+                        ],
+                        hash  : jasmine.any(Number)
+                    });
                 });
             });
 
             describe('Right', function () {
                 it('should return the same points and width but new left coordinate', function () {
-                    var map = figure.moveRight();
-
-                    expect(map.points).toEqual([
-                        0, 0, 0, 0,
-                        3, 3, 3, 3
-                    ]);
-
-                    expect(map.left).toBe(3);
-                    expect(map.top).toBe(4);
-                    expect(map.width).toBe(4);
+                    expect(figure.moveRight()).toEqual({
+                        left  : 3,
+                        top   : 4,
+                        width : 4,
+                        points: [
+                            0, 0, 0, 0,
+                            3, 3, 3, 3
+                        ],
+                        hash  : jasmine.any(Number)
+                    });
                 });
             });
         });
