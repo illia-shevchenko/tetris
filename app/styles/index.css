@@ -1,0 +1,41 @@
+.canvas {
+    width: 300px;
+    height: 600px;
+    background-color: black;
+}
+
+.container {
+    position: absolute;
+}
+
+.container .figure {
+    position: relative;
+}
+
+.figure-0 {
+    background-color: blue;
+}
+
+.figure-1 {
+    background-color: yellow;
+}
+
+.figure-2 {
+    background-color: green;
+}
+
+.figure-3 {
+    background-color: green;
+}
+
+.figure-4 {
+    background-color: red;
+}
+
+.figure-5 {
+    background-color: orangered;
+}
+
+.figure-6 {
+    background-color: orangered;
+}
