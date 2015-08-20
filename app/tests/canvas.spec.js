@@ -183,7 +183,7 @@ define(['canvas'], function (Canvas) {
                     width : 2,
                     points: [
                         0, 0,
-                        0, 4,
+                        0, 0,
                         0, 9]
                 });
 
@@ -196,20 +196,9 @@ define(['canvas'], function (Canvas) {
                 }));
                 expect(container.className).toEqual('container');
 
-                expect(container.children.length).toEqual(2);
-
+                expect(container.children.length).toEqual(1);
 
                 cNode  = container.children[0];
-                expect(cNode.style).toEqual(jasmine.objectContaining({
-                    left  : '30px',
-                    top   : '30px',
-                    width : '30px',
-                    height: '30px'
-                }));
-                expect(cNode.className).toEqual('element element-4');
-
-
-                cNode  = container.children[1];
                 expect(cNode.style).toEqual(jasmine.objectContaining({
                     left  : '30px',
                     top   : '60px',
