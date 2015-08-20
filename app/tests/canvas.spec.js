@@ -1,7 +1,10 @@
 /**
  * Created by Illia_Shevchenko on 14.08.2015.
  */
-define(['canvas'],function (Canvas) {
+'use strict';
+
+
+define(['canvas'], function (Canvas) {
     describe('Canvas Class', function () {
         var node,
             canvas,

@@ -1,9 +1,11 @@
 /**
  * Created by Illia_Shevchenko on 14.08.2015.
  */
-//
+'use strict';
+
+
 define(['Squire'], function (Squire) {
-    var FigureMock = function (settings) {
+    var FigureMock = function () {
         //this.allowedConfigurations = settings.allowedConfigurations;
     };
 
@@ -30,7 +32,7 @@ define(['Squire'], function (Squire) {
         });
 
         it('should create instances of Figure class', function () {
-            expect(figuresFactory.getFigure()).toEqual(jasmine.any(FigureMock));
+            expect(figuresFactory.getFigure(0, 0, '')).toEqual(jasmine.any(FigureMock));
         });
     });
 });

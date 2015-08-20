@@ -1,6 +1,9 @@
 /**
  * Created by Illia_Shevchenko on 14.08.2015.
  */
+'use strict';
+
+
 define(['element'], function (GameElement) {
     describe('GameElement', function () {
         var gameElement;
