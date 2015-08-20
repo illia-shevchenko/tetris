@@ -99,8 +99,8 @@ define(function () {
 
             this._node.removeChild(element);
 
-            element.style.left = this._getRealX(map.left);
-            element.style.top  = this._getRealY(map.top);
+            element.style.left = this._getRealX(map.left, this._nodeLeft);
+            element.style.top  = this._getRealY(map.top, this._nodeTop);
 
             map.points.forEach(function (point, index) {
                 if (!point) {
@@ -150,23 +150,26 @@ define(function () {
 
         /**
          * Gets size by X axy in pixel from virtual
+         * @param {number} val Virtual size or coordinate
+         * @param {number} [add = 0] Additional count of pixels to add to the result
          * @param val Virtual size or coordinate
          * @returns {string} Size in pixel
          * @protected
          */
-        _getRealX: function (val) {
-            return val * this._unitWidth + 'px';
+        _getRealX: function (val, add) {
+            return val * this._unitWidth + (add || 0) + 'px';
         },
 
 
         /**
          * Gets size by Y axy in pixel from virtual
          * @param {number} val Virtual size or coordinate
+         * @param {number} [add = 0] Additional count of pixels to add to the result
          * @returns {string} Size in pixel
          * @protected
          */
-        _getRealY: function (val) {
-            return val * this._unitHeight + 'px';
+        _getRealY: function (val, add) {
+            return val * this._unitHeight + (add || 0) + 'px';
         },
 
 
@@ -176,8 +179,12 @@ define(function () {
          *
          */
         _setSizes: function () {
+            var rect = this._node.getBoundingClientRect();
             this._unitWidth  = Math.round(this._node.clientWidth  / this._width);
             this._unitHeight = Math.round(this._node.clientHeight / this._height);
+
+            this._nodeLeft = rect.left;
+            this._nodeTop  = rect.top;
         },
 
 
