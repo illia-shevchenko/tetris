@@ -1,0 +1,28 @@
+{
+  "name": "try_tetris",
+  "version": "0.0.0",
+  "authors": [
+    "Illia Shevchenko <illyashevchenko@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "requirejs-plugins": "~1.0.3",
+    "requirejs": "~2.1.20"
+  },
+  "install": {
+    "path": "app/lib",
+    "sources": {
+      "requirejs-plugins": [
+        "bower_components/requirejs-plugins/src/json.js",
+        "bower_components/requirejs-plugins/lib/text.js"
+      ]
+    }
+  }
+}
