@@ -48,14 +48,18 @@ define(['./element'], function (GameElement) {
      * @returns {Map}
      */
     Figure.prototype.rotate = function () {
-        var index = this._configurationIndex + 1,
+        var index = 0,
             map;
 
-        if (index >= this._allowedConfigurations.length) {
-            index = 0;
-        }
+        this._allowedConfigurations.some(function (configuration, i) {
+            if (i < this._allowedConfigurations.length - 1 && configuration.points === this._points) {
+                index = i + 1;
+                return true;
+            }
+        }, this);
 
         map = this.getMap();
+
         map.points = this._allowedConfigurations[index].points;
         map.width  = this._allowedConfigurations[index].width;
 

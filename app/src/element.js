@@ -42,7 +42,7 @@ define(function () {
                 left     : this._left,
                 top      : this._top,
                 width    : this._width,
-                points   : this._points.slice()
+                points   : this._points
             };
         },
 
@@ -68,7 +68,7 @@ define(function () {
                 throw new Error(msg);
             }
 
-            this._points = map.points.slice();
+            this._points = map.points;
             this._width  = map.width;
         },
 

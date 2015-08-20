@@ -109,6 +109,24 @@ define(['figure'], function (Figure) {
                 expect(map.top).toBe(4);
                 expect(map.width).toBe(2);
             });
+
+            it('should return first position with the same coordinates for double rotation', function () {
+                var map;
+
+                map = figure.rotate();
+                figure.setMap(map);
+
+                map = figure.rotate();
+
+                expect(map.points).toEqual([
+                    0, 0, 0, 0,
+                    3, 3, 3, 3
+                ]);
+
+                expect(map.left).toBe(2);
+                expect(map.top).toBe(4);
+                expect(map.width).toBe(4);
+            });
         });
 
         describe('Move', function () {
