@@ -17,14 +17,20 @@ define(function () {
      * @param {number} [settings.width = 10] Virtual width of the canvas
      * @param {number} [settings.height = 20] Virtual height of the canvas
      * @param {string} [settings.tag = 'div'] Tag for creation elements on the canvas
+     * @param {string} [settings.containerClass = 'container'] Base class for containers
+     * @param {string} [settings.elementClass = 'element'] Base class for elements
      * @constructor
      * @alias Canvas
+     * @todo: container class as parameter?
      */
     var Canvas = function (settings) {
             this._node   = settings.node;
             this._width  = settings.width  || 10;
             this._height = settings.height || 20;
             this._tag    = settings.tag    || 'div';
+
+            this._containerClass = settings.containerClass || 'container';
+            this._elementClass   = settings.elementClass    || 'element';
 
             this._maps     = {};
             this._elements = {};
@@ -43,7 +49,6 @@ define(function () {
          * @property {number} [top] Top position of the map
          * @property {number} [width] Width of the map
          * @property {Array.<number>} [points] Array of points
-         * @property {string} [baseClass] Base class of the points
          */
 
 
@@ -115,7 +120,7 @@ define(function () {
                 subElement.style.top    = this._getRealY(top);
                 subElement.style.width  = this._getRealX(1);
                 subElement.style.height = this._getRealY(1);
-                subElement.className    = map.baseClass + ' ' + map.baseClass + '-' + point;
+                subElement.className    = this._elementClass + ' ' + this._elementClass + '-' + point;
 
                 counter++;
             }, this);

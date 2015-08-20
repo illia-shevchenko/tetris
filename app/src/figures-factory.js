@@ -7,6 +7,7 @@
 /**
  * A module for generating figures randomly
  * @module figures-factory
+ * @todo configurations load from json and can be mocked
  */
 define(['figure'], function (Figure) {
     var configurations = [
@@ -128,10 +129,9 @@ define(['figure'], function (Figure) {
          * Returns Figure class instance with given position
          * @param {number} left Left position for a figure
          * @param {number} top Top position for a figure
-         * @param {string} baseClass Base class for a figure
          * @returns {Figure}
          */
-        getFigure: function (left, top, baseClass) {
+        getFigure: function (left, top) {
             var configNumber = getRandom(configurations.length),
                 allowedConfiguration = configurations[configNumber],
                 startIndex = getRandom(allowedConfiguration.length);
@@ -141,8 +141,7 @@ define(['figure'], function (Figure) {
                 top : top,
                 allowedConfigurations: allowedConfiguration,
                 startIndex : startIndex,
-                pointsValue: configNumber,
-                baseClass  : baseClass
+                pointsValue: configNumber
             });
         }
     };

@@ -15,7 +15,6 @@ define(function () {
      * @param {Object} [settings.left = 0] Left position of the element
      * @param {Object} [settings.top  = 0] Top position of the element
      * @param {Object} [settings.width = 0] Width of the element
-     * @param {Object} [settings.baseClass = 'element'] Base class of the element
      *
      * @constructor
      * @alias GameElement
@@ -27,7 +26,6 @@ define(function () {
         this._top   = settings.top  || 0;
 
         this._width = settings.width || 0;
-        this._baseClass = settings.baseClass || 'element';
     };
 
     GameElement.prototype = {
@@ -44,8 +42,7 @@ define(function () {
                 left     : this._left,
                 top      : this._top,
                 width    : this._width,
-                points   : this._points.slice(),
-                baseClass: this._baseClass
+                points   : this._points.slice()
             };
         },
 
@@ -68,7 +65,7 @@ define(function () {
 
             if (map.points.length % map.width !== 0) {
                 var msg = 'Width (' + map.width + ') does not suit points length (' + map.points.length + ')';
-                throw(new Error(msg));
+                throw new Error(msg);
             }
 
             this._points = map.points.slice();

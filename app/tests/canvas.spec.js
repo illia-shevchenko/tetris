@@ -20,7 +20,9 @@ define(['canvas'], function (Canvas) {
                 node  : node,
                 width : 10,
                 height: 20,
-                tag   : 'span'
+                tag   : 'span',
+                elementClass  : 'element',
+                containerClass: 'container'
             });
 
             canvas.addElement({
@@ -31,8 +33,7 @@ define(['canvas'], function (Canvas) {
                 points: [
                     1, 0, 0,
                     0, 2, 0,
-                    0, 0, 3],
-                baseClass: 'element'
+                    0, 0, 3]
             });
         });
 
@@ -65,6 +66,7 @@ define(['canvas'], function (Canvas) {
 
                 expect(container.style.left).toEqual('30px');
                 expect(container.style.top).toEqual('30px');
+                expect(container.className).toEqual('container');
 
                 expect(container.children.length).toEqual(3);
 
@@ -107,10 +109,10 @@ define(['canvas'], function (Canvas) {
                     left  : 3,
                     top   : 3,
                     width : 4,
-                    points: [0, 0, 0, 5,
+                    points: [
+                        0, 0, 0, 5,
                         0, 0, 6, 0,
-                        7, 8, 0, 0],
-                    baseClass: 'element-updated'
+                        7, 8, 0, 0]
                 });
 
                 var container = node.children[0],
@@ -119,6 +121,7 @@ define(['canvas'], function (Canvas) {
 
                 expect(container.style.left).toEqual('90px');
                 expect(container.style.top).toEqual('90px');
+                expect(container.className).toEqual('container');
 
                 expect(container.children.length).toEqual(4);
 
@@ -130,7 +133,7 @@ define(['canvas'], function (Canvas) {
                 expect(cStyle.top).toEqual('0px');
                 expect(cStyle.width).toEqual('30px');
                 expect(cStyle.height).toEqual('30px');
-                expect(cNode.className).toEqual('element-updated element-updated-5');
+                expect(cNode.className).toEqual('element element-5');
 
 
                 cNode  = container.children[1];
@@ -140,7 +143,7 @@ define(['canvas'], function (Canvas) {
                 expect(cStyle.top).toEqual('30px');
                 expect(cStyle.width).toEqual('30px');
                 expect(cStyle.height).toEqual('30px');
-                expect(cNode.className).toEqual('element-updated element-updated-6');
+                expect(cNode.className).toEqual('element element-6');
 
 
                 cNode  = container.children[2];
@@ -150,7 +153,7 @@ define(['canvas'], function (Canvas) {
                 expect(cStyle.top).toEqual('60px');
                 expect(cStyle.width).toEqual('30px');
                 expect(cStyle.height).toEqual('30px');
-                expect(cNode.className).toEqual('element-updated element-updated-7');
+                expect(cNode.className).toEqual('element element-7');
 
 
                 cNode  = container.children[3];
@@ -160,7 +163,7 @@ define(['canvas'], function (Canvas) {
                 expect(cStyle.top).toEqual('60px');
                 expect(cStyle.width).toEqual('30px');
                 expect(cStyle.height).toEqual('30px');
-                expect(cNode.className).toEqual('element-updated element-updated-8');
+                expect(cNode.className).toEqual('element element-8');
             });
 
 
@@ -170,10 +173,10 @@ define(['canvas'], function (Canvas) {
                     left  : 6,
                     top   : 7,
                     width : 2,
-                    points: [0, 0,
+                    points: [
+                        0, 0,
                         0, 4,
-                        0, 9],
-                    baseClass: 'element'
+                        0, 9]
                 });
 
                 var container = node.children[0],
@@ -182,6 +185,7 @@ define(['canvas'], function (Canvas) {
 
                 expect(container.style.left).toEqual('180px');
                 expect(container.style.top).toEqual('210px');
+                expect(container.className).toEqual('container');
 
                 expect(container.children.length).toEqual(2);
 
@@ -231,6 +235,7 @@ define(['canvas'], function (Canvas) {
 
                 expect(container.style.left).toEqual('45px');
                 expect(container.style.top).toEqual('40px');
+                expect(container.className).toEqual('container');
 
                 expect(container.children.length).toEqual(3);
 

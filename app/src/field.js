@@ -16,7 +16,6 @@ define(['./element'], function (GameElement) {
      * @param {Object} settings Settings to create field
      * @param {number} settings.width Width for new field
      * @param {number} settings.height Height for new field
-     * @param {number} [settings.baseClass] Base class for field creation
      *
      * @class
      * @extends GameElement
@@ -27,8 +26,7 @@ define(['./element'], function (GameElement) {
         var fieldSettings = {
             left : 0,
             top  : 0,
-            width: settings.width,
-            baseClass: settings.baseClass
+            width: settings.width
         };
 
         GameElement.call(this, fieldSettings);

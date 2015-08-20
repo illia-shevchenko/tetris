@@ -13,6 +13,7 @@ define(['Squire'], function (Squire) {
         constructor: FigureMock
     };
 
+    //TODO: Add testing settings position
     describe('Figures Factory', function () {
         var injector,
             figuresFactory;
@@ -32,7 +33,7 @@ define(['Squire'], function (Squire) {
         });
 
         it('should create instances of Figure class', function () {
-            expect(figuresFactory.getFigure(0, 0, '')).toEqual(jasmine.any(FigureMock));
+            expect(figuresFactory.getFigure(0, 0)).toEqual(jasmine.any(FigureMock));
         });
     });
 });

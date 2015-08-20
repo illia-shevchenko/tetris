@@ -12,8 +12,7 @@ define(['element'], function (GameElement) {
             gameElement = new GameElement({
                 left: 2,
                 top : 2,
-                width: 4,
-                baseClass: 'element'
+                width: 4
             });
         });
 
@@ -24,8 +23,6 @@ define(['element'], function (GameElement) {
                 expect(map.left).toBe(2);
                 expect(map.top).toBe(2);
                 expect(map.width).toBe(4);
-                expect(map.baseClass).toBe('element');
-
                 expect(map.hash).toEqual(jasmine.any(Number));
 
                 expect(map.points).toEqual([]);
@@ -50,8 +47,7 @@ define(['element'], function (GameElement) {
                     top  : 8,
                     width: 4,
                     points:[],
-                    hash  : hash,
-                    baseClass: 'element'
+                    hash  : hash
                 });
             });
 
@@ -70,8 +66,7 @@ define(['element'], function (GameElement) {
                     points:[
                         0, 1, 5,
                         2, 3, 6],
-                    hash  : hash,
-                    baseClass: 'element'
+                    hash  : hash
                 });
             });
 
@@ -88,9 +83,8 @@ define(['element'], function (GameElement) {
                 expect(func).toThrowError('Width (4) does not suit points length (6)');
             });
 
-            it('should not change baseClass or hash', function () {
+            it('should not change hash', function () {
                 gameElement.setMap({
-                    baseClass: 'new-element',
                     hash     : new Date().valueOf()
                 });
 
@@ -99,8 +93,7 @@ define(['element'], function (GameElement) {
                     top  : 2,
                     width: 4,
                     points:[],
-                    hash  : hash,
-                    baseClass: 'element'
+                    hash  : hash
                 });
             });
         });
