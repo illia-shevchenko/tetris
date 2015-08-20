@@ -67,43 +67,43 @@ define(['canvas'], function (Canvas) {
         describe('Add element', function () {
             it('should place element with correct settings', function () {
                 var container = node.children[0],
-                    cNode,
-                    cStyle;
+                    cNode;
 
-                expect(container.style.left).toEqual('40px');
-                expect(container.style.top).toEqual('40px');
+                expect(container.style).toEqual(jasmine.objectContaining({
+                    left: '40px',
+                    top : '40px'
+                }));
                 expect(container.className).toEqual('container');
 
                 expect(container.children.length).toEqual(3);
 
-
                 cNode  = container.children[0];
-                cStyle = cNode.style;
-
-                expect(cStyle.left).toEqual('0px');
-                expect(cStyle.top).toEqual('0px');
-                expect(cStyle.width).toEqual('30px');
-                expect(cStyle.height).toEqual('30px');
+                expect(cNode.style).toEqual(jasmine.objectContaining({
+                    left  : '0px',
+                    top   : '0px',
+                    width : '30px',
+                    height: '30px'
+                }));
                 expect(cNode.className).toEqual('element element-1');
 
 
                 cNode  = container.children[1];
-                cStyle = cNode.style;
-
-                expect(cStyle.left).toEqual('30px');
-                expect(cStyle.top).toEqual('30px');
-                expect(cStyle.width).toEqual('30px');
-                expect(cStyle.height).toEqual('30px');
+                expect(cNode.style).toEqual(jasmine.objectContaining({
+                    left  : '30px',
+                    top   : '30px',
+                    width : '30px',
+                    height: '30px'
+                }));
                 expect(cNode.className).toEqual('element element-2');
 
 
                 cNode  = container.children[2];
-                cStyle = cNode.style;
-
-                expect(cStyle.left).toEqual('60px');
-                expect(cStyle.top).toEqual('60px');
-                expect(cStyle.width).toEqual('30px');
-                expect(cStyle.height).toEqual('30px');
+                expect(cNode.style).toEqual(jasmine.objectContaining({
+                    left  : '60px',
+                    top   : '60px',
+                    width : '30px',
+                    height: '30px'
+                }));
                 expect(cNode.className).toEqual('element element-3');
             });
         });
@@ -122,53 +122,55 @@ define(['canvas'], function (Canvas) {
                 });
 
                 var container = node.children[0],
-                    cNode,
-                    cStyle;
+                    cNode;
 
-                expect(container.style.left).toEqual('100px');
-                expect(container.style.top).toEqual('100px');
+                expect(container.style).toEqual(jasmine.objectContaining({
+                    left: '100px',
+                    top : '100px'
+                }));
+
                 expect(container.className).toEqual('container');
 
                 expect(container.children.length).toEqual(4);
 
 
                 cNode  = container.children[0];
-                cStyle = cNode.style;
-
-                expect(cStyle.left).toEqual('90px');
-                expect(cStyle.top).toEqual('0px');
-                expect(cStyle.width).toEqual('30px');
-                expect(cStyle.height).toEqual('30px');
+                expect(cNode.style).toEqual(jasmine.objectContaining({
+                    left  : '90px',
+                    top   : '0px',
+                    width : '30px',
+                    height: '30px'
+                }));
                 expect(cNode.className).toEqual('element element-5');
 
 
                 cNode  = container.children[1];
-                cStyle = cNode.style;
-
-                expect(cStyle.left).toEqual('60px');
-                expect(cStyle.top).toEqual('30px');
-                expect(cStyle.width).toEqual('30px');
-                expect(cStyle.height).toEqual('30px');
+                expect(cNode.style).toEqual(jasmine.objectContaining({
+                    left  : '60px',
+                    top   : '30px',
+                    width : '30px',
+                    height: '30px'
+                }));
                 expect(cNode.className).toEqual('element element-6');
 
 
                 cNode  = container.children[2];
-                cStyle = cNode.style;
-
-                expect(cStyle.left).toEqual('0px');
-                expect(cStyle.top).toEqual('60px');
-                expect(cStyle.width).toEqual('30px');
-                expect(cStyle.height).toEqual('30px');
+                expect(cNode.style).toEqual(jasmine.objectContaining({
+                    left  : '0px',
+                    top   : '60px',
+                    width : '30px',
+                    height: '30px'
+                }));
                 expect(cNode.className).toEqual('element element-7');
 
 
                 cNode  = container.children[3];
-                cStyle = cNode.style;
-
-                expect(cStyle.left).toEqual('30px');
-                expect(cStyle.top).toEqual('60px');
-                expect(cStyle.width).toEqual('30px');
-                expect(cStyle.height).toEqual('30px');
+                expect(cNode.style).toEqual(jasmine.objectContaining({
+                    left  : '30px',
+                    top   : '60px',
+                    width : '30px',
+                    height: '30px'
+                }));
                 expect(cNode.className).toEqual('element element-8');
             });
 
@@ -186,33 +188,34 @@ define(['canvas'], function (Canvas) {
                 });
 
                 var container = node.children[0],
-                    cNode,
-                    cStyle;
+                    cNode;
 
-                expect(container.style.left).toEqual('190px');
-                expect(container.style.top).toEqual('220px');
+                expect(container.style).toEqual(jasmine.objectContaining({
+                    left: '190px',
+                    top : '220px'
+                }));
                 expect(container.className).toEqual('container');
 
                 expect(container.children.length).toEqual(2);
 
 
                 cNode  = container.children[0];
-                cStyle = cNode.style;
-
-                expect(cStyle.left).toEqual('30px');
-                expect(cStyle.top).toEqual('30px');
-                expect(cStyle.width).toEqual('30px');
-                expect(cStyle.height).toEqual('30px');
+                expect(cNode.style).toEqual(jasmine.objectContaining({
+                    left  : '30px',
+                    top   : '30px',
+                    width : '30px',
+                    height: '30px'
+                }));
                 expect(cNode.className).toEqual('element element-4');
 
 
                 cNode  = container.children[1];
-                cStyle = cNode.style;
-
-                expect(cStyle.left).toEqual('30px');
-                expect(cStyle.top).toEqual('60px');
-                expect(cStyle.width).toEqual('30px');
-                expect(cStyle.height).toEqual('30px');
+                expect(cNode.style).toEqual(jasmine.objectContaining({
+                    left  : '30px',
+                    top   : '60px',
+                    width : '30px',
+                    height: '30px'
+                }));
                 expect(cNode.className).toEqual('element element-9');
             });
 
@@ -236,43 +239,44 @@ define(['canvas'], function (Canvas) {
                 canvas.redraw();
 
                 var container = node.children[0],
-                    cNode,
-                    cStyle;
+                    cNode;
 
-                expect(container.style.left).toEqual('55px');
-                expect(container.style.top).toEqual('50px');
+                expect(container.style).toEqual(jasmine.objectContaining({
+                    left: '55px',
+                    top : '50px'
+                }));
                 expect(container.className).toEqual('container');
 
                 expect(container.children.length).toEqual(3);
 
 
                 cNode  = container.children[0];
-                cStyle = cNode.style;
-
-                expect(cStyle.left).toEqual('0px');
-                expect(cStyle.top).toEqual('0px');
-                expect(cStyle.width).toEqual('45px');
-                expect(cStyle.height).toEqual('40px');
+                expect(cNode.style).toEqual(jasmine.objectContaining({
+                    left  : '0px',
+                    top   : '0px',
+                    width : '45px',
+                    height: '40px'
+                }));
                 expect(cNode.className).toEqual('element element-1');
 
 
                 cNode  = container.children[1];
-                cStyle = cNode.style;
-
-                expect(cStyle.left).toEqual('45px');
-                expect(cStyle.top).toEqual('40px');
-                expect(cStyle.width).toEqual('45px');
-                expect(cStyle.height).toEqual('40px');
+                expect(cNode.style).toEqual(jasmine.objectContaining({
+                    left  : '45px',
+                    top   : '40px',
+                    width : '45px',
+                    height: '40px'
+                }));
                 expect(cNode.className).toEqual('element element-2');
 
 
                 cNode  = container.children[2];
-                cStyle = cNode.style;
-
-                expect(cStyle.left).toEqual('90px');
-                expect(cStyle.top).toEqual('80px');
-                expect(cStyle.width).toEqual('45px');
-                expect(cStyle.height).toEqual('40px');
+                expect(cNode.style).toEqual(jasmine.objectContaining({
+                    left  : '90px',
+                    top   : '80px',
+                    width : '45px',
+                    height: '40px'
+                }));
                 expect(cNode.className).toEqual('element element-3');
             });
         });
