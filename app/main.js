@@ -44,8 +44,5 @@ requirejs(['tetris', 'canvas', 'field', 'figures-factory'], function (Tetris, Ca
     });
 
     tetris.start();
-    tetris.down();
-    tetris.down();
-    tetris.down();
-    //setInterval(tetris.down.bind(tetris), 1000);
+    setInterval(tetris.down.bind(tetris), 1000);
 });

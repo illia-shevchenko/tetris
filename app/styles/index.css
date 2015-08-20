@@ -9,7 +9,7 @@
 }
 
 .container .figure {
-    position: relative;
+    position: absolute;
 }
 
 .figure-0 {
