@@ -101,7 +101,7 @@ define(['./element'], function (GameElement) {
     /**
      * Lays map to a field (copy values to a proper positions)
      * @param {Map} map Map to lay to the field
-     * @return {number} Stroked lines number
+     * @return {number} Stricken lines number
      */
     Field.prototype.layMap = function (map) {
         map.points.forEach(function (point, index) {
@@ -124,7 +124,7 @@ define(['./element'], function (GameElement) {
 
     /**
      * Strikes out completed lines
-     * @return {number} Stroked lines number
+     * @return {number} Stricken lines number
      * @private
      */
     Field.prototype._strikeLines = function () {
@@ -156,7 +156,7 @@ define(['./element'], function (GameElement) {
 
     /**
      * Strike a line from points and adds zero line from the beginning
-     * @param {number} start Start position from which line should be stroked
+     * @param {number} start Start position from which line should be stricken
      * @private
      */
     Field.prototype._strikeLine = function (start) {
@@ -192,7 +192,7 @@ define(['./element'], function (GameElement) {
     Field.prototype._normalizePoints = function (points) {
         return points.map(function (point) {
             return point && 1;
-        })
+        });
     };
 
 

@@ -179,7 +179,7 @@ define(['field'], function (Field) {
 
 
             describe('Strike lines', function () {
-                it('should strike lines after having one fulfilled and return stroked lines number', function () {
+                it('should strike lines after having one fulfilled and return stricken lines number', function () {
                     var lines = field.layMap({
                         left: 1,
                         top : 2,
