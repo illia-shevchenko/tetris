@@ -27,10 +27,39 @@ requirejs(['tetris', 'canvas', 'field', 'figures-factory'], function (Tetris, Ca
             onNewFigure: figuresFactory.getFigure.bind(figuresFactory, 4, 0),
             onLineStrike: function (lines) {
                 console.log('Stricken lines: ' + lines);
+            },
+            onEnd: function () {
+                pause();
             }
-        });
+        }),
+
+        start = function () {
+            interval = setInterval(tetris.down.bind(tetris), 1000);
+        },
+
+        pause = function () {
+            if (!interval) {
+                start();
+                return;
+            }
+
+            clearInterval(interval);
+            interval = null;
+        },
+
+        interval;
 
     document.addEventListener('keydown', function (event) {
+        var key = event.keyCode || event.which;
+        //space
+        if (key === 32) {
+            pause();
+        }
+
+        if (!interval) {
+            return;
+        }
+
         switch (event.keyCode || event.which) {
             //up
             case 38: tetris.rotate(); break;
@@ -44,5 +73,5 @@ requirejs(['tetris', 'canvas', 'field', 'figures-factory'], function (Tetris, Ca
     });
 
     tetris.start();
-    setInterval(tetris.down.bind(tetris), 1000);
+    start();
 });
