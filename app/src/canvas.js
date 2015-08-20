@@ -92,6 +92,7 @@ define(function () {
             }
 
             var element = this._elements[map.hash],
+                subElementsCount = element.children.length,
                 counter = 0;
 
             this._maps[map.hash]     = map;
@@ -126,8 +127,8 @@ define(function () {
             }, this);
 
             //Remove excess nodes using counter
-            for (; counter < element.children.length; ++counter) {
-                element.removeChild(element.children[counter]);
+            for (; counter < subElementsCount; ++counter) {
+                element.removeChild(element.lastChild);
             }
 
             this._node.appendChild(element);
