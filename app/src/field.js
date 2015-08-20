@@ -42,7 +42,7 @@ define(['./element'], function (GameElement) {
      * Get position related to current map and position to
      * @param {number} pointIndex Position (index) in map points related to which positions should be counted
      * @param {Map} map Map according to which positions should be counted
-     * @returns  {{top: number, left: number, fieldTop: number, fieldLeft: number, fieldValueIndex: number, indexInField: boolean}}
+     * @returns  {{top: number, left: number, fieldTop: number, fieldLeft: number, fieldValueIndex: number, indexInField: boolean, fieldNextLineIndex: number, nextLineIndexInField: boolean}}
      * @private
      */
     Field.prototype._getAllPositions = function (pointIndex, map) {
@@ -51,7 +51,8 @@ define(['./element'], function (GameElement) {
 
             fieldTop = map.top + top,
             fieldLeft = map.left + left,
-            fieldValueIndex = fieldTop * this._width + fieldLeft;
+            fieldValueIndex = fieldTop * this._width + fieldLeft,
+            fieldNextLineIndex = fieldValueIndex + this._width;
 
         return {
             top : top,
@@ -60,7 +61,10 @@ define(['./element'], function (GameElement) {
             fieldLeft: fieldLeft,
 
             fieldValueIndex: fieldValueIndex,
-            indexInField   : fieldTop < this._height && fieldLeft >= 0 && fieldLeft < this._width
+            indexInField   : fieldTop < this._height && fieldLeft >= 0 && fieldLeft < this._width,
+
+            fieldNextLineIndex: fieldNextLineIndex,
+            nextLineIndexInField: fieldTop + 1 < this._height/* && fieldLeft >= 0 && fieldLeft < this._width*/
         };
     };
 
@@ -68,22 +72,28 @@ define(['./element'], function (GameElement) {
     /**
      * Check map suits current field
      * @param {Map} map Map to check
-     * @returns {boolean} True if map suits
+     * @returns {number} 0 - if map does not suit the field. 1 - if suits, 2 - if map should be laid
      */
     Field.prototype.checkMap = function (map) {
-        var fieldPoints = this._normalizePoints(this._points);
+        var fieldPoints = this._normalizePoints(this._points),
+            lay   = false,
+            suits = this._normalizePoints(map.points)
+                .every(function (point, index) {
+                    var positions  = this._getAllPositions(index, map),
+                        fieldValue = 1;
 
-        return this._normalizePoints(map.points)
-            .every(function (point, index) {
-                var positions  = this._getAllPositions(index, map),
-                    fieldValue = 1;
+                    if (positions.indexInField) {
+                        fieldValue = fieldPoints[positions.fieldValueIndex];
+                    }
 
-                if (positions.indexInField) {
-                    fieldValue = fieldPoints[positions.fieldValueIndex];
-                }
+                    if (point && (!positions.nextLineIndexInField || fieldPoints[positions.fieldNextLineIndex])) {
+                        lay = true;
+                    }
 
-                return point + fieldValue < 2;
-            }, this);
+                    return point + fieldValue < 2;
+                }, this);
+
+        return suits ? lay + suits : 0;
     };
 
 
