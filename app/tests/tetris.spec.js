@@ -81,8 +81,9 @@ define(['tetris'], function (Tetris) {
 
             describe('Methods on success map checks', function () {
                 beforeEach(function () {
-                    settings.field.checkMap = function () { return 1; };
-                    spyOn(settings.field, 'checkMap').and.callThrough();
+                    spyOn(settings.field, 'checkMap').and.callFake(function () {
+                        return 1;
+                    });
                 });
 
 
@@ -152,9 +153,10 @@ define(['tetris'], function (Tetris) {
             describe('Methods on map checks with lay resolution', function () {
                 beforeEach(function () {
                     settings.field.checkMap = function () { return 2; };
-                    settings.field.layMap = function () { return 1; };
 
-                    spyOn(settings.field, 'layMap').and.callThrough();
+                    spyOn(settings.field, 'layMap').and.callFake(function () {
+                        return 1;
+                    });
                     spyOn(settings.canvas, 'addElement');
                     spyOn(settings.canvas, 'removeElement');
                     spyOn(tetris, 'onLineStrike');
@@ -196,9 +198,8 @@ define(['tetris'], function (Tetris) {
             describe('Finish resolution', function () {
                 beforeEach(function () {
                     settings.field.checkMap = function () { return -1; };
-                    settings.field.layMap = function () {};
 
-                    spyOn(settings.field, 'layMap').and.callThrough();
+                    spyOn(settings.field, 'layMap').and.callFake(function () {});
                     spyOn(settings.canvas, 'addElement');
                     spyOn(settings.canvas, 'removeElement');
                     spyOn(tetris, 'onLineStrike');
@@ -219,22 +220,6 @@ define(['tetris'], function (Tetris) {
                 });
 
             });
-        });
-
-        describe('Preview', function () {
-            /*
-             getNewFigure = function () {
-             var oldFigure = figure;
-
-             return figuresFactory.getFigure(configurations);
-             if (oldFigure) {
-                 preview.removeElement(oldFigure.getMap());
-             }
-
-             preview.addElement(figure.getMap());
-
-             return oldFigure;
-             */
         });
     });
 });
