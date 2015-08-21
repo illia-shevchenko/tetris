@@ -56,7 +56,7 @@ define(['tetris'], function (Tetris) {
                     nextFigureFlag = !nextFigureFlag;
                     return nextFigureFlag ? figure : nextFigure;
                 },
-                onLineStrike: function () {},
+                onScoreChanges: function () {},
                 onFinish    : function () {}
             };
 
@@ -162,7 +162,7 @@ define(['tetris'], function (Tetris) {
 
             describe('Methods on failed map checks', function () {
                 beforeEach(function () {
-                    settings.field.checkMap = function () { return 0; };
+                    spyOn(settings.field, 'checkMap').and.callFake(function () { return 0; });
                 });
 
                 var testSuit = function () {
@@ -193,8 +193,7 @@ define(['tetris'], function (Tetris) {
 
             describe('Methods on map checks with lay resolution', function () {
                 beforeEach(function () {
-                    settings.field.checkMap = function () { return 2; };
-
+                    spyOn(settings.field, 'checkMap').and.callFake(function () { return 2; });
                     spyOn(settings.field, 'layMap').and.callFake(function () {
                         return 1;
                     });
@@ -202,7 +201,6 @@ define(['tetris'], function (Tetris) {
                     spyOn(settings.canvas, 'removeElement');
                     spyOn(settings.preview, 'addElement');
                     spyOn(settings.preview, 'removeElement');
-                    spyOn(tetris, 'onLineStrike');
                     spyOn(tetris, 'onNewFigure').and.callThrough();
                 });
 
@@ -214,7 +212,6 @@ define(['tetris'], function (Tetris) {
                     settings.preview.addElement.calls.reset();
                     settings.preview.removeElement.calls.reset();
 
-                    tetris.onLineStrike.calls.reset();
                     tetris.onNewFigure.calls.reset();
                 });
 
@@ -222,7 +219,6 @@ define(['tetris'], function (Tetris) {
                     expect(figure.setMap).not.toHaveBeenCalled();
                     expect(settings.canvas.removeElement).toHaveBeenCalledWith(figureMap);
                     expect(settings.field.layMap).toHaveBeenCalledWith(figureMap);
-                    expect(tetris.onLineStrike).toHaveBeenCalledWith(1);
 
                     expect(settings.canvas.updateElement).toHaveBeenCalledWith(fieldMap);
 
@@ -256,12 +252,10 @@ define(['tetris'], function (Tetris) {
 
             describe('Finish resolution', function () {
                 beforeEach(function () {
-                    settings.field.checkMap = function () { return -1; };
-
+                    spyOn(settings.field, 'checkMap').and.callFake(function () { return -1; });
                     spyOn(settings.field, 'layMap').and.callFake(function () {});
                     spyOn(settings.canvas, 'addElement');
                     spyOn(settings.canvas, 'removeElement');
-                    spyOn(tetris, 'onLineStrike');
                     spyOn(tetris, 'onFinish');
                     spyOn(tetris, 'onNewFigure');
                 });
@@ -272,7 +266,6 @@ define(['tetris'], function (Tetris) {
                     settings.canvas.addElement.calls.reset();
                     settings.canvas.removeElement.calls.reset();
 
-                    tetris.onLineStrike.calls.reset();
                     tetris.onFinish.calls.reset();
                     tetris.onNewFigure.calls.reset();
                 });
@@ -288,7 +281,29 @@ define(['tetris'], function (Tetris) {
                     expect(settings.canvas.addElement).not.toHaveBeenCalled();
                     expect(tetris.onFinish).toHaveBeenCalled();
                 });
+            });
+        });
 
+        describe('Scores', function () {
+            beforeEach(function () {
+                spyOn(settings.field, 'checkMap').and.callFake(function () { return 2; });
+                spyOn(tetris, 'onScoreChanges');
+                tetris.setBaseScore(100);
+                tetris.start();
+            });
+
+            it('should call onScoreChanges on line striking with proper value', function () {
+                spyOn(settings.field, 'layMap').and.callFake(function () { return 1; });
+
+                tetris.down();
+                expect(tetris.onScoreChanges).toHaveBeenCalledWith(100);
+            });
+
+            it('should consider stricken lines count', function () {
+                spyOn(settings.field, 'layMap').and.callFake(function () { return 3; });
+
+                tetris.down();
+                expect(tetris.onScoreChanges).toHaveBeenCalledWith(900);
             });
         });
     });
