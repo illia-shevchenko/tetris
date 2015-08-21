@@ -3,6 +3,7 @@
     height: 600px;
     background-color: black;
     overflow: hidden;
+    float: left;;
 }
 
 .container {
@@ -13,30 +14,39 @@
     position: absolute;
 }
 
-.figure-1 {
-    background-color: blue;
+.controls {
+    float: left;
+    padding-left: 30px;
 }
 
-.figure-2 {
-    background-color: yellow;
+.controls > div {
+    margin-bottom: 20px;
 }
 
-.figure-3 {
-    background-color: green;
+.score {
+    width: 150px;
+    height: 50px;
+    background-color: black;
+    color: white;
 }
 
-.figure-4 {
-    background-color: darkgreen;
+.next {
+    width: 150px;
+    height: 150px;
+    background-color: black;
+    color: white;
 }
 
-.figure-5 {
-    background-color: red;
+.control {
+    padding: 10px;
+    display: block;
+    margin-bottom: 10px;
 }
 
-.figure-6 {
-    background-color: orangered;
+.control.pause {
+    background-color: aliceblue;
 }
 
-.figure-7 {
-    background-color: darkorange;
+.control.restart {
+    background-color: mistyrose;
 }

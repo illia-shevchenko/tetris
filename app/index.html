@@ -4,9 +4,19 @@
     <meta charset="UTF-8">
     <title>My cool tested tetris</title>
     <link rel="stylesheet" href="styles/index.css">
+    <link rel="stylesheet" href="styles/colors.css">
 </head>
 <body>
     <div class="canvas" id="canvas"></div>
+    <div class="controls">
+        <div class="next" id="next">Next: </div>
+        <div class="score" id="score">Scores: </div>
+        <div class="buttons">
+            <button class="control pause" id="pause">Pause</button>
+            <button class="control restart" id="restart">Restart</button>
+            <!--<button>Save</button>-->
+        </div>
+    </div>
     <script data-main="main" src="lib/requirejs/require.js"></script>
 </body>
 </html>
