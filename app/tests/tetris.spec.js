@@ -8,8 +8,10 @@ define(['tetris'], function (Tetris) {
         var tetris,
             settings,
             figure,
+            nextFigure,
             fieldMap = {},
-            figureMap = {};
+            figureMap = {},
+            nextFigureMap = {};
 
         beforeEach(function () {
             figure = {
@@ -18,6 +20,15 @@ define(['tetris'], function (Tetris) {
                 moveDown : function () { return figureMap; },
                 rotate   : function () { return figureMap; },
                 getMap   : function () { return figureMap; },
+                setMap   : function () {}
+            };
+
+            nextFigure = {
+                moveLeft : function () { return nextFigureMap; },
+                moveRight: function () { return nextFigureMap; },
+                moveDown : function () { return nextFigureMap; },
+                rotate   : function () { return nextFigureMap; },
+                getMap   : function () { return nextFigureMap; },
                 setMap   : function () {}
             };
 
@@ -48,7 +59,6 @@ define(['tetris'], function (Tetris) {
             beforeEach(function () {
                 spyOn(settings.canvas, 'addElement');
                 spyOn(settings.preview, 'addElement');
-                spyOn(settings.preview, 'removeElement');
                 spyOn(tetris, 'onNewFigure').and.callThrough();
                 tetris.start();
             });
@@ -58,25 +68,22 @@ define(['tetris'], function (Tetris) {
             });
 
             it('should call to new figure and add figure map to he canvas on start', function () {
-                expect(tetris.onNewFigure).toHaveBeenCalled();
-
-                //expect(settings.preview.removeElement).toHaveBeenCalled();
+                expect(tetris.onNewFigure.calls.count()).toBe(2);
+                expect(settings.preview.addElement).toHaveBeenCalled();
                 expect(settings.canvas.addElement).toHaveBeenCalledWith(figureMap);
-                //expect(tetris.onNewFigure).toHaveBeenCalled();
-                //expect(settings.preview.addElement).toHaveBeenCalled();
             });
         });
 
         describe('Moving figures', function () {
             beforeEach(function () {
                 tetris.start();
-
-                spyOn(figure, 'moveLeft').and.callThrough();
-                spyOn(figure, 'moveRight').and.callThrough();
-                spyOn(figure, 'moveDown').and.callThrough();
-                spyOn(figure, 'rotate').and.callThrough();
                 spyOn(figure, 'setMap');
                 spyOn(settings.canvas, 'updateElement');
+            });
+
+            afterEach(function () {
+                figure.setMap.calls.reset();
+                settings.canvas.updateElement.calls.reset();
             });
 
             describe('Methods on success map checks', function () {
@@ -95,24 +102,32 @@ define(['tetris'], function (Tetris) {
 
 
                 it('should call down, checkMap, setMap and updateElement', function () {
+                    spyOn(figure, 'moveDown').and.callThrough();
+
                     tetris.down();
                     expect(figure.moveDown).toHaveBeenCalled();
                     testSuit();
                 });
 
                 it('should call left, checkMap, setMap and updateElement', function () {
+                    spyOn(figure, 'moveLeft').and.callThrough();
+
                     tetris.left();
                     expect(figure.moveLeft).toHaveBeenCalled();
                     testSuit();
                 });
 
                 it('should call right, checkMap, setMap and updateElement', function () {
+                    spyOn(figure, 'moveRight').and.callThrough();
+
                     tetris.right();
                     expect(figure.moveRight).toHaveBeenCalled();
                     testSuit();
                 });
 
                 it('should call rotate, checkMap, setMap and updateElement', function () {
+                    spyOn(figure, 'rotate').and.callThrough();
+
                     tetris.rotate();
                     expect(figure.rotate).toHaveBeenCalled();
                     testSuit();
@@ -159,8 +174,22 @@ define(['tetris'], function (Tetris) {
                     });
                     spyOn(settings.canvas, 'addElement');
                     spyOn(settings.canvas, 'removeElement');
+                    spyOn(settings.preview, 'addElement');
+                    spyOn(settings.preview, 'removeElement');
                     spyOn(tetris, 'onLineStrike');
                     spyOn(tetris, 'onNewFigure').and.callThrough();
+                });
+
+                afterEach(function () {
+                    settings.field.layMap.calls.reset();
+
+                    settings.canvas.addElement.calls.reset();
+                    settings.canvas.removeElement.calls.reset();
+                    settings.preview.addElement.calls.reset();
+                    settings.preview.removeElement.calls.reset();
+
+                    tetris.onLineStrike.calls.reset();
+                    tetris.onNewFigure.calls.reset();
                 });
 
                 var testSuit = function () {
@@ -170,6 +199,10 @@ define(['tetris'], function (Tetris) {
                     expect(tetris.onLineStrike).toHaveBeenCalledWith(1);
 
                     expect(settings.canvas.updateElement).toHaveBeenCalledWith(fieldMap);
+
+                    expect(settings.preview.removeElement).toHaveBeenCalled();
+                    expect(settings.preview.addElement).toHaveBeenCalled();
+
                     expect(tetris.onNewFigure).toHaveBeenCalled();
                     expect(settings.canvas.addElement).toHaveBeenCalledWith(figureMap);
                 };
@@ -205,6 +238,17 @@ define(['tetris'], function (Tetris) {
                     spyOn(tetris, 'onLineStrike');
                     spyOn(tetris, 'onFinish');
                     spyOn(tetris, 'onNewFigure');
+                });
+
+                afterEach(function () {
+                    settings.field.layMap.calls.reset();
+
+                    settings.canvas.addElement.calls.reset();
+                    settings.canvas.removeElement.calls.reset();
+
+                    tetris.onLineStrike.calls.reset();
+                    tetris.onFinish.calls.reset();
+                    tetris.onNewFigure.calls.reset();
                 });
 
                 it('should call removeElement, layMap, updateFiled and onFinish', function () {
