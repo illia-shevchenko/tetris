@@ -104,6 +104,31 @@ define(['./element'], function (GameElement) {
 
 
     /**
+     * Sets new position for the figure. Horizontal position is related the center always.
+     * But vertical can be related to the center or to the height of the figure
+     * @param {Object} [offsets] Offsets settings
+     * @param {number} [offsets.x = 0] Offset for left position
+     * @param {number} [offsets.y = 0] Offset for top position. In case of center it treated as height of the rectangle. In case of not center - as delta
+     * @param {boolean} [offsets.yCenter = false] True if top position will be related to the center. False if position will be related to height of the figure
+     * @returns {Map} Map for new position of the Figure
+     */
+    Figure.prototype.setOffsetPosition = function (offsets) {
+        offsets   = offsets || {};
+        offsets.x = offsets.x || 0;
+        offsets.y = offsets.y || 0;
+
+        var height = Math.floor(this._points.length / this._width);
+
+        this._left = Math.floor((offsets.x - this._width) / 2);
+        this._top  = Math.floor((offsets.y - height)      / 2);
+
+        if (!offsets.yCenter){
+            this._top = offsets.y - height;
+        }
+    };
+
+
+    /**
      * Fills all allowed configurations with new point arrays filled with 'pointsValue'
      * @private
      */
