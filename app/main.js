@@ -25,57 +25,53 @@ requirejs(['tetris', 'canvas', 'field', 'figures-factory', 'json!../settings/fig
             elementClass  : 'figure',
             containerClass: 'container'
         }),
-        tetris = new Tetris({
-            canvas: canvas,
-            field : field,
-            onNewFigure: figuresFactory.getFigure.bind(figuresFactory, configurations, 5),
-            onLineStrike: function (lines) {
-                console.log('Stricken lines: ' + lines);
-            },
-            onFinish: function () {
-                pause();
-            }
+        preview = new Canvas({
+            node  : document.getElementById('next'),
+            width : 6,
+            height: 6,
+            tag   : 'div',
+            elementClass  : 'figure',
+            containerClass: 'container'
         }),
 
+        interval,
         start = function () {
             interval = setInterval(tetris.down.bind(tetris), 1000);
         },
 
         pause = function () {
             if (!interval) {
-                start();
-                return;
+                return start();
             }
 
-            clearInterval(interval);
-            interval = null;
+            interval = clearInterval(interval);
         },
 
-        interval;
+        tetris = new Tetris({
+            canvas      : canvas,
+            field       : field,
+            preview     : preview,
+            onNewFigure : figuresFactory.getFigure.bind(figuresFactory, configurations),
+            onLineStrike: console.log.bind(console, 'Stricken lines: '),
+            onFinish    : pause
+        });
 
     document.addEventListener('keydown', function (event) {
         var key = event.keyCode || event.which;
-        //space
-        if (key === 32) {
-            pause();
-        }
 
-        if (!interval) {
-            return;
-        }
-
-        switch (event.keyCode || event.which) {
-            //up
-            case 38: tetris.rotate(); break;
-            //right
-            case 39: tetris.right(); break;
-            //left
-            case 37: tetris.left(); break;
-            //down
-            case 40: tetris.down(); break;
+        switch (interval && key) {
+            /*up*/   case 38: tetris.rotate(); break;
+            /*right*/case 39: tetris.right(); break;
+            /*left*/ case 37: tetris.left(); break;
+            /*down*/ case 40: tetris.down(); break;
+            default:
+            /*space*/if (key === 32) {
+                pause();
+            }
         }
     });
 
+    document.getElementById('pause').addEventListener('click', pause);
     tetris.start();
     start();
 });
