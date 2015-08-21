@@ -38,26 +38,19 @@ define(['Squire'], function (Squire) {
         });
 
         it('should create instances of Figure class with', function () {
-            expect(figuresFactory.getFigure(figures, 0, 0)).toEqual(jasmine.any(FigureMock));
-        });
-
-        it('should set coordinates properly', function () {
-            expect(figuresFactory.getFigure(figures, 2, 2).settings).toEqual(jasmine.objectContaining({
-                left: 1,
-                top : 0
-            }));
+            expect(figuresFactory.getFigure(figures)).toEqual(jasmine.any(FigureMock));
         });
 
         it('should set allowedConfigurations properly', function () {
-            expect(figuresFactory.getFigure(figures, 0, 0).settings.allowedConfigurations).toEqual(figures[0]);
+            expect(figuresFactory.getFigure(figures).settings.allowedConfigurations).toEqual(figures[0]);
         });
 
         it('should set startIndex properly', function () {
-            expect(figuresFactory.getFigure(figures, 0, 0).settings.startIndex).toBe(0);
+            expect(figuresFactory.getFigure(figures).settings.startIndex).toBe(0);
         });
 
         it('should set pointsValue properly', function () {
-            expect(figuresFactory.getFigure(figures, 0, 0).settings.pointsValue).toBe(1);
+            expect(figuresFactory.getFigure(figures).settings.pointsValue).toBe(1);
         });
     });
 });
