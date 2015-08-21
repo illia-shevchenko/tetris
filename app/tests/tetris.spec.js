@@ -21,12 +21,15 @@ define(['tetris'], function (Tetris) {
                 setMap   : function () {}
             };
 
-
             settings = {
                 canvas : {
                     addElement   : function () {},
                     removeElement: function () {},
                     updateElement: function () {}
+                },
+                preview: {
+                    addElement   : function () {},
+                    removeElement: function () {}
                 },
                 field: {
                     checkMap: function () {},
@@ -44,6 +47,8 @@ define(['tetris'], function (Tetris) {
         describe('Creating', function () {
             beforeEach(function () {
                 spyOn(settings.canvas, 'addElement');
+                spyOn(settings.preview, 'addElement');
+                spyOn(settings.preview, 'removeElement');
                 spyOn(tetris, 'onNewFigure').and.callThrough();
                 tetris.start();
             });
@@ -54,7 +59,11 @@ define(['tetris'], function (Tetris) {
 
             it('should call to new figure and add figure map to he canvas on start', function () {
                 expect(tetris.onNewFigure).toHaveBeenCalled();
+
+                //expect(settings.preview.removeElement).toHaveBeenCalled();
                 expect(settings.canvas.addElement).toHaveBeenCalledWith(figureMap);
+                //expect(tetris.onNewFigure).toHaveBeenCalled();
+                //expect(settings.preview.addElement).toHaveBeenCalled();
             });
         });
 
