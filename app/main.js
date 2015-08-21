@@ -5,10 +5,14 @@
 
 
 requirejs.config({
-    baseUrl: 'src'
+    baseUrl: 'src',
+    paths  : {
+        json: '../lib/requirejs-plugins/json',
+        text: '../lib/requirejs-plugins/text'
+    }
 });
 
-requirejs(['tetris', 'canvas', 'field', 'figures-factory'], function (Tetris, Canvas, Field, figuresFactory) {
+requirejs(['tetris', 'canvas', 'field', 'figures-factory', 'json!../settings/figures.json'], function (Tetris, Canvas, Field, figuresFactory, configurations) {
     var field = new Field({
             width : 10,
             height: 20
@@ -24,7 +28,7 @@ requirejs(['tetris', 'canvas', 'field', 'figures-factory'], function (Tetris, Ca
         tetris = new Tetris({
             canvas: canvas,
             field : field,
-            onNewFigure: figuresFactory.getFigure.bind(figuresFactory, 5),
+            onNewFigure: figuresFactory.getFigure.bind(figuresFactory, configurations, 5),
             onLineStrike: function (lines) {
                 console.log('Stricken lines: ' + lines);
             },
