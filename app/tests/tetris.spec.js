@@ -224,5 +224,21 @@ define(['tetris'], function (Tetris) {
 
             });
         });
+
+        describe('Preview', function () {
+            /*
+             getNewFigure = function () {
+             var oldFigure = figure;
+
+             return figuresFactory.getFigure(configurations);
+             if (oldFigure) {
+                 preview.removeElement(oldFigure.getMap());
+             }
+
+             preview.addElement(figure.getMap());
+
+             return oldFigure;
+             */
+        });
     });
 });
