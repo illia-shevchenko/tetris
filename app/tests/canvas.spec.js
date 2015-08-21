@@ -43,6 +43,13 @@ define(['canvas'], function (Canvas) {
             });
         });
 
+        it('should return its sizes', function () {
+            expect(canvas.getSizes()).toEqual({
+                width : 10,
+                height: 20
+            });
+        });
+
         describe('Remove element', function () {
             it('should delete existing element', function () {
                 canvas.removeElement({
