@@ -26,7 +26,7 @@
   },
   "scripts": {
     "test": "karma start --reporters progress",
-    "doc": "jsdoc -d documentation/ app/src/",
+    "doc": "rm -rf documentation && jsdoc -d documentation/ app/src/",
     "lint": "eslint app/src/",
     "postinstall": "bower install && bower-installer"
   },
