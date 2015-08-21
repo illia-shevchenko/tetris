@@ -56,14 +56,27 @@ define(function () {
          * @private
          */
         _setNewFigure: function () {
-            var map;
+            var map,
+                previewSizes;
 
             this._figure     = this._nextFigure;
             this._nextFigure = this.onNewFigure();
 
+            this._figure.setOffsetPosition({
+                x: this._canvas.getSizes().width
+            });
+
             map = this._figure.getMap();
             this._canvas.addElement(map);
             this._preview.removeElement(map);
+
+            previewSizes = this._preview.getSizes();
+            this._nextFigure.setOffsetPosition({
+                x: previewSizes.width,
+                y: previewSizes.height,
+                yCenter: true
+            });
+
             this._preview.addElement(this._nextFigure.getMap());
         },
 
