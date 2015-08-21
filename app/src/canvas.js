@@ -136,6 +136,18 @@ define(function () {
 
 
         /**
+         * Gets width and height of the canvas
+         * @returns {{width: (number), height: (number)}}
+         */
+        getSizes: function () {
+            return {
+                width : this._width,
+                height: this._height
+            };
+        },
+
+
+        /**
          * Update sizes and redraws all registered elements
          */
         redraw: function () {
