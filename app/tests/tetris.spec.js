@@ -8,6 +8,7 @@ define(['tetris'], function (Tetris) {
         var tetris,
             settings,
             figure,
+            nextFigureFlag = false,
             nextFigure,
             fieldMap = {},
             figureMap = {},
@@ -20,7 +21,8 @@ define(['tetris'], function (Tetris) {
                 moveDown : function () { return figureMap; },
                 rotate   : function () { return figureMap; },
                 getMap   : function () { return figureMap; },
-                setMap   : function () {}
+                setMap   : function () {},
+                setOffsetPosition: function () {}
             };
 
             nextFigure = {
@@ -29,25 +31,31 @@ define(['tetris'], function (Tetris) {
                 moveDown : function () { return nextFigureMap; },
                 rotate   : function () { return nextFigureMap; },
                 getMap   : function () { return nextFigureMap; },
-                setMap   : function () {}
+                setMap   : function () {},
+                setOffsetPosition: function () {}
             };
 
             settings = {
                 canvas : {
                     addElement   : function () {},
                     removeElement: function () {},
-                    updateElement: function () {}
+                    updateElement: function () {},
+                    getSizes     : function () { return {width: 10, height: 20}; }
                 },
                 preview: {
                     addElement   : function () {},
-                    removeElement: function () {}
+                    removeElement: function () {},
+                    getSizes     : function () { return {width: 6, height: 6}; }
                 },
                 field: {
                     checkMap: function () {},
                     layMap  : function () {},
                     getMap  : function () { return fieldMap; }
                 },
-                onNewFigure : function () { return figure; },
+                onNewFigure : function () {
+                    nextFigureFlag = !nextFigureFlag;
+                    return nextFigureFlag ? figure : nextFigure;
+                },
                 onLineStrike: function () {},
                 onFinish    : function () {}
             };
@@ -58,7 +66,13 @@ define(['tetris'], function (Tetris) {
         describe('Creating', function () {
             beforeEach(function () {
                 spyOn(settings.canvas, 'addElement');
+                spyOn(settings.canvas, 'getSizes').and.callThrough();
                 spyOn(settings.preview, 'addElement');
+                spyOn(settings.preview, 'getSizes').and.callThrough();
+
+                spyOn(figure, 'setOffsetPosition');
+                spyOn(nextFigure, 'setOffsetPosition');
+
                 spyOn(tetris, 'onNewFigure').and.callThrough();
                 tetris.start();
             });
@@ -69,7 +83,19 @@ define(['tetris'], function (Tetris) {
 
             it('should call to new figure and add figure map to he canvas on start', function () {
                 expect(tetris.onNewFigure.calls.count()).toBe(2);
+
+                expect(settings.preview.getSizes).toHaveBeenCalled();
+                expect(nextFigure.setOffsetPosition).toHaveBeenCalledWith({
+                    x: 6,
+                    y: 6,
+                    yCenter: true
+                });
                 expect(settings.preview.addElement).toHaveBeenCalled();
+
+                expect(settings.canvas.getSizes).toHaveBeenCalled();
+                expect(figure.setOffsetPosition).toHaveBeenCalledWith({
+                    x: 10
+                });
                 expect(settings.canvas.addElement).toHaveBeenCalledWith(figureMap);
             });
         });
