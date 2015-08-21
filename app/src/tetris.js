@@ -26,6 +26,7 @@ define(function () {
      * Creates instances of tetris game
      * @param {object} settings Settings for tetris instance creation
      * @param {Canvas} settings.canvas Canvas instance
+     * @param {Canvas} settings.preview Canvas instance for preview block
      * @param {Field} settings.field Field instance
      * @param {onNewFigure} settings.onNewFigure Callback for getting new Figure
      * @param {onLineStrike} [settings.onLineStrike] Callback on line strikes. Possible for scores
@@ -35,8 +36,9 @@ define(function () {
      * @see module:tetris
      */
     var Tetris = function (settings) {
-        this._canvas = settings.canvas;
-        this._field  = settings.field;
+        this._canvas  = settings.canvas;
+        this._preview = settings.preview;
+        this._field   = settings.field;
 
         this._figure  = null;
 
@@ -54,8 +56,15 @@ define(function () {
          * @private
          */
         _setNewFigure: function () {
-            this._figure = this.onNewFigure();
-            this._canvas.addElement(this._figure.getMap());
+            var map;
+
+            this._figure     = this._nextFigure;
+            this._nextFigure = this.onNewFigure();
+
+            map = this._figure.getMap();
+            this._canvas.addElement(map);
+            this._preview.removeElement(map);
+            this._preview.addElement(this._nextFigure.getMap());
         },
 
 
@@ -64,6 +73,8 @@ define(function () {
          */
         start: function () {
             this._canvas.addElement(this._field.getMap());
+
+            this._nextFigure = this.onNewFigure();
             this._setNewFigure();
         },
 
