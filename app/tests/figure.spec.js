@@ -173,5 +173,40 @@ define(['figure'], function (Figure) {
                 });
             });
         });
+
+        describe('Set position', function () {
+            it('should set position at the center', function () {
+                figure.setOffsetPosition({
+                    x: 6,
+                    y: 6,
+                    yCenter: true
+                });
+
+                expect(figure.getMap()).toEqual(jasmine.objectContaining({
+                    left: 1,
+                    top : 2
+                }));
+            });
+            it('should set position at the center', function () {
+                figure.setOffsetPosition({
+                    x: 5,
+                    y: 5,
+                    yCenter: true
+                });
+
+                expect(figure.getMap()).toEqual(jasmine.objectContaining({
+                    left: 0,
+                    top : 1
+                }));
+            });
+
+            it('should set position above the center', function () {
+                figure.setOffsetPosition();
+
+                expect(figure.getMap()).toEqual(jasmine.objectContaining({
+                    top : -2
+                }));
+            });
+        });
     });
 });
