@@ -18,8 +18,8 @@ define(function () {
 
     /**
      * @global
-     * @typedef {Function} onLineStrike
-     * @param {number} number Number of stricken off lines
+     * @typedef {Function} onScoreChanges
+     * @param {number} number Number of current scores
      */
 
     /**
@@ -29,7 +29,7 @@ define(function () {
      * @param {Canvas} settings.preview Canvas instance for preview block
      * @param {Field} settings.field Field instance
      * @param {onNewFigure} settings.onNewFigure Callback for getting new Figure
-     * @param {onLineStrike} [settings.onLineStrike] Callback on line strikes. Possible for scores
+     * @param {onScoreChanges} [settings.onScoreChanges] Callback on score changes
      * @param {Function} [settings.onFinish] Callback on game is finished
      * @class
      * @alias Tetris
@@ -43,13 +43,15 @@ define(function () {
         this._figure  = null;
 
         this.onNewFigure = settings.onNewFigure;
-        this.onLineStrike = settings.onLineStrike;
+        this.onScoreChanges = settings.onScoreChanges;
         this.onFinish = settings.onFinish;
     };
 
     Tetris.prototype = {
-        onLineStrike: function () {},
-        onFinish    : function () {},
+        onScoreChanges: function () {},
+        onFinish      : function () {},
+
+        _baseScore: 100,
 
         /**
          * Sets new figure and adds it to the canvas
@@ -82,9 +84,31 @@ define(function () {
 
 
         /**
+         * Sets base score
+         * @param {number} value New base score value
+         */
+        setBaseScore: function (value) {
+            this._baseScore = value;
+        },
+
+
+        /**
+         * Set current strokes and return its value
+         * @param {number} lines Stricken lines
+         * @returns {number} current score
+         * @private
+         */
+        _setScores: function (lines) {
+            this._scores += this._baseScore * lines * lines;
+            return this._scores;
+        },
+
+
+        /**
          * Starts the game - adds field to canvas and set new figure
          */
         start: function () {
+            this._scores = 0;
             this._canvas.addElement(this._field.getMap());
 
             this._nextFigure = this.onNewFigure();
@@ -107,8 +131,10 @@ define(function () {
                 break;
                 case 2:
                     this._canvas.removeElement(map);
+
                     strickenLines = this._field.layMap(map);
-                    this.onLineStrike(strickenLines);
+                    this.onScoreChanges(this._setScores(strickenLines));
+
                     this._canvas.updateElement(this._field.getMap());
                     this._setNewFigure();
                 break;
