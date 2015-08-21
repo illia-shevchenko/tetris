@@ -47,13 +47,18 @@ requirejs(['tetris', 'canvas', 'field', 'figures-factory', 'json!../settings/fig
             interval = clearInterval(interval);
         },
 
+        scoreElement = document.getElementById('score').lastChild,
+
         tetris = new Tetris({
-            canvas      : canvas,
-            field       : field,
-            preview     : preview,
-            onNewFigure : figuresFactory.getFigure.bind(figuresFactory, configurations),
-            onLineStrike: console.log.bind(console, 'Stricken lines: '),
-            onFinish    : pause
+            canvas  : canvas,
+            field   : field,
+            preview : preview,
+            onFinish: pause,
+
+            onScoreChanges: function (score) {
+                scoreElement.textContent = score;
+            },
+            onNewFigure   : figuresFactory.getFigure.bind(figuresFactory, configurations)
         });
 
     document.addEventListener('keydown', function (event) {
