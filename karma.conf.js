@@ -18,13 +18,13 @@ module.exports = function (config) {
             {pattern: 'app/src/**', included: false},
             {pattern: 'app/tests/**', included: false},
             {pattern: 'node_modules/squirejs/src/Squire.js', included: false},
+            {pattern: 'app/lib/**', included: false},
             'test-main.js'
         ],
 
 
         // list of files to exclude
         exclude: [
-            'app/lib/**',
             'app/main.js'
         ],
 

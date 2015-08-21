@@ -17,7 +17,9 @@ require.config({
     // Karma serves files under /base, which is the basePath from your config file
     baseUrl: '/base/app/src',
     paths: {
-        Squire: '../../node_modules/squirejs/src/Squire'
+        Squire: '../../node_modules/squirejs/src/Squire',
+        json  : '../lib/requirejs-plugins/json',
+        text  : '../lib/requirejs-plugins/text'
     }
 });
 
