@@ -62,6 +62,15 @@ define(['canvas'], function (Canvas) {
 
                 expect(func).not.toThrow();
             });
+
+
+            it('should not throw errors on deletion undefined', function () {
+                var func = function () {
+                    canvas.removeElement();
+                };
+
+                expect(func).not.toThrow();
+            });
         });
 
         describe('Add element', function () {

@@ -71,7 +71,7 @@ define(function () {
          * @param {Map} map Map of the element to delete. Actually only hash property needed to find element
          */
         removeElement: function (map) {
-            if (!this._maps[map.hash]) {
+            if (typeof map !== 'object' || !this._maps[map.hash]) {
                 return;
             }
 
