@@ -107,7 +107,7 @@ define(['field'], function (Field) {
                     width : 4
                 });
 
-                expect(result).toBe(2);
+                expect(result).toBe(-1);
             });
         });
 
@@ -164,7 +164,7 @@ define(['field'], function (Field) {
                     },
                         result = field.checkMap(map);
 
-                    expect(result).toBe(2);
+                    expect(result).toBe(-1);
                     field.layMap(map);
 
                     expect(field.getMap().points).toEqual([
@@ -189,7 +189,7 @@ define(['field'], function (Field) {
                     },
                         result = field.checkMap(map);
 
-                    expect(result).toBe(2);
+                    expect(result).toBe(-1);
                     field.layMap(map);
 
                     expect(field.getMap().points).toEqual([
@@ -240,7 +240,7 @@ define(['field'], function (Field) {
                         result = field.checkMap(map),
                         lines;
 
-                    expect(result).toBe(2);
+                    expect(result).toBe(-1);
                     lines = field.layMap(map);
 
                     expect(lines).toBe(1);
@@ -252,53 +252,7 @@ define(['field'], function (Field) {
                         2, 2, 2, 0, 3
                     ]);
                 });
-
-                //it('should strike lines after having one fulfilled and return stricken lines number', function () {
-                //    var lines = field.layMap({
-                //        left: 1,
-                //        top : 2,
-                //        points: [
-                //            0, 0, 0, 0,
-                //            0, 3, 3, 3,
-                //            0, 0, 0, 3],
-                //        width : 4
-                //    });
-                //
-                //    expect(field.getMap().points).toEqual([
-                //        0, 0, 0, 0, 0,
-                //        0, 0, 0, 0, 0,
-                //        0, 0, 0, 0, 0,
-                //        0, 0, 0, 0, 0,
-                //        2, 2, 3, 3, 0
-                //    ]);
-                //
-                //    expect(lines).toBe(1);
-                //});
             });
         });
-
-        /*describe('Detect full field', function () {
-            it('should detect if field is full and no more maps can be laid', function () {
-                field.layMap({
-                    left: 1,
-                    top : 2,
-                    points: [
-                        0, 0, 0, 0,
-                        0, 3, 3, 0,
-                        0, 0, 3, 3],
-                    width : 4
-                });
-
-                expect(field.getMap().points).toEqual([
-                    0, 0, 0, 0, 0,
-                    0, 0, 0, 0, 0,
-                    0, 0, 0, 0, 0,
-                    0, 0, 0, 0, 0,
-                    2, 2, 3, 3, 0
-                ]);
-
-                expect(lines).toBe(1);
-            });
-        });*/
     });
 });

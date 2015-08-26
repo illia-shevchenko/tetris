@@ -72,7 +72,7 @@ define(['./element'], function (GameElement) {
     /**
      * Check map suits current field
      * @param {Map} map Map to check
-     * @returns {number} 0 - if map does not suit the field. 1 - if suits, 2 - if map should be laid
+     * @returns {number} 0 - if map does not suit the field. 1 - if suits, -1 - if map should be laid
      */
     Field.prototype.checkMap = function (map) {
         var fieldPoints = this._normalizePoints(this._points),
@@ -93,7 +93,15 @@ define(['./element'], function (GameElement) {
                     return point + fieldValue < 2;
                 }, this);
 
-        return suits ? lay + suits : 0;
+        if (!suits) {
+            return 0;
+        }
+
+        if (lay) {
+            return -1;
+        }
+
+        return 1;
     };
 
 
