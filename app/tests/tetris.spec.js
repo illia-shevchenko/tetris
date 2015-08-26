@@ -130,7 +130,7 @@ define(['tetris'], function (Tetris) {
                 it('should call down, checkMap, setMap and updateElement', function () {
                     spyOn(figure, 'moveDown').and.callThrough();
 
-                    tetris.down();
+                    tetris.tick();
                     expect(figure.moveDown).toHaveBeenCalled();
                     testSuit();
                 });
@@ -171,7 +171,7 @@ define(['tetris'], function (Tetris) {
                 };
 
                 it('should not call setMap and updateElement on trying moveDown figure', function () {
-                    tetris.down();
+                    tetris.tick();
                     testSuit();
                 });
 
@@ -230,7 +230,7 @@ define(['tetris'], function (Tetris) {
                 };
 
                 it('should not call setMap but should remove figure from canvas, lay it with proper result and update field on canvas on moveDown figure', function () {
-                    tetris.down();
+                    tetris.tick();
                     testSuit();
                 });
 
@@ -271,7 +271,7 @@ define(['tetris'], function (Tetris) {
                 });
 
                 it('should call removeElement, layMap, updateFiled and onFinish', function () {
-                    tetris.down();
+                    tetris.tick();
                     expect(figure.setMap).not.toHaveBeenCalled();
                     expect(settings.canvas.removeElement).toHaveBeenCalledWith(figureMap);
                     expect(settings.field.layMap).toHaveBeenCalledWith(figureMap);
@@ -295,14 +295,14 @@ define(['tetris'], function (Tetris) {
             it('should call onScoreChanges on line striking with proper value', function () {
                 spyOn(settings.field, 'layMap').and.callFake(function () { return 1; });
 
-                tetris.down();
+                tetris.tick();
                 expect(tetris.onScoreChanges).toHaveBeenCalledWith(100);
             });
 
             it('should consider stricken lines count', function () {
                 spyOn(settings.field, 'layMap').and.callFake(function () { return 3; });
 
-                tetris.down();
+                tetris.tick();
                 expect(tetris.onScoreChanges).toHaveBeenCalledWith(900);
             });
         });

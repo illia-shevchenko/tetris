@@ -158,6 +158,14 @@ define(function () {
 
 
         /**
+         * Next game tick. For tetris it is down the figure
+         */
+        tick: function () {
+            this.down();
+        },
+
+
+        /**
          * Moves current figure left
          */
         left: function () {

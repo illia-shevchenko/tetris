@@ -36,7 +36,7 @@ requirejs(['tetris', 'canvas', 'field', 'figures-factory', 'json!../settings/fig
 
         interval,
         start = function () {
-            interval = setInterval(tetris.down.bind(tetris), 1000);
+            interval = setInterval(tetris.tick.bind(tetris), 1000);
         },
 
         pause = function () {
