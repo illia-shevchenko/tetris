@@ -58,9 +58,8 @@ define(function () {
          */
         addElement: function (map) {
             var element = this._createElement(this._containerClass);
-            this._maps[map.hash]     = map;
-            this._elements[map.hash] = element;
 
+            this._saveMap(map, element);
             this._node.appendChild(element);
             this.updateElement(map);
         },
@@ -82,47 +81,57 @@ define(function () {
 
 
         /**
-         * Updates element placed on the canvas
-         * @param {Map} map New map from which needed to update element
-         * @todo: refactor this
+         *
+         * @param {Map} map map to save
+         * @param {HTMLElement} element Element related to a map
+         * @private
          */
-        updateElement: function (map) {
-            if (!this._maps[map.hash]) {
-                return;
-            }
-
-            var element = this._elements[map.hash],
-                subElementsCount = element.children.length,
-                counter = 0;
-
+        _saveMap: function (map, element) {
             this._maps[map.hash]     = map;
             this._elements[map.hash] = element;
+        },
 
-            this._node.removeChild(element);
 
-            element.style.left = this._getRealX(map.left, this._nodeLeft);
-            element.style.top  = this._getRealY(map.top, this._nodeTop);
+        /**
+         * Sets parameter to element related to a point
+         * @param {HTMLElement} element Element related to a point
+         * @param {number} index Index of the point
+         * @param {number} width Width parent element
+         * @param {number|string} point Value of the point
+         * @private
+         */
+        _setPoint: function (element, index, width, point) {
+            element.style.left   = this._getRealX(index % width);
+            element.style.top    = this._getRealY(Math.floor(index / width));
+            element.style.width  = this._getRealX(1);
+            element.style.height = this._getRealY(1);
+            element.className    = this._elementClass + ' ' + this._elementClass + '-' + point;
+        },
+
+
+        /**
+         * Updates all points for the related map
+         * @param {Map} map Map to update
+         * @param {HTMLElement} element Related to map element
+         * @private
+         */
+        _updatePoints: function (map, element) {
+            var subElementsCount = element.children.length,
+                counter = 0;
 
             map.points.forEach(function (point, index) {
                 if (!point) {
                     return;
                 }
 
-                var left = index % map.width,
-                    top  = Math.floor(index / map.width),
-                    subElement = element.children[counter];
+                var subElement = element.children[counter];
 
                 if (!subElement) {
                     subElement = this._createElement();
                     element.appendChild(subElement);
                 }
 
-                subElement.style.left   = this._getRealX(left);
-                subElement.style.top    = this._getRealY(top);
-                subElement.style.width  = this._getRealX(1);
-                subElement.style.height = this._getRealY(1);
-                subElement.className    = this._elementClass + ' ' + this._elementClass + '-' + point;
-
+                this._setPoint(subElement, index, map.width, point);
                 counter++;
             }, this);
 
@@ -130,7 +139,27 @@ define(function () {
             for (; counter < subElementsCount; ++counter) {
                 element.removeChild(element.lastChild);
             }
+        },
 
+
+        /**
+         * Updates element placed on the canvas
+         * @param {Map} map New map from which needed to update element
+         */
+        updateElement: function (map) {
+            if (!this._maps[map.hash]) {
+                return;
+            }
+
+            var element = this._elements[map.hash];
+
+            this._saveMap(map, element);
+            this._node.removeChild(element);
+
+            element.style.left = this._getRealX(map.left, this._nodeLeft);
+            element.style.top  = this._getRealY(map.top, this._nodeTop);
+
+            this._updatePoints(map, element);
             this._node.appendChild(element);
         },
 
