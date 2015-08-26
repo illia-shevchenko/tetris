@@ -37,6 +37,7 @@ define(['./element'], function (GameElement) {
     Field.prototype = Object.create(GameElement.prototype);
 
 
+    Field.prototype._pointValue = 0;
     /**
      * Get position related to current map and position to
      * @param {number} pointIndex Position (index) in map points related to which positions should be counted
@@ -174,7 +175,7 @@ define(['./element'], function (GameElement) {
         var points = new Array(width * height),
             i = 0;
         for (; i < points.length; ++i) {
-            points[i] = 0;
+            points[i] = this._pointValue;
         }
 
         return points;
