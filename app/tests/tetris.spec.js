@@ -94,7 +94,8 @@ define(['tetris'], function (Tetris) {
 
                 expect(settings.canvas.getSizes).toHaveBeenCalled();
                 expect(figure.setOffsetPosition).toHaveBeenCalledWith({
-                    x: 10
+                    x: 10,
+                    y: 1
                 });
                 expect(settings.canvas.addElement).toHaveBeenCalledWith(figureMap);
             });
