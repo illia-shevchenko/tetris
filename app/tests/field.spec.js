@@ -30,6 +30,29 @@ define(['field'], function (Field) {
             });
         });
 
+        describe('Clearing', function () {
+            it('should be able to clear field after laying some figures', function () {
+                field.layMap( {
+                    left: 1,
+                    top : 1,
+                    points: [
+                        0, 0, 0, 0,
+                        0, 3, 3, 0,
+                        0, 3, 3, 0,
+                        0, 0, 0, 0],
+                    width : 4
+                });
+
+                field.clear();
+                expect(field.getMap().points).toEqual([
+                    0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0]);
+            });
+        });
+
         describe('Check maps with empty field', function () {
             it('should successfully check maps that suits free space', function () {
                 var map = {

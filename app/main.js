@@ -76,7 +76,7 @@ requirejs(['tetris', 'interval', 'canvas', 'field', 'figures-factory', 'json!../
         tetris.restart();
         interval.start();
     });
-    
+
     tetris.start();
     interval.start();
 });
