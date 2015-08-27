@@ -29,6 +29,7 @@ define(['tetris'], function (Tetris) {
             nextFigure = {
                 moveDown : function () { return nextFigureMap; },
                 getMap   : function () { return nextFigureMap; },
+                setMap   : function () {},
                 setOffsetPosition: function () {}
             };
 
@@ -41,6 +42,7 @@ define(['tetris'], function (Tetris) {
                 },
                 preview: {
                     addElement   : function () {},
+                    updateElement: function () {},
                     removeElement: function () {},
                     getSizes     : function () { return {width: 6, height: 6}; }
                 },
@@ -49,6 +51,7 @@ define(['tetris'], function (Tetris) {
                     checkOverlay : function () {},
                     clear   : function () {},
                     layMap  : function () {},
+                    setMap  : function () {},
                     getMap  : function () { return fieldMap; }
                 },
                 onNewFigure : function () {
@@ -336,7 +339,6 @@ define(['tetris'], function (Tetris) {
                     });
                 });
             });
-
         });
 
         describe('Scores', function () {
@@ -364,6 +366,65 @@ define(['tetris'], function (Tetris) {
 
                 tetris.tick();
                 expect(tetris.onScoreChanges).toHaveBeenCalledWith(900);
+            });
+        });
+
+        describe('Game state', function () {
+            beforeEach(function () {
+                tetris.start();
+            });
+
+            it('should be able to get current gae state as an object - figure, nextFigure, field and state', function () {
+                expect(tetris.getState()).toEqual({
+                    nextFigure: nextFigureMap,
+                    figure: figureMap,
+                    field : fieldMap,
+                    score : 0
+                });
+            });
+
+            it('should be able to set game state from an object', function () {
+                var newFigureMap = { points: [1, 2, 3] },
+                    newNextFigureMap = { points: [14, 15, 16]},
+                    newFieldMap = { points: [27, 28, 29] };
+
+                spyOn(settings.canvas, 'updateElement');
+                spyOn(settings.preview, 'updateElement');
+
+                spyOn(settings.field, 'setMap').and.callFake(function (map) {
+                    fieldMap.points = map.points;
+                });
+
+                spyOn(figure, 'setMap').and.callFake(function (map) {
+                    figureMap.points = map.points;
+                });
+
+                spyOn(nextFigure, 'setMap').and.callFake(function (map) {
+                    nextFigureMap.points = map.points;
+                });
+
+                tetris.setState({
+                    nextFigure: newNextFigureMap,
+                    figure: newFigureMap,
+                    field : newFieldMap,
+                    score : 100
+                });
+
+                expect(settings.canvas.updateElement).toHaveBeenCalledWith(jasmine.objectContaining(newFieldMap));
+                expect(settings.canvas.updateElement).toHaveBeenCalledWith(jasmine.objectContaining(newFigureMap));
+                expect(settings.preview.updateElement).toHaveBeenCalledWith(jasmine.objectContaining(newNextFigureMap));
+
+                //to check scores setting we need to force game finishing
+                spyOn(settings.field, 'checkOverlay').and.callFake(function () { return true; });
+                spyOn(settings.field, 'checkOverSize').and.callFake(function () { return true; });
+                spyOn(tetris, 'onFinish');
+
+                tetris.tick();
+                expect(tetris.onFinish).toHaveBeenCalledWith(100);
+
+                nextFigureMap = {};
+                figureMap = {};
+                fieldMap = {};
             });
         });
     });
