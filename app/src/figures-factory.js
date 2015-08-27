@@ -16,7 +16,7 @@ define(['figure'], function (Figure) {
     return {
         /**
          * Returns Figure class instance with given position
-         * @param {Array.<Array>.<Object>} configurations Configurations to get figures from
+         * @param {Array.<Array.<Object>>} configurations Configurations to get figures from
          * @returns {Figure}
          */
         getFigure: function (configurations) {

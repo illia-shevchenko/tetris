@@ -237,7 +237,7 @@ define(function () {
 
 
         /**
-         * Returns curent game state as an object
+         * Returns current game state as an object
          * @returns {{nextFigure: (Map), figure: (Map), field: (Map), score: (number)}}
          */
         getState: function () {
