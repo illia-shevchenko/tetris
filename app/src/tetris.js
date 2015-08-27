@@ -214,6 +214,14 @@ define(function () {
         },
 
 
+        /**
+         * Sets new sate for a game and update canvas and preview with new elements
+         * @param {object} state State to set
+         * @param {Map} state.field New map for field
+         * @param {Map} state.figure New map for figure
+         * @param {Map} state.nextFigure New map for next figure
+         * @param {number} state.score New score
+         */
         setState: function (state) {
             this._field.setMap(state.field);
             this._canvas.updateElement(this._field.getMap());
