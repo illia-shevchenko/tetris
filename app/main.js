@@ -34,19 +34,21 @@ requirejs(['tetris', 'interval', 'canvas', 'field', 'figures-factory', 'json!../
             containerClass: 'container'
         }),
 
-        scoreElement = document.getElementById('score').lastChild,
-
         tetris = new Tetris({
             canvas  : canvas,
             field   : field,
             preview : preview,
             onFinish: function (scores) {
-                alert('Game finished:' + scores);
+                var messageEl = document.getElementById('message');
+
+                messageEl.textContent = 'Game finished with scores: ' + scores;
+                messageEl.style.display = 'block';
+
                 interval.stop();
             },
 
             onScoreChanges: function (score) {
-                scoreElement.textContent = score;
+                document.getElementById('score').lastChild.textContent = score;
             },
             onNewFigure   : figuresFactory.getFigure.bind(figuresFactory, configurations)
         }),
