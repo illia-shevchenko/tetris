@@ -118,6 +118,19 @@ define(function () {
 
 
         /**
+         * Restarts the game
+         */
+        restart: function () {
+            this._canvas.removeElement(this._figure.getMap());
+            this._preview.removeElement(this._nextFigure.getMap());
+
+            this._field.clear();
+            this._canvas.updateElement(this._field.getMap());
+            this.start();
+        },
+
+
+        /**
          * Processes map with Tetris game logic
          * @param {Map} map Map to process
          * @private
