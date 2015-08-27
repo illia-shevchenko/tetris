@@ -12,7 +12,8 @@ define(['tetris'], function (Tetris) {
             nextFigure,
             fieldMap = {},
             figureMap = {},
-            nextFigureMap = {};
+            nextFigureMap = {},
+            downFigureMap = {};
 
         beforeEach(function () {
             figure = {
@@ -207,6 +208,36 @@ define(['tetris'], function (Tetris) {
             });
 
             describe('Ticks', function () {
+                describe('Tick process', function () {
+                    beforeEach(function () {
+                        spyOn(figure, 'moveDown').and.callFake(function () { return downFigureMap; });
+                        spyOn(figure, 'getMap').and.callFake(function ()   { return figureMap;     });
+
+                        spyOn(settings.field, 'checkOverlay');
+                        spyOn(settings.field, 'checkOverSize');
+
+                        tetris.tick();
+                    });
+
+                    afterEach(function () {
+                        settings.field.checkOverlay.calls.reset();
+                        settings.field.checkOverSize.calls.reset();
+                        figure.moveDown.calls.reset();
+                        figure.getMap.calls.reset();
+                    });
+
+                    it('should call for moveDown map and check it for overlaying', function () {
+                        expect(figure.moveDown).toHaveBeenCalled();
+                        expect(settings.field.checkOverlay).toHaveBeenCalledWith(downFigureMap);
+                    });
+
+                    it('should call for current map and check it for oversizing', function () {
+                        expect(figure.getMap).toHaveBeenCalled();
+                        expect(settings.field.checkOverSize).toHaveBeenCalledWith(figureMap);
+                    });
+                });
+
+
                 describe('Methods on map checks with lay resolution', function () {
                     beforeEach(function () {
                         spyOn(settings.field, 'checkOverlay').and.callFake(function () { return true; });
@@ -214,21 +245,23 @@ define(['tetris'], function (Tetris) {
                         spyOn(settings.field, 'layMap').and.callFake(function () {
                             return 15;
                         });
+
                         spyOn(settings.canvas, 'addElement');
                         spyOn(settings.canvas, 'removeElement');
+
                         spyOn(settings.preview, 'addElement');
                         spyOn(settings.preview, 'removeElement');
+
                         spyOn(tetris, 'onNewFigure').and.callThrough();
                         tetris.tick();
                     });
 
                     afterEach(function () {
-                        settings.field.checkOverlay.calls.reset();
-                        settings.field.checkOverSize.calls.reset();
                         settings.field.layMap.calls.reset();
 
                         settings.canvas.addElement.calls.reset();
                         settings.canvas.removeElement.calls.reset();
+
                         settings.preview.addElement.calls.reset();
                         settings.preview.removeElement.calls.reset();
 
@@ -236,9 +269,6 @@ define(['tetris'], function (Tetris) {
                     });
 
                     it('should not call setMap but should remove figure from canvas, lay it with proper result and update field on canvas on tick', function () {
-                        expect(settings.field.checkOverlay).toHaveBeenCalledWith(figureMap);
-                        expect(settings.field.checkOverSize).toHaveBeenCalledWith(figureMap);
-
                         expect(figure.setMap).not.toHaveBeenCalled();
                         expect(settings.canvas.removeElement).toHaveBeenCalledWith(figureMap);
                         expect(settings.field.layMap).toHaveBeenCalledWith(figureMap);

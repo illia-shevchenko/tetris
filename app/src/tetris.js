@@ -135,14 +135,15 @@ define(function () {
          * Next game tick. For tetris it is down the figure
          */
         tick: function () {
-            var map = this._figure.moveDown(),
-                overlay = this._field.checkOverlay(map),
-                oversize = this._field.checkOverSize(map),
+            var mapDown = this._figure.moveDown(),
+                mapCurrent = this._figure.getMap(),
+                overlay = this._field.checkOverlay(mapDown),
+                oversize = this._field.checkOverSize(mapCurrent),
                 strickenLines;
 
             //move down solution
             if (!overlay) {
-                return this._processMovement(map);
+                return this._processMovement(mapDown);
             }
 
             //finish solution
@@ -152,9 +153,9 @@ define(function () {
 
             //lay solution
             if (overlay && !oversize) {
-                this._canvas.removeElement(map);
+                this._canvas.removeElement(mapCurrent);
 
-                strickenLines = this._field.layMap(map);
+                strickenLines = this._field.layMap(mapCurrent);
                 this.onScoreChanges(this._setScores(strickenLines));
 
                 this._canvas.updateElement(this._field.getMap());
