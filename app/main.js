@@ -71,6 +71,12 @@ requirejs(['tetris', 'interval', 'canvas', 'field', 'figures-factory', 'json!../
     });
 
     document.getElementById('pause').addEventListener('click', interval.pause.bind(interval));
+    document.getElementById('restart').addEventListener('click', function () {
+        interval.stop();
+        tetris.restart();
+        interval.start();
+    });
+    
     tetris.start();
     interval.start();
 });
