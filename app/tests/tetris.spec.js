@@ -47,7 +47,7 @@ define(['tetris'], function (Tetris) {
                 field: {
                     checkOverSize: function () {},
                     checkOverlay : function () {},
-                    checkLay: function () {},
+                    clear   : function () {},
                     layMap  : function () {},
                     getMap  : function () { return fieldMap; }
                 },
@@ -97,6 +97,26 @@ define(['tetris'], function (Tetris) {
                     y: 1
                 });
                 expect(settings.canvas.addElement).toHaveBeenCalledWith(figureMap);
+            });
+        });
+
+        describe('Restarting', function () {
+            it('should clear canvas, field and preview, remove current figure and start game from the beginning', function () {
+                tetris.start();
+
+                spyOn(settings.canvas, 'removeElement');
+                spyOn(settings.canvas, 'updateElement');
+                spyOn(settings.preview, 'removeElement');
+                spyOn(settings.field, 'clear');
+                spyOn(tetris, 'start');
+
+                tetris.restart();
+
+                expect(settings.canvas.removeElement).toHaveBeenCalledWith(figureMap);
+                expect(settings.field.clear).toHaveBeenCalled();
+                expect(settings.canvas.updateElement).toHaveBeenCalledWith(fieldMap);
+                expect(settings.preview.removeElement).toHaveBeenCalledWith(nextFigureMap);
+                expect(tetris.start).toHaveBeenCalled();
             });
         });
 
