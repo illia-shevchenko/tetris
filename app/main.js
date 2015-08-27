@@ -12,7 +12,7 @@ requirejs.config({
     }
 });
 
-requirejs(['tetris', 'canvas', 'field', 'figures-factory', 'json!../settings/figures.json'], function (Tetris, Canvas, Field, figuresFactory, configurations) {
+requirejs(['tetris', 'interval', 'canvas', 'field', 'figures-factory', 'json!../settings/figures.json'], function (Tetris, Interval, Canvas, Field, figuresFactory, configurations) {
     var field = new Field({
             width : 10,
             height: 20
@@ -34,24 +34,6 @@ requirejs(['tetris', 'canvas', 'field', 'figures-factory', 'json!../settings/fig
             containerClass: 'container'
         }),
 
-        interval = 0,
-        start = function () {
-            interval = setInterval(tetris.tick.bind(tetris), 1000);
-        },
-
-        pause = function () {
-            if (!interval) {
-                return start();
-            }
-
-            interval = clearInterval(interval);
-        },
-
-        stop = function () {
-            clearInterval(interval);
-            interval = Number.MAX_VALUE;
-        },
-
         scoreElement = document.getElementById('score').lastChild,
 
         tetris = new Tetris({
@@ -60,14 +42,16 @@ requirejs(['tetris', 'canvas', 'field', 'figures-factory', 'json!../settings/fig
             preview : preview,
             onFinish: function (scores) {
                 alert('Game finished:' + scores);
-                stop();
+                interval.stop();
             },
 
             onScoreChanges: function (score) {
                 scoreElement.textContent = score;
             },
             onNewFigure   : figuresFactory.getFigure.bind(figuresFactory, configurations)
-        });
+        }),
+
+        interval = new Interval(tetris.tick.bind(tetris), 1000);
 
     document.addEventListener('keydown', function (event) {
         var key = event.keyCode || event.which;
@@ -79,12 +63,12 @@ requirejs(['tetris', 'canvas', 'field', 'figures-factory', 'json!../settings/fig
             /*down*/ case 40: tetris.down(); break;
             default:
             /*space*/if (key === 32) {
-                pause();
+                interval.pause();
             }
         }
     });
 
-    document.getElementById('pause').addEventListener('click', pause);
+    document.getElementById('pause').addEventListener('click', interval.pause.bind(interval));
     tetris.start();
-    start();
+    interval.start();
 });
