@@ -31,7 +31,7 @@ define(['./element'], function (GameElement) {
 
         GameElement.call(this, fieldSettings);
         this._height = settings.height;
-        this._points = this._createPoints(settings.width, settings.height);
+        this.clear();
     };
 
     Field.prototype = Object.create(GameElement.prototype);
@@ -179,6 +179,14 @@ define(['./element'], function (GameElement) {
     Field.prototype._strikeLine = function (start) {
         this._points.splice(start, this._width);
         this._points = this._createPoints(this._width, 1).concat(this._points);
+    };
+
+
+    /**
+     * Clears points of the field
+     */
+    Field.prototype.clear = function () {
+        this._points = this._createPoints(this._width, this._height);
     };
 
 
