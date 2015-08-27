@@ -65,7 +65,8 @@ define(function () {
             this._nextFigure = this.onNewFigure();
 
             this._figure.setOffsetPosition({
-                x: this._canvas.getSizes().width
+                x: this._canvas.getSizes().width,
+                y: 1
             });
 
             map = this._figure.getMap();
