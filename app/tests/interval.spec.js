@@ -21,7 +21,7 @@ define(['interval'], function (Interval) {
         });
 
         it('should starts timer', function () {
-            
+
         });
 
         it('should be able to pause timer', function () {

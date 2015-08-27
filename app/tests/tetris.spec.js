@@ -27,12 +27,8 @@ define(['tetris'], function (Tetris) {
             };
 
             nextFigure = {
-                moveLeft : function () { return nextFigureMap; },
-                moveRight: function () { return nextFigureMap; },
                 moveDown : function () { return nextFigureMap; },
-                rotate   : function () { return nextFigureMap; },
                 getMap   : function () { return nextFigureMap; },
-                setMap   : function () {},
                 setOffsetPosition: function () {}
             };
 
