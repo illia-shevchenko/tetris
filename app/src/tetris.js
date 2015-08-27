@@ -65,8 +65,7 @@ define(function () {
             this._nextFigure = this.onNewFigure();
 
             this._figure.setOffsetPosition({
-                x: this._canvas.getSizes().width,
-                y: 1
+                x: this._canvas.getSizes().width
             });
 
             map = this._figure.getMap();
@@ -122,29 +121,44 @@ define(function () {
          * @param {Map} map Map to process
          * @private
          */
-        _processMap: function (map) {
-            var strickenLines;
+        _processMovement: function (map) {
+            if (this._field.checkOverlay(map)) {
+                return;
+            }
 
-            switch (this._field.checkMap(map)) {
-                case 1:
-                    this._figure.setMap(map);
-                    this._canvas.updateElement(map);
-                break;
-                case 2:
-                    this._canvas.removeElement(map);
+            this._figure.setMap(map);
+            this._canvas.updateElement(map);
+        },
 
-                    strickenLines = this._field.layMap(map);
-                    this.onScoreChanges(this._setScores(strickenLines));
 
-                    this._canvas.updateElement(this._field.getMap());
-                    this._setNewFigure();
-                break;
-                case -1:
-                    this._canvas.removeElement(map);
-                    this._field.layMap(map);
-                    this._canvas.updateElement(this._field.getMap());
-                    this.onFinish();
-                break;
+        /**
+         * Next game tick. For tetris it is down the figure
+         */
+        tick: function () {
+            var map = this._figure.moveDown(),
+                overlay = this._field.checkOverlay(map),
+                oversize = this._field.checkOverSize(map),
+                strickenLines;
+
+            //move down solution
+            if (!overlay && !oversize) {
+                return this._processMovement(map);
+            }
+
+            //finish solution
+            if (overlay && oversize) {
+                return this.onFinish(this._scores);
+            }
+
+            //lay solution
+            if (overlay && !oversize) {
+                this._canvas.removeElement(map);
+
+                strickenLines = this._field.layMap(map);
+                this.onScoreChanges(this._setScores(strickenLines));
+
+                this._canvas.updateElement(this._field.getMap());
+                this._setNewFigure();
             }
         },
 
@@ -154,15 +168,7 @@ define(function () {
          */
         down: function () {
             var map = this._figure.moveDown();
-            this._processMap(map);
-        },
-
-
-        /**
-         * Next game tick. For tetris it is down the figure
-         */
-        tick: function () {
-            this.down();
+            this._processMovement(map);
         },
 
 
@@ -171,7 +177,7 @@ define(function () {
          */
         left: function () {
             var map = this._figure.moveLeft();
-            this._processMap(map);
+            this._processMovement(map);
         },
 
 
@@ -180,7 +186,7 @@ define(function () {
          */
         right: function () {
             var map = this._figure.moveRight();
-            this._processMap(map);
+            this._processMovement(map);
         },
 
 
@@ -189,7 +195,7 @@ define(function () {
          */
         rotate: function () {
             var map = this._figure.rotate();
-            this._processMap(map);
+            this._processMovement(map);
         },
 
 
