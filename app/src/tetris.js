@@ -141,7 +141,7 @@ define(function () {
                 strickenLines;
 
             //move down solution
-            if (!overlay && !oversize) {
+            if (!overlay) {
                 return this._processMovement(map);
             }
 

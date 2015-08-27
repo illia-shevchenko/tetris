@@ -47,13 +47,21 @@ requirejs(['tetris', 'canvas', 'field', 'figures-factory', 'json!../settings/fig
             interval = clearInterval(interval);
         },
 
+        stop = function () {
+            clearInterval(interval);
+            interval = Number.MAX_VALUE;
+        },
+
         scoreElement = document.getElementById('score').lastChild,
 
         tetris = new Tetris({
             canvas  : canvas,
             field   : field,
             preview : preview,
-            onFinish: pause,
+            onFinish: function (scores) {
+                alert('Game finished:' + scores);
+                stop();
+            },
 
             onScoreChanges: function (score) {
                 scoreElement.textContent = score;
