@@ -71,7 +71,7 @@ define(['./element'], function (GameElement) {
         var fieldPoints = this._normalizePoints(this._points);
 
         return this._normalizePoints(map.points)
-            .every(function (point, index) {
+            .some(function (point, index) {
                 var positions  = this._getAllPositions(index, map),
                     fieldValue = 1;
 
@@ -79,7 +79,7 @@ define(['./element'], function (GameElement) {
                     fieldValue = fieldPoints[positions.fieldValueIndex] || 0;
                 }
 
-                return point + fieldValue < 2;
+                return point + fieldValue > 1;
             }, this);
     };
 
@@ -92,7 +92,7 @@ define(['./element'], function (GameElement) {
     Field.prototype.checkLay = function (map) {
         var fieldPoints = this._normalizePoints(this._points);
 
-        return this.checkOverlay(map)
+        return !this.checkOverlay(map)
             && this._normalizePoints(map.points)
                 .some(function (point, index) {
                     var positions  = this._getAllPositions(index, map);
