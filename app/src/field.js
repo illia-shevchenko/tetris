@@ -42,66 +42,76 @@ define(['./element'], function (GameElement) {
      * Get position related to current map and position to
      * @param {number} pointIndex Position (index) in map points related to which positions should be counted
      * @param {Map} map Map according to which positions should be counted
-     * @returns  {{top: number, left: number, fieldTop: number, fieldLeft: number, fieldValueIndex: number, indexInField: boolean, fieldNextLineIndex: number, nextLineIndexInField: boolean}}
+     * @returns {{fieldValueIndex: *, indexInField: boolean, fieldNextLineIndex: *, nextLineIndexInField: boolean}}
      * @private
      */
     Field.prototype._getAllPositions = function (pointIndex, map) {
-        var top  = Math.floor(pointIndex / map.width),
-            left = pointIndex % map.width,
+        var fieldTop  = map.top  + Math.floor(pointIndex / map.width),
+            fieldLeft = map.left + pointIndex % map.width,
 
-            fieldTop = map.top + top,
-            fieldLeft = map.left + left,
-            fieldValueIndex = fieldTop * this._width + fieldLeft,
-            fieldNextLineIndex = fieldValueIndex + this._width;
+            fieldValueIndex = fieldTop * this._width + fieldLeft;
 
         return {
-            top : top,
-            left: left,
-            fieldTop : fieldTop,
-            fieldLeft: fieldLeft,
-
             fieldValueIndex: fieldValueIndex,
             indexInField   : fieldTop < this._height && fieldLeft >= 0 && fieldLeft < this._width,
+            indexAboveField: fieldTop < 0,
 
-            fieldNextLineIndex: fieldNextLineIndex,
-            nextLineIndexInField: fieldTop + 1 < this._height/* && fieldLeft >= 0 && fieldLeft < this._width*/
+            fieldNextLineIndex  : fieldValueIndex + this._width,
+            nextLineIndexInField: fieldTop + 1 < this._height
         };
     };
 
 
     /**
-     * Check map suits current field
+     * Check map suits current field. Also maps that does not suit width if the field will be rejected
      * @param {Map} map Map to check
-     * @returns {number} 0 - if map does not suit the field. 1 - if suits, -1 - if map should be laid
+     * @returns {boolean} True if map suits the field
      */
-    Field.prototype.checkMap = function (map) {
-        var fieldPoints = this._normalizePoints(this._points),
-            lay   = false,
-            suits = this._normalizePoints(map.points)
-                .every(function (point, index) {
-                    var positions  = this._getAllPositions(index, map),
-                        fieldValue = 1;
+    Field.prototype.checkOverlay = function (map) {
+        var fieldPoints = this._normalizePoints(this._points);
 
-                    if (positions.indexInField) {
-                        fieldValue = fieldPoints[positions.fieldValueIndex] || 0;
-                    }
+        return this._normalizePoints(map.points)
+            .every(function (point, index) {
+                var positions  = this._getAllPositions(index, map),
+                    fieldValue = 1;
 
-                    if (point && (!positions.nextLineIndexInField || fieldPoints[positions.fieldNextLineIndex])) {
-                        lay = true;
-                    }
+                if (positions.indexInField) {
+                    fieldValue = fieldPoints[positions.fieldValueIndex] || 0;
+                }
 
-                    return point + fieldValue < 2;
+                return point + fieldValue < 2;
+            }, this);
+    };
+
+
+    /**
+     * Check map to be laid onto current field
+     * @param {Map} map Map to check
+     * @returns {boolean} True if map should and can be laid
+     */
+    Field.prototype.checkLay = function (map) {
+        var fieldPoints = this._normalizePoints(this._points);
+
+        return this.checkOverlay(map)
+            && this._normalizePoints(map.points)
+                .some(function (point, index) {
+                    var positions  = this._getAllPositions(index, map);
+                    return point && (!positions.nextLineIndexInField || fieldPoints[positions.fieldNextLineIndex]);
                 }, this);
+    };
 
-        if (!suits) {
-            return 0;
-        }
 
-        if (lay) {
-            return -1;
-        }
-
-        return 1;
+    /**
+     * Check map to be over size the field
+     * @param {Map} map Map to check
+     * @returns {boolean} True if map does not suit the field size
+     */
+    Field.prototype.checkOverSize = function (map) {
+        return this._normalizePoints(map.points)
+            .some(function (point, index) {
+                var positions = this._getAllPositions(index, map);
+                return point && (positions.indexAboveField || !positions.indexInField);
+            }, this);
     };
 
 
