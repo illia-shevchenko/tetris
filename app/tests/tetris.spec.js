@@ -384,7 +384,7 @@ define(['tetris'], function (Tetris) {
             });
 
             it('should be able to set game state from an object', function () {
-                var newFigureMap = { points: [1, 2, 3] },
+                var newFigureMap = { points: [1, 2, 3] },//we ned something to be in Map to be able to use jasmine.objectContaining
                     newNextFigureMap = { points: [14, 15, 16]},
                     newFieldMap = { points: [27, 28, 29] };
 
