@@ -100,8 +100,8 @@ define(function () {
          * @private
          */
         _setScores: function (lines) {
-            this._scores += this._baseScore * lines * lines;
-            return this._scores;
+            this._score += this._baseScore * lines * lines;
+            return this._score;
         },
 
 
@@ -109,7 +109,7 @@ define(function () {
          * Starts the game - adds field to canvas and set new figure
          */
         start: function () {
-            this._scores = 0;
+            this._score = 0;
             this._canvas.addElement(this._field.getMap());
 
             this._nextFigure = this.onNewFigure();
@@ -162,7 +162,7 @@ define(function () {
 
             //finish solution
             if (overlay && oversize) {
-                return this.onFinish(this._scores);
+                return this.onFinish(this._score);
             }
 
             //lay solution
@@ -213,6 +213,33 @@ define(function () {
             this._processMovement(map);
         },
 
+
+        setState: function (state) {
+            this._field.setMap(state.field);
+            this._canvas.updateElement(this._field.getMap());
+
+            this._figure.setMap(state.figure);
+            this._canvas.updateElement(this._figure.getMap());
+
+            this._nextFigure.setMap(state.nextFigure);
+            this._preview.updateElement(this._nextFigure.getMap());
+
+            this._score = state.score;
+        },
+
+
+        /**
+         * Returns curent game state as an object
+         * @returns {{nextFigure: (Map), figure: (Map), field: (Map), score: (number)}}
+         */
+        getState: function () {
+            return {
+                nextFigure: this._nextFigure.getMap(),
+                figure: this._figure.getMap(),
+                field: this._field.getMap(),
+                score: this._score
+            };
+        },
 
         constructor: Tetris
     };
