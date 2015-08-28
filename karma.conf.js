@@ -19,7 +19,7 @@ module.exports = function (config) {
             {pattern: 'app/tests/**', included: false},
             {pattern: 'node_modules/squirejs/src/Squire.js', included: false},
             {pattern: 'app/lib/**', included: false},
-            'test-main.js'
+            'app/tests/test-main.js'
         ],
 
 
