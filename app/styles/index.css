@@ -29,6 +29,7 @@ body {
 
 .container .figure {
     position: absolute;
+    box-sizing: border-box;
 }
 
 .controls {
