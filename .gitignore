@@ -5,5 +5,7 @@ lib
 tmp
 documentation
 docs
-main-built.js
+**-built**
+build
+dist
 npm-debug.log

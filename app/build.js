@@ -4,6 +4,7 @@
 /*eslint-disable */
 
 ({
+    useStrict: true,
     baseUrl: 'src',
     paths  : {
         json: '../lib/requirejs-plugins/json',
