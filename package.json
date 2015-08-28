@@ -12,6 +12,7 @@
     "eslint": "^1.2.0",
     "jasmine": "^2.3.2",
     "jasmine-core": "^2.3.4",
+    "jasmine-node": "^2.0.0-beta4",
     "jsdoc": "^3.3.2",
     "karma": "^0.13.9",
     "karma-cli": "^0.1.0",
@@ -20,6 +21,7 @@
     "karma-phantomjs-launcher": "^0.2.1",
     "karma-requirejs": "^0.2.2",
     "phantomjs": "^1.9.18",
+    "request": "^2.61.0",
     "requirejs": "^2.1.20",
     "squirejs": "^0.2.1"
   },
