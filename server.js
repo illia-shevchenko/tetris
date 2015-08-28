@@ -1,11 +1,13 @@
 /**
  * Created by Illia_Shevchenko on 28.08.2015.
  */
+'use strict';
+
 
 /**
  * set up
  */
-var express  = require('express'),
+let express  = require('express'),
     app      = express(),
     mongoose = require('mongoose'),
     port     = process.env.PORT || 8080,
