@@ -3,14 +3,18 @@
     "parser": "espree",
     "env": {
         "browser": true,
-        "node": false,
+        "node": true,
         "amd": true,
         "mocha": false,
-        "jasmine": true
+        "jasmine": true,
+        "es6" : true
     },
 
   "globals": {
-      "requirejs": true
+      "requirejs": true,
+      "__dirname": true,
+      "express": true,
+      "mongoose": true
   },
 
     "rules": {
@@ -173,7 +177,6 @@
         "space-unary-ops": [2, { "words": true, "nonwords": false }],
         "spaced-comment": 0,
         "spaced-line-comment": [0, "always"],
-        "strict": [2, "global"],
         "use-isnan": 2,
         "valid-jsdoc": 0,
         "valid-typeof": 2,

@@ -2,7 +2,7 @@
   "name": "try_tetris",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "directories": {
     "test": "tests"
   },
@@ -28,9 +28,16 @@
     "test": "karma start --reporters progress",
     "doc": "rm -rf documentation && jsdoc -d documentation/ app/src/",
     "lint": "eslint app/src/",
-    "build": "node_modules/.bin/r.js -o app/build.js && node_modules/.bin/r.js -o app/build-css.js",
-    "postinstall": "bower install && bower-installer"
+    "build": "r.js -o app/build.js && r.js -o app/build-css.js",
+    "postinstall": "bower install && bower-installer",
+    "prestart": "npm run test && npm run lint",
+    "start": "node --harmony server.js"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.13.3",
+    "express": "^4.13.3",
+    "mongoose": "^4.1.3"
+  }
 }
