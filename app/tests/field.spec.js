@@ -65,7 +65,6 @@ define(['field'], function (Field) {
                 };
 
                 expect(field.checkOverlay(map)).toBe(false);
-                expect(field.checkLay(map)).toBe(false);
                 expect(field.checkOverSize(map)).toBe(false);
             });
 
@@ -80,7 +79,6 @@ define(['field'], function (Field) {
                 };
 
                 expect(field.checkOverlay(map)).toBe(false);
-                expect(field.checkLay(map)).toBe(false);
                 expect(field.checkOverSize(map)).toBe(false);
             });
 
@@ -95,7 +93,6 @@ define(['field'], function (Field) {
                 };
 
                 expect(field.checkOverlay(map)).toBe(true);
-                expect(field.checkLay(map)).toBe(false);
                 expect(field.checkOverSize(map)).toBe(true);
             });
 
@@ -110,7 +107,6 @@ define(['field'], function (Field) {
                 };
 
                 expect(field.checkOverlay(map)).toBe(false);
-                expect(field.checkLay(map)).toBe(false);
                 expect(field.checkOverSize(map)).toBe(false);
             });
 
@@ -125,7 +121,6 @@ define(['field'], function (Field) {
                 };
 
                 expect(field.checkOverlay(map)).toBe(true);
-                expect(field.checkLay(map)).toBe(false);
                 expect(field.checkOverSize(map)).toBe(true);
             });
 
@@ -141,7 +136,6 @@ define(['field'], function (Field) {
                 };
 
                 expect(field.checkOverlay(map)).toBe(false);
-                expect(field.checkLay(map)).toBe(true);
                 expect(field.checkOverSize(map)).toBe(false);
             });
 
@@ -160,7 +154,6 @@ define(['field'], function (Field) {
                 };
 
                 expect(field.checkOverlay(map)).toBe(false);
-                expect(field.checkLay(map)).toBe(true);
                 expect(field.checkOverSize(map)).toBe(true);
             });
         });
@@ -203,7 +196,6 @@ define(['field'], function (Field) {
                     };
 
                     expect(field.checkOverlay(map)).toBe(true);
-                    expect(field.checkLay(map)).toBe(false);
                     expect(field.checkOverSize(map)).toBe(false);
                 });
 
@@ -220,7 +212,6 @@ define(['field'], function (Field) {
                     };
 
                     expect(field.checkOverlay(map)).toBe(false);
-                    expect(field.checkLay(map)).toBe(true);
                     expect(field.checkOverSize(map)).toBe(false);
 
                     field.layMap(map);
@@ -246,7 +237,6 @@ define(['field'], function (Field) {
                     };
 
                     expect(field.checkOverlay(map)).toBe(false);
-                    expect(field.checkLay(map)).toBe(true);
                     expect(field.checkOverSize(map)).toBe(false);
                     field.layMap(map);
 
@@ -298,7 +288,6 @@ define(['field'], function (Field) {
                         lines;
 
                     expect(field.checkOverlay(map)).toBe(false);
-                    expect(field.checkLay(map)).toBe(true);
                     expect(field.checkOverSize(map)).toBe(false);
 
                     lines = field.layMap(map);

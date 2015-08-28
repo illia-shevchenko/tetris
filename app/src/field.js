@@ -85,23 +85,6 @@ define(['./element'], function (GameElement) {
 
 
     /**
-     * Check map to be laid onto current field
-     * @param {Map} map Map to check
-     * @returns {boolean} True if map should and can be laid
-     */
-    Field.prototype.checkLay = function (map) {
-        var fieldPoints = this._normalizePoints(this._points);
-
-        return !this.checkOverlay(map)
-            && this._normalizePoints(map.points)
-                .some(function (point, index) {
-                    var positions  = this._getAllPositions(index, map);
-                    return point && (!positions.nextLineIndexInField || fieldPoints[positions.fieldNextLineIndex]);
-                }, this);
-    };
-
-
-    /**
      * Check map to be over size the field
      * @param {Map} map Map to check
      * @returns {boolean} True if map does not suit the field size
