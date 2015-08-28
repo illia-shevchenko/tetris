@@ -20,7 +20,6 @@
     "karma-phantomjs-launcher": "^0.2.1",
     "karma-requirejs": "^0.2.2",
     "phantomjs": "^1.9.18",
-    "require": "^2.4.20",
     "requirejs": "^2.1.20",
     "squirejs": "^0.2.1"
   },
@@ -28,9 +27,12 @@
     "test": "karma start --reporters progress",
     "doc": "rm -rf documentation && jsdoc -d documentation/ app/src/",
     "lint": "eslint app/src/",
-    "build": "r.js -o app/build.js && r.js -o app/build-css.js",
-    "postinstall": "bower install && bower-installer",
-    "prestart": "npm run test && npm run lint",
+    "buildJs": "rjs -o app/build.js",
+    "buildCss": "rjs -o app/build-css.js",
+    "build": "npm run buildJs && npm run buildCss",
+    "renameRJs": "mv node_modules/.bin/r.js.cmd node_modules/.bin/rjs.cmd && mv node_modules/.bin/r.js node_modules/.bin/rjs",
+    "postinstall": "bower install && bower-installer && npm run renameRJs",
+    "prestart": "npm run test && npm run lint && npm run build",
     "start": "node --harmony server.js"
   },
   "author": "",
