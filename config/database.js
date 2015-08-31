@@ -5,5 +5,5 @@
 
 
 module.exports = {
-    url : ''//'mongodb://node:node@mongo.onmodulus.net:27017/uwO3mypu'
+    url : 'mongodb://server:server@ds035563.mongolab.com:35563/games'
 };

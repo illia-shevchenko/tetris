@@ -7,7 +7,7 @@
 let router = require('express').Router();
 
 router.get('/:q', require('./list'));
-router.post('/:id', require('./update'));
+router.put('/:id', require('./update'));
 router.post('/', require('./create'));
 router.delete('/:id', require('./delete'));
 

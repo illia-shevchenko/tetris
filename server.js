@@ -17,9 +17,7 @@ let express  = require('express'),
 /**
  * configuration
  */
-if (database.url) {
-    mongoose.connect(database.url);
-}
+mongoose.connect(database.url);
 
 app.use(express.static(__dirname + '/app'));
 app.use(bodyParser.urlencoded({
