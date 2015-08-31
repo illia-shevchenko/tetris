@@ -26,9 +26,15 @@
     "squirejs": "^0.2.1"
   },
   "scripts": {
-    "test": "karma start --reporters progress",
-    "doc": "rm -rf documentation && jsdoc -d documentation/ app/src/",
-    "lint": "eslint app/src/",
+    "test_client": "karma start --reporters progress",
+    "test_server": "karma start --reporters progress",
+    "test": "npm run test_server && npm run test_client",
+    "doc_client": "rm -rf documentation && jsdoc -d documentation/ app/src/",
+    "doc_server": "rm -rf documentation_server && jsdoc -d documentation_server/ server/",
+    "doc": "npm run doc_server && npm run doc_client",
+    "lint_client": "eslint app/src/",
+    "lint_server": "eslint server/",
+    "lint": "npm run lint_server && npm run lint_client",
     "buildJs": "rjs -o app/build.js",
     "buildCss": "rjs -o app/build-css.js",
     "build": "npm run buildJs && npm run buildCss",
