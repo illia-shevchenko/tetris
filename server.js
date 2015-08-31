@@ -33,31 +33,9 @@ app.use(bodyParser.json());
  */
 app.use('/', routes);
 
-app.use(function(req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
-});
 
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-    app.use(function(err, req, res) {
-        res.status(err.status || 500);
-        res.send('Error!');
-    });
-}
-
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res) {
-    res.status(err.status || 500);
-    res.send('Error!');
-    //res.render('error', {
-    //    message: err.message,
-    //    error: {}
-    //});
-});
+app.use(require('./server/middleware/404'));
+app.use(require('./server/middleware/handleErrors'));
 /**
  * listen (start app with node server.js)
  */
