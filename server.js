@@ -7,13 +7,15 @@
 /**
  * set up
  */
-let express  = require('express'),
-    app      = express(),
-    mongoose = require('mongoose'),
-    port     = process.env.PORT || 8080,
-    database = require('./config/database'),
-    bodyParser = require('body-parser'),
-    routes     = require('./server/routes');
+let serverDir  = './server',
+    mwDir      = `${serverDir}/middleware`,
+
+    express    = require('express'),
+    app        = express(),
+    mongoose   = require('mongoose'),
+    port       = process.env.PORT || 8080,
+    database   = require('./config/database'),
+    bodyParser = require('body-parser');
 /**
  * configuration
  */
@@ -29,11 +31,11 @@ app.use(bodyParser.json());
 /**
  * routes
  */
-app.use('/', routes);
+app.use('/', require(`${serverDir}/routes`));
 
 
-app.use(require('./server/middleware/404'));
-app.use(require('./server/middleware/handleErrors'));
+app.use(require(`${mwDir}/404`));
+app.use(require(`${mwDir}/handleErrors`));
 /**
  * listen (start app with node server.js)
  */
