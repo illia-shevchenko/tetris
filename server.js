@@ -7,7 +7,7 @@
 /**
  * set up
  */
-let serverDir  = './server',
+let serverDir  = './server-es5',
     mwDir      = `${serverDir}/middleware`,
 
     express    = require('express'),

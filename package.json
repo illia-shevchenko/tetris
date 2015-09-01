@@ -26,23 +26,30 @@
   },
   "scripts": {
     "test_client": "karma start karma.client.conf.js --reporters progress",
-    "test_server": "jasmine-node --captureExceptions server/",
+    "test_server": "jasmine-node --captureExceptions server-es5/",
     "test": "npm run test_server && npm run test_client",
+
     "doc_client": "rm -rf documentation && jsdoc -d documentation/ app/src/",
     "doc_server": "rm -rf documentation_server && jsdoc -d documentation_server/ server/",
-    "doc": "npm run doc_server && npm run doc_client",
+
     "lint_client": "eslint app/src/",
     "lint_server": "eslint server/",
     "lint": "npm run lint_server && npm run lint_client",
+
     "buildJs": "rjs -o app/build.js",
     "buildCss": "rjs -o app/build-css.js",
-    "build": "npm run buildJs && npm run buildCss",
+    "build_client": "npm run buildJs && npm run buildCss",
+
+    "build_server": "babel server/ -d server-es5 -s",
+
     "renameRJs": "mv node_modules/.bin/r.js.cmd node_modules/.bin/rjs.cmd && mv node_modules/.bin/r.js node_modules/.bin/rjs",
+
     "postinstall": "bower install && bower-installer && npm run renameRJs",
-    "prestart": "npm run lint && npm run build && npm run test",
-    "server": "babel-node server.js",
-    "start": "npm run server",
-    "develop": "nodemon --watch server --exec npm run server"
+    "prestart": "npm run lint && npm run build_client && npm run test",
+    "prestart_server": "npm run build_server",
+    "start_server": "node server.js",
+    "start": "npm run start_server",
+    "develop": "nodemon --watch server --exec npm run start_server"
   },
   "author": "",
   "license": "ISC",

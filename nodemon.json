@@ -1,5 +1,5 @@
 {
   "events": {
-    "start": "sleep 1 && npm run test_server"
+    "start": "sleep 5 && npm run test_server"
   }
 }
