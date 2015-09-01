@@ -4,20 +4,18 @@
 'use strict';
 
 
-describe('Hello world', function () {
+describe('GAME api', function () {
     const baseUrl = 'http://localhost:8080/api/game';
     let   request = require('request');
 
 
-    describe('GET api/', function () {
-        it('should be', function () {
-            expect(1).toBe(1);
-        });
+    describe('GET api/game/:q', function () {
+        const url = baseUrl + '/search_string';
 
-        it('should returns 200 OK and proper text', function (done) {
-            request.get(baseUrl, function (err, response, body) {
-                expect(response.statusCode).toBe(300);
-                expect(body).toEqual('Here is cool api version 0.0.0-pre-alfa');
+        it('should returns 200 OK and list of games', function (done) {
+            request.get(url, function (err, response, body) {
+                expect(response.statusCode).toBe(200);
+                expect(body).toEqual('Here your list: search_string');
                 done();
             });
         });

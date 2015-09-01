@@ -4,15 +4,12 @@
 'use strict';
 
 
-module.exports = function (app) {
-    const CustomError = require('../models/errors/custom');
+const CustomError = require('../models/errors/custom');
+module.exports = function (err, req, res) {
+    if (!(err instanceof CustomError)) {
+        err = new CustomError('Error!', 500, err);
+    }
 
-    app.use(function (err, req, res) {
-        if (!(err instanceof CustomError)) {
-            err = new CustomError('Error!', 500, err);
-        }
-
-        res.status(err.status || 500);
-        res.send(err);
-    });
+    res.status(err.status || 500);
+    res.send(err);
 };
