@@ -25,7 +25,7 @@
     "squirejs": "^0.2.1"
   },
   "scripts": {
-    "test_client": "karma start --reporters progress",
+    "test_client": "karma start karma.client.conf.js --reporters progress",
     "test_server": "jasmine-node --captureExceptions server/",
     "test": "npm run test_server && npm run test_client",
     "doc_client": "rm -rf documentation && jsdoc -d documentation/ app/src/",
