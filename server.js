@@ -37,4 +37,4 @@ app.use(require('./server/middleware/handleErrors'));
 /**
  * listen (start app with node server.js)
  */
-app.listen(port);
+module.exports = app.listen(port);
