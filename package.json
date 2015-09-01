@@ -44,7 +44,7 @@
     "prestart": "npm run lint && npm run build && npm run test",
     "server": "babel-node server.js",
     "start": "npm run server",
-    "develop": "nodemon --watch server --exec npm run doc_server && npm run server"
+    "develop": "nodemon --watch server --exec npm run server"
   },
   "author": "",
   "license": "ISC",

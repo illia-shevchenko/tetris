@@ -1,0 +1,5 @@
+{
+  "events": {
+    "start": "npm run --silent test_server"
+  }
+}
