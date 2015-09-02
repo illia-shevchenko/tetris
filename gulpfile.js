@@ -21,7 +21,7 @@ var gulp = require('gulp'),
         clientOutJs : 'app.js',
         clientOutCss: 'app.css',
         clientOutLibJs: 'lib.js',
-        clientDoc     : './documentation'
+        clientDoc     : '.app/documentation'
     },
 
     destination = 'server' + (transpile ? '-es5' : ''),

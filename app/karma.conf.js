@@ -8,7 +8,7 @@ module.exports = function (config) {
     config.set({
 
         // base path that will be used to resolve all patterns (eg. files, exclude)
-        basePath: '../',
+        basePath: '',
 
 
         // frameworks to use
@@ -18,23 +18,19 @@ module.exports = function (config) {
 
         // list of files / patterns to load in the browser
         files: [
-            {pattern: 'app/src/**', included: false},
-            {pattern: 'app/tests/**', included: false},
-            {pattern: 'app/bower_components/**', included: false},
-            'app/tests/test-main.js'
+            {pattern: '**/*.js', included: false},
+            '**/test-main.js'
         ],
 
 
         // list of files to exclude
-        exclude: [
-            'app/src/main.js'
-        ],
+        exclude: [],
 
 
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
-            'app/src/**': 'coverage'
+            'src/**/*.js': 'coverage'
         },
 
 
@@ -45,7 +41,7 @@ module.exports = function (config) {
 
         coverageReporter: {
             type: 'html',
-            dir: 'documentation/coverage/'
+            dir: 'coverage/'
         },
 
         // web server port

@@ -1,5 +1,8 @@
-var allTestFiles = [];
-var TEST_REGEXP = /(spec|test)\.js$/i;
+'use strict';
+
+
+var allTestFiles = [],
+    TEST_REGEXP = /(spec|test)\.js$/i;
 
 //Get a list of all the test files to include
 Object.keys(window.__karma__.files).forEach(function (file) {
@@ -15,7 +18,7 @@ Object.keys(window.__karma__.files).forEach(function (file) {
 
 require.config({
     // Karma serves files under /base, which is the basePath from your config file
-    baseUrl: '/base/app/src',
+    baseUrl: '/base/src',
     paths: {
         Squire: '../bower_components/squire/src/Squire',
         json  : '../bower_components/requirejs-plugins/src/json',
