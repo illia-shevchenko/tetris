@@ -34,7 +34,8 @@
     "yargs": "^3.23.0"
   },
   "scripts": {
-    "test_client_locally": "karma start ./app/karma.conf.js"
+    "test_client_locally": "karma start ./app/karma.conf.js",
+    "test_client": "karma start ./app/karma.conf.build.js"
   },
   "author": "",
   "license": "ISC",

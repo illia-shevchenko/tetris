@@ -2,7 +2,6 @@
 // Generated on Fri Aug 14 2015 15:41:45 GMT+0300 (FLE Daylight Time)
 'use strict';
 
-//TODO: We are testing files before building. It is not good at all. The problem is that we need to restart building then tests
 module.exports = function (config) {
     config.set({
 

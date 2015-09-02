@@ -3,12 +3,12 @@
 'use strict';
 
 
-//TODO: We are testing files before building. It is not good at all. The problem is that we need to restart building then tests
+//TODO: This is not working. See gulpfile
 module.exports = function (config) {
     config.set({
 
         // base path that will be used to resolve all patterns (eg. files, exclude)
-        basePath: '',
+        basePath: '../server-es5/public',
 
 
         // frameworks to use
@@ -18,7 +18,9 @@ module.exports = function (config) {
 
         // list of files / patterns to load in the browser
         files: [
-            {pattern: '**/*.js', included: false},
+            {pattern: './**/app.js', included: false},
+            {pattern: '../../app/tests/**/*.js', included: false},
+            {pattern: '../../app/bower_components/**/*.js', included: false},
             '../../app/tests/test-build.js'
         ],
 
@@ -42,7 +44,7 @@ module.exports = function (config) {
 
         // level of logging
         // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-        logLevel: config.LOG_INFO,
+        logLevel: config.LOG_DEBUG,
 
 
         // enable / disable watching file and executing tests whenever any file changes

@@ -94,10 +94,16 @@ gulp.task('clientTest', function () {
         }));
 });
 
-gulp.task('clientBuildTest', function () {
-
+//TODO: This is not working. Because we bootstrap main.js file also to build. And karma runs it.
+gulp.task('clientTestBuild', function () {
+    gulp.src('notexisting')
+        .pipe(plugins.karma({
+            configFile: config.clientTestBuildConf,
+            action    : 'run'
+        }));
 });
 
-gulp.task('client', ['clientLibJs', 'clientJs', 'clientHtml', 'clientCss']);
+gulp.task('clientBuild', ['clientLibJs', 'clientJs', 'clientHtml', 'clientCss']);
+gulp.task('clientDev', ['clientTest', 'clientDoc']);
 
 gulp.task('default', []);
