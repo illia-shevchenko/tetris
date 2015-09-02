@@ -1,8 +1,12 @@
 /**
  * Created by Illia_Shevchenko on 01.09.2015.
  */
+'use strict';
+
+
 var gulp = require('gulp'),
     plugins = require('gulp-load-plugins')(),
+    mainBowerFiles = require('main-bower-files'),
     args    = require('yargs').argv,
 
     transpile = args.es5,
@@ -15,17 +19,24 @@ var gulp = require('gulp'),
         clientCss   : './app/styles/main.css',
 
         clientOutJs : 'app.js',
-        clientOutCss: 'app.css'
-
+        clientOutCss: 'app.css',
+        clientOutLibJs: 'lib.js'
     },
 
     destination = 'server' + (transpile ? '-es5' : ''),
+    clientDestination = destination + '/public';
 
-    clientDestination = destination + '/public',
-    clientLib = clientDestination + '/lib.js',
-    clientCss = clientDestination + '/app.css',
-    clientHtml = clientDestination + '/index.html';
 
+gulp.task('clientLibJs', function () {
+    var files = mainBowerFiles({
+        paths: config.clientPath,
+        filter: /require.js/
+    });
+
+    gulp.src(files)
+        .pipe(plugins.uglify())
+        .pipe(gulp.dest(clientDestination));
+});
 
 gulp.task('clientJs', function () {
     gulp.src(config.clientMain)
@@ -57,10 +68,11 @@ gulp.task('clientHtml', function () {
 gulp.task('clientCss', function () {
     gulp.src(config.clientCss)
         .pipe(plugins.minifyCss())
+        .pipe(plugins.concat(config.clientOutCss))
         .pipe(gulp.dest(clientDestination));
 });
 
 
-gulp.task('client', ['clientJs', 'clientHtml', 'clientCss']);
+gulp.task('client', ['clientLibJs', 'clientJs', 'clientHtml', 'clientCss']);
 
 gulp.task('default', []);
