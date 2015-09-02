@@ -33,7 +33,9 @@
     "requirejs": "^2.1.20",
     "yargs": "^3.23.0"
   },
-  "scripts": {},
+  "scripts": {
+    "test_client_locally": "karma start ./app/karma.conf.js"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
