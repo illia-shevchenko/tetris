@@ -15,13 +15,17 @@ var gulp = require('gulp'),
         clientPath: './app/',
         clientSource: './app/src',
         clientMain  : './app/src/main.js',
+        clientJs    : './app/src/**/*.js',
         clientHtml  : './app/index.html',
         clientCss   : './app/styles/main.css',
 
         clientOutJs : 'app.js',
         clientOutCss: 'app.css',
         clientOutLibJs: 'lib.js',
-        clientDoc     : '.app/documentation'
+        clientDoc     : '.app/documentation',
+
+        clientTestConf: './app/karma.conf.js',
+        clientTestBuildConf: './app/karma.conf.build.js'
     },
 
     destination = 'server' + (transpile ? '-es5' : ''),
@@ -63,7 +67,7 @@ gulp.task('clientJs', function () {
 gulp.task('clientDoc', function () {
     require('del')(config.clientDoc + '/**')
         .then(function () {
-            gulp.src(config.clientSource + '/**/*.js')
+            gulp.src(config.clientJs)
                 .pipe(plugins.jsdoc(config.clientDoc));
         });
 });
@@ -81,6 +85,18 @@ gulp.task('clientCss', function () {
         .pipe(gulp.dest(clientDestination));
 });
 
+gulp.task('clientTest', function () {
+    gulp.src('notexisting')
+    .pipe(plugins.karma({
+            configFile: config.clientTestConf,
+            logLevel  : 'ERROR',
+            action    : 'run'
+        }));
+});
+
+gulp.task('clientBuildTest', function () {
+
+});
 
 gulp.task('client', ['clientLibJs', 'clientJs', 'clientHtml', 'clientCss']);
 
