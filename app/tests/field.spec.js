@@ -2,6 +2,7 @@
  * Created by Illia_Shevchenko on 14.08.2015.
  */
 'use strict';
+/*eslint max-nested-callbacks: 0*/
 
 
 define(['field'], function (Field) {
@@ -32,7 +33,7 @@ define(['field'], function (Field) {
 
         describe('Clearing', function () {
             it('should be able to clear field after laying some figures', function () {
-                field.layMap( {
+                field.layMap({
                     left: 1,
                     top : 1,
                     points: [

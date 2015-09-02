@@ -2,6 +2,7 @@
  * Created by Illia_Shevchenko on 27.08.2015.
  */
 'use strict';
+/*eslint max-nested-callbacks: 0*/
 
 
 define(['interval'], function (Interval) {

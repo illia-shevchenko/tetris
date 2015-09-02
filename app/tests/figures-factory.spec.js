@@ -2,9 +2,13 @@
  * Created by Illia_Shevchenko on 14.08.2015.
  */
 'use strict';
+/*eslint max-nested-callbacks: 0*/
 
 
 define(['Squire'], function (Squire) {
+    /**
+     * @type {Class}
+     */
     var FigureMock = function (settings) {
             this.settings = settings;
         },

@@ -2,6 +2,7 @@
  * Created by Illia_Shevchenko on 14.08.2015.
  */
 'use strict';
+/*eslint max-nested-callbacks: 0*/
 
 define(['tetris'], function (Tetris) {
     describe('Tetris', function () {
@@ -38,13 +39,13 @@ define(['tetris'], function (Tetris) {
                     addElement   : function () {},
                     removeElement: function () {},
                     updateElement: function () {},
-                    getSizes     : function () { return {width: 10, height: 20}; }
+                    getSizes     : function () { return { width: 10, height: 20 }; }
                 },
                 preview: {
                     addElement   : function () {},
                     updateElement: function () {},
                     removeElement: function () {},
-                    getSizes     : function () { return {width: 6, height: 6}; }
+                    getSizes     : function () { return { width: 6, height: 6 }; }
                 },
                 field: {
                     checkOverSize: function () {},
@@ -385,7 +386,7 @@ define(['tetris'], function (Tetris) {
 
             it('should be able to set game state from an object', function () {
                 var newFigureMap = { points: [1, 2, 3] },//we ned something to be in Map to be able to use jasmine.objectContaining
-                    newNextFigureMap = { points: [14, 15, 16]},
+                    newNextFigureMap = { points: [14, 15, 16] },
                     newFieldMap = { points: [27, 28, 29] };
 
                 spyOn(settings.canvas, 'updateElement');
