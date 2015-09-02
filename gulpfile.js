@@ -20,7 +20,8 @@ var gulp = require('gulp'),
 
         clientOutJs : 'app.js',
         clientOutCss: 'app.css',
-        clientOutLibJs: 'lib.js'
+        clientOutLibJs: 'lib.js',
+        clientDoc     : './documentation'
     },
 
     destination = 'server' + (transpile ? '-es5' : ''),
@@ -58,6 +59,14 @@ gulp.task('clientJs', function () {
         .pipe(gulp.dest(clientDestination));
 });
 
+
+gulp.task('clientDoc', function () {
+    require('del')(config.clientDoc + '/**')
+        .then(function () {
+            gulp.src(config.clientSource + '/**/*.js')
+                .pipe(plugins.jsdoc(config.clientDoc));
+        });
+});
 
 gulp.task('clientHtml', function () {
     gulp.src(config.clientHtml)
