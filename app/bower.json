@@ -14,7 +14,8 @@
   ],
   "dependencies": {
     "requirejs-plugins": "~1.0.3",
-    "requirejs": "~2.1.20"
+    "requirejs": "~2.1.20",
+    "squire": "~0.2.0"
   },
   "install": {
     "path": "app/lib",

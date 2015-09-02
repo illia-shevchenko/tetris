@@ -8,6 +8,7 @@ documentation_server
 docs
 **-built**
 build
+server/public
 dist
 npm-debug.log
 *-es5*
