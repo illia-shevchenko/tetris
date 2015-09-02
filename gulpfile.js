@@ -19,6 +19,7 @@ var gulp = require('gulp'),
         clientHtml  : './app/index.html',
         clientCss   : './app/styles/main.css',
 
+        clientTests: './app/tests/**/*.spec.js',
         clientOutJs : 'app.js',
         clientOutCss: 'app.css',
         clientOutLibJs: 'lib.js',
@@ -63,6 +64,12 @@ gulp.task('clientJs', function () {
         .pipe(gulp.dest(clientDestination));
 });
 
+gulp.task('clientLint', function () {
+    gulp.src(config.clientJs)
+        .pipe(plugins.eslint())
+        .pipe(plugins.eslint.format());
+});
+
 
 gulp.task('clientDoc', function () {
     require('del')(config.clientDoc + '/**')
@@ -72,6 +79,7 @@ gulp.task('clientDoc', function () {
         });
 });
 
+//TODO: Add process html to make work app without building and change it on building
 gulp.task('clientHtml', function () {
     gulp.src(config.clientHtml)
         .pipe(gulp.dest(clientDestination));
@@ -103,7 +111,14 @@ gulp.task('clientTestBuild', function () {
         }));
 });
 
-gulp.task('clientBuild', ['clientLibJs', 'clientJs', 'clientHtml', 'clientCss']);
-gulp.task('clientDev', ['clientTest', 'clientDoc']);
+
+//TODO: Add watchers there
+//TODO: MAnage what should be performed on build and with which command
+gulp.task('clientBuild', ['clientTest', 'clientLint', 'clientLibJs', 'clientJs', 'clientHtml', 'clientCss']);
+gulp.task('clientBuildDev', ['clientTest', 'clientLint', 'clientDoc']);
+
+gulp.task('clientDev', ['clientBuildDev'], function () {
+    gulp.watch([config.clientJs, config.clientTests], ['clientBuildDev']);
+});
 
 gulp.task('default', []);

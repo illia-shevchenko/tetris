@@ -122,7 +122,7 @@ define(['./element'], function (GameElement) {
         this._left = Math.floor((offsets.x - this._width) / 2);
         this._top  = Math.floor((offsets.y - height)      / 2);
 
-        if (!offsets.yCenter){
+        if (!offsets.yCenter) {
             this._top = offsets.y - height;
         }
     };
