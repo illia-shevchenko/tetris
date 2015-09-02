@@ -23,7 +23,7 @@ var gulp = require('gulp'),
         clientOutJs : 'app.js',
         clientOutCss: 'app.css',
         clientOutLibJs: 'lib.js',
-        clientDoc     : '.app/documentation',
+        clientDoc     : './app/documentation',
 
         clientTestConf: './app/karma.conf.js',
         clientTestBuildConf: './app/karma.conf.build.js'
@@ -112,8 +112,6 @@ gulp.task('clientTestBuild', function () {
 });
 
 
-//TODO: Add watchers there
-//TODO: MAnage what should be performed on build and with which command
 gulp.task('clientBuild', ['clientTest', 'clientLint', 'clientLibJs', 'clientJs', 'clientHtml', 'clientCss']);
 gulp.task('clientBuildDev', ['clientTest', 'clientLint', 'clientDoc']);
 
