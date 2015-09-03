@@ -41,7 +41,8 @@
   "scripts": {
     "test_client_locally": "karma start ./app/karma.conf.js",
     "test_client": "karma start ./app/karma.conf.build.js",
-    "test_server": "mocha server/**/*.spec.js --require server/tests/helpers/run.js  --reporter spec --compilers js:gulp-babel/node_modules/babel-core/register"
+    "test_server": "mocha server/**/*.spec.js --require server/tests/helpers/run.js  --reporter spec --compilers js:gulp-babel/node_modules/babel-core/register",
+    "postinstall": "cd app && bower install && cd .."
   },
   "author": "",
   "license": "ISC",
