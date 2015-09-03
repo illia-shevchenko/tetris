@@ -5,7 +5,7 @@
 
 
 class CustomError extends Error {
-    constructor (message, status = 400, data = '', type = 'unknown', pre = '') {
+    constructor(message, status = 400, data = '', type = 'unknown', pre = '') {
         const prefix = pre || type.charAt(0).toUpperCase() + type.slice(1);
 
         super(`${prefix} error: ${message}`);

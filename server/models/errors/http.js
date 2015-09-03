@@ -6,7 +6,7 @@
 let CustomError = require('./custom');
 
 class HttpError extends CustomError {
-    constructor (message, data) {
+    constructor(message, data) {
         super(message, 400, data, 'http');
     }
 }

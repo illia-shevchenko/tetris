@@ -7,4 +7,4 @@
 let app     = require('../../../server'),
     request = require('supertest');
 
-global.request = request(app);//request('http://localhost:' + process.env.PORT || 8080); //todo: pass host address or need to use mock via env variables
+global.request = request(app);

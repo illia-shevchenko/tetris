@@ -3,7 +3,7 @@
  */
 'use strict';
 
-let router = require('express').Router();
+let router = require('express').Router();// eslint-disable-line new-cap
 
 router.use('/game', require('./game'));
 router.get('/about', function (req, res) {

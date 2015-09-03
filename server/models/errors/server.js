@@ -6,7 +6,7 @@
 let CustomError = require('./custom');
 
 class ServerError extends CustomError {
-    constructor (message, data) {
+    constructor(message, data) {
         super(message, 500, data, 'server', 'Server internal');
     }
 }

@@ -4,7 +4,7 @@
 'use strict';
 
 
-let router = require('express').Router();
+let router = require('express').Router();// eslint-disable-line new-cap
 
 router.get('/:q', require('./list'));
 router.put('/:id', require('./update'));

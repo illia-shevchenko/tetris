@@ -6,7 +6,7 @@
 
 const CustomError = require('../models/errors/custom');
 
-module.exports = function(req, res, next) {
+module.exports = function (req, res, next) {
     let err = new CustomError('Not Found', 404);
     next(err);
 };

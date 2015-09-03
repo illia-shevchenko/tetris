@@ -37,15 +37,22 @@ var gulp = require('gulp'),
         dest  : destination,
 
         js    : ['./server/**/*.js', '!**/*.spec.js', '!**/tests/**'],
-        tests : './server/**/*.spec.js'
+        tests : './server/**/*.spec.js',
+        docOut: './server/documentation',
+        main  : './server.js'
+    },
+    initEnv = function () {
+        process.env.NODE_TRANSPILE = transpile;
+        process.env.NODE_DEST      = destination;
+    },
+    cleanEnv = function () {
+        process.env.NODE_TRANSPILE = null;
+        process.env.NODE_DEST      = null;
     };
 
 
 //init environment variables
-(function () {
-    process.env.NODE_TRANSPILE = transpile;
-    process.env.NODE_DEST      = destination;
-})();
+initEnv();
 
 
 //do something additional if transpile is needed
@@ -57,7 +64,7 @@ var gulp = require('gulp'),
     require('gulp-babel/node_modules/babel-core/register');
 })();
 
-
+gulp.task('clean', cleanEnv);
 gulp.task('clientLibJs', function () {
     var files = mainBowerFiles({
         paths: clientConf.folder,
@@ -145,15 +152,36 @@ gulp.task('serverJs', function () {
         .pipe(gulp.dest(serverConf.dest));
 });
 
-gulp.task('serverTest', function () {
+gulp.task('serverLint', function () {
+    gulp.src(serverConf.js)
+        .pipe(plugins.eslint())
+        .pipe(plugins.eslint.format());
+});
+
+
+gulp.task('serverDoc', function () {
+    require('del')(serverConf.docOut + '/**')
+        .then(function () {
+            gulp.src(serverConf.js)
+                .pipe(plugins.jsdoc(serverConf.docOut));
+        });
+});
+
+gulp.task('serverBuild', ['serverLint', 'serverJs']);
+
+gulp.task('serverTest', ['serverBuild'], function () {
     gulp.src(serverConf.tests)
         .pipe(plugins.mocha({
             require: ['./server/tests/helpers/run.js']
-        }))
-        .once('error', process.exit.bind(process, 1))
-        .once('end', process.exit);
+        }))/*
+     .once('error', process.exit.bind(process, 1))
+     .once('end', process.exit)*/;
 });
 
+
+gulp.task('server:restart', function () {
+    gulp.watch([ './app.js' ], plugins.developServer.restart);
+});
 
 gulp.task('clientBuild', ['clientTest', 'clientLint', 'clientLibJs', 'clientJs', 'clientHtml', 'clientCss']);
 gulp.task('clientBuildDev', ['clientTest', 'clientLint', 'clientDoc']);
@@ -162,4 +190,13 @@ gulp.task('clientDev', ['clientBuildDev'], function () {
     gulp.watch([clientConf.js, clientConf.tests], ['clientBuildDev']);
 });
 
-gulp.task('default', []);
+gulp.task('serverBuildDev', ['serverTest', 'serverDoc']);
+
+gulp.task('serverDev', ['serverBuildDev'], function () {
+    gulp.watch([serverConf.js, serverConf.tests], ['serverBuildDev']);
+});
+
+gulp.task('build', ['clientBuild', 'serverBuild']);
+gulp.task('dev', ['clientDev', 'serverDev']);
+
+gulp.task('default', ['clientBuild', 'serverTest']);
