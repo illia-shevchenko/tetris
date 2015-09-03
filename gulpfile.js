@@ -10,9 +10,11 @@ var gulp = require('gulp'),
     args    = require('yargs').argv,
 
     transpile = args.es5,
+    destination = 'server' + (transpile ? '-es5' : ''),
 
     clientConf = {
         folder: './app/',
+        dest  : destination + '/public',
         source: './app/src',
         mainJs  : './app/src/main.js',
         js    : './app/src/**/*.js',
@@ -29,8 +31,14 @@ var gulp = require('gulp'),
         testBuildConf: './app/karma.conf.build.js'
     },
 
-    destination = 'server' + (transpile ? '-es5' : ''),
-    clientDestination = destination + '/public',
+    serverConf = {
+        folder: './server',
+        dest  : destination,
+
+        js    : '',
+        tests : './server/**/*.spec.js'
+    },
+
 
     initEnv = function () {
         process.env.NODE_TRANSPILE = transpile;
@@ -47,11 +55,12 @@ gulp.task('clientLibJs', function () {
 
     gulp.src(files)
         .pipe(plugins.uglify())
-        .pipe(gulp.dest(clientDestination));
+        .pipe(gulp.dest(clientConf.dest));
 });
 
 gulp.task('clientJs', function () {
     gulp.src(clientConf.mainJs)
+        .pipe(plugins.sourcemaps.init())
         .pipe(plugins.requirejsOptimize({
             useStrict: true,
             baseUrl  : clientConf.source,
@@ -59,15 +68,10 @@ gulp.task('clientJs', function () {
                 json: '../bower_components/requirejs-plugins/src/json',
                 text: '../bower_components/requirejs-plugins/lib/text'
             },
-            out: clientConf.jsOut/*,
-            TODO: Source maps seems not to be working - file is not created
-
-             optimize: 'uglify2',
-             generateSourceMaps: true,
-             preserveLicenseComments: false
-             */
+            out: clientConf.jsOut
         }))
-        .pipe(gulp.dest(clientDestination));
+        .pipe(plugins.sourcemaps.write())
+        .pipe(gulp.dest(clientConf.dest));
 });
 
 gulp.task('clientLint', function () {
@@ -88,7 +92,7 @@ gulp.task('clientDoc', function () {
 //TODO: Add process html to make work app without building and change it on building
 gulp.task('clientHtml', function () {
     gulp.src(clientConf.html)
-        .pipe(gulp.dest(clientDestination));
+        .pipe(gulp.dest(clientConf.dest));
 });
 
 
@@ -96,7 +100,7 @@ gulp.task('clientCss', function () {
     gulp.src(clientConf.css)
         .pipe(plugins.minifyCss())
         .pipe(plugins.concat(clientConf.cssOut))
-        .pipe(gulp.dest(clientDestination));
+        .pipe(gulp.dest(clientConf.dest));
 });
 
 gulp.task('clientTest', function () {
@@ -115,6 +119,15 @@ gulp.task('clientTestBuild', function () {
             configFile: clientConf.testBuildConf,
             action    : 'run'
         }));
+});
+
+
+gulp.task('serverJs', function () {
+    if (!transpile) {
+        return;
+    }
+
+    gulp.src()
 });
 
 
