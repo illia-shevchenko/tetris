@@ -4,17 +4,18 @@
 'use strict';
 /*eslint max-nested-callbacks: 0*/
 
-
-let CustomError = require('../custom');
+let CustomError = require('../custom'),
+    expect = require('chai').expect;
 
 describe('CustomError', function () {
     it('should provide default parameters', function () {
         let custom = new CustomError('message');
 
-        expect(custom.errorMessage).toEqual('message');
-        expect(custom.data).toEqual('');
-        expect(custom.type).toEqual('unknown');
-        expect(custom.status).toBe(400);
+        console.log(Object.keys(custom));
+        expect(custom.errorMessage).to.equal('message');
+        expect(custom.data).to.equal('');
+        expect(custom.type).to.equal('unknown');
+        expect(custom.status).to.equal(400);
 
         //expect(custom.toString()).toEqual('');
     });

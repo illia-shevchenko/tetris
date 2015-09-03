@@ -4,7 +4,6 @@
 'use strict';
 /*eslint max-nested-callbacks: 0*/
 
-
 describe('GAME api', function () {
     const baseUrl = 'http://localhost:8080/api/game';
     let   request = require('request');
@@ -14,8 +13,10 @@ describe('GAME api', function () {
         const url = baseUrl + '/search_string';
 
         it('should returns 200 OK and list of games', function (done) {
+            console.log('request');
             request.get(url, function (err, response, body) {
-                expect(response.statusCode).toBe(200);
+                console.log('response');
+                expect(response.statusCode).toBe(300);
                 expect(body).toEqual('Here your list: search_string');
                 done();
             });
