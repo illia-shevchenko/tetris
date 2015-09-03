@@ -2,6 +2,7 @@
  * Created by Illia_Shevchenko on 01.09.2015.
  */
 'use strict';
+/*eslint no-process-exit: 0*/
 
 
 var gulp = require('gulp'),
@@ -37,15 +38,25 @@ var gulp = require('gulp'),
 
         js    : ['./server/**/*.js', '!**/*.spec.js', '!**/tests/**'],
         tests : './server/**/*.spec.js'
-    },
-
-
-    initEnv = function () {
-        process.env.NODE_TRANSPILE = transpile;
-        process.env.NODE_DEST      = destination;
     };
 
-initEnv();
+
+//init environment variables
+(function () {
+    process.env.NODE_TRANSPILE = transpile;
+    process.env.NODE_DEST      = destination;
+})();
+
+
+//do something additional if transpile is needed
+(function () {
+    if (!transpile) {
+        return;
+    }
+
+    require('gulp-babel/node_modules/babel-core/register');
+})();
+
 
 gulp.task('clientLibJs', function () {
     var files = mainBowerFiles({
@@ -132,6 +143,15 @@ gulp.task('serverJs', function () {
         .pipe(plugins.babel())
         .pipe(plugins.sourcemaps.write())
         .pipe(gulp.dest(serverConf.dest));
+});
+
+gulp.task('serverTest', function () {
+    gulp.src(serverConf.tests)
+        .pipe(plugins.mocha({
+            require: ['./server/tests/helpers/run.js']
+        }))
+        .once('error', process.exit.bind(process, 1))
+        .once('end', process.exit);
 });
 
 
