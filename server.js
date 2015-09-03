@@ -7,7 +7,7 @@
 /**
  * set up
  */
-let serverDir  = './server-es5',
+let serverDir  = './server',
     mwDir      = `${serverDir}/middleware`,
 
     express    = require('express'),
@@ -35,8 +35,9 @@ app.use('/', require(`${serverDir}/routes`));
 
 
 app.use(require(`${mwDir}/404`));
-app.use(require(`${mwDir}/handleErrors`));
+app.use(require(`${mwDir}/handle-errors`));
 /**
  * listen (start app with node server.js)
  */
-module.exports = app.listen(port);
+app.listen(port);
+module.exports = app;

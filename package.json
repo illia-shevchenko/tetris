@@ -31,15 +31,15 @@
     "main-bower-files": "^2.9.0",
     "mocha": "^2.3.0",
     "phantomjs": "^1.9.18",
-    "request": "^2.61.0",
     "requirejs": "^2.1.20",
     "sinon": "^1.16.1",
+    "supertest": "^1.1.0",
     "yargs": "^3.23.0"
   },
   "scripts": {
     "test_client_locally": "karma start ./app/karma.conf.js",
     "test_client": "karma start ./app/karma.conf.build.js",
-    "test_server": "mocha server/**/*.spec.js --require server/tests/helpers/chai.js --reporter spec --compilers js:gulp-babel/node_modules/babel-core/register"
+    "test_server": "mocha server/**/*.spec.js --require server/tests/helpers/run.js  --reporter spec --compilers js:gulp-babel/node_modules/babel-core/register"
   },
   "author": "",
   "license": "ISC",
