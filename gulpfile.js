@@ -11,31 +11,37 @@ var gulp = require('gulp'),
 
     transpile = args.es5,
 
-    config = {
-        clientPath: './app/',
-        clientSource: './app/src',
-        clientMain  : './app/src/main.js',
-        clientJs    : './app/src/**/*.js',
-        clientHtml  : './app/index.html',
-        clientCss   : './app/styles/main.css',
+    clientConf = {
+        folder: './app/',
+        source: './app/src',
+        mainJs  : './app/src/main.js',
+        js    : './app/src/**/*.js',
+        html  : './app/index.html',
+        css   : './app/styles/main.css',
 
-        clientTests: './app/tests/**/*.spec.js',
-        clientOutJs : 'app.js',
-        clientOutCss: 'app.css',
-        clientOutLibJs: 'lib.js',
-        clientDoc     : './app/documentation',
+        tests: './app/tests/**/*.spec.js',
+        jsOut : 'app.js',
+        cssOut: 'app.css',
+        libJsOut: 'lib.js',
+        docOut     : './app/documentation',
 
-        clientTestConf: './app/karma.conf.js',
-        clientTestBuildConf: './app/karma.conf.build.js'
+        testConf: './app/karma.conf.js',
+        testBuildConf: './app/karma.conf.build.js'
     },
 
     destination = 'server' + (transpile ? '-es5' : ''),
-    clientDestination = destination + '/public';
+    clientDestination = destination + '/public',
 
+    initEnv = function () {
+        process.env.NODE_TRANSPILE = transpile;
+        process.env.NODE_DEST      = destination;
+    };
+
+initEnv();
 
 gulp.task('clientLibJs', function () {
     var files = mainBowerFiles({
-        paths: config.clientPath,
+        paths: clientConf.folder,
         filter: /require.js/
     });
 
@@ -45,15 +51,15 @@ gulp.task('clientLibJs', function () {
 });
 
 gulp.task('clientJs', function () {
-    gulp.src(config.clientMain)
+    gulp.src(clientConf.mainJs)
         .pipe(plugins.requirejsOptimize({
             useStrict: true,
-            baseUrl  : config.clientSource,
+            baseUrl  : clientConf.source,
             paths  : {
                 json: '../bower_components/requirejs-plugins/src/json',
                 text: '../bower_components/requirejs-plugins/lib/text'
             },
-            out: config.clientOutJs/*,
+            out: clientConf.jsOut/*,
             TODO: Source maps seems not to be working - file is not created
 
              optimize: 'uglify2',
@@ -65,38 +71,38 @@ gulp.task('clientJs', function () {
 });
 
 gulp.task('clientLint', function () {
-    gulp.src(config.clientJs)
+    gulp.src(clientConf.js)
         .pipe(plugins.eslint())
         .pipe(plugins.eslint.format());
 });
 
 
 gulp.task('clientDoc', function () {
-    require('del')(config.clientDoc + '/**')
+    require('del')(clientConf.docOut + '/**')
         .then(function () {
-            gulp.src(config.clientJs)
-                .pipe(plugins.jsdoc(config.clientDoc));
+            gulp.src(clientConf.js)
+                .pipe(plugins.jsdoc(clientConf.docOut));
         });
 });
 
 //TODO: Add process html to make work app without building and change it on building
 gulp.task('clientHtml', function () {
-    gulp.src(config.clientHtml)
+    gulp.src(clientConf.html)
         .pipe(gulp.dest(clientDestination));
 });
 
 
 gulp.task('clientCss', function () {
-    gulp.src(config.clientCss)
+    gulp.src(clientConf.css)
         .pipe(plugins.minifyCss())
-        .pipe(plugins.concat(config.clientOutCss))
+        .pipe(plugins.concat(clientConf.cssOut))
         .pipe(gulp.dest(clientDestination));
 });
 
 gulp.task('clientTest', function () {
     gulp.src('notexisting')
     .pipe(plugins.karma({
-            configFile: config.clientTestConf,
+            configFile: clientConf.testConf,
             logLevel  : 'ERROR',
             action    : 'run'
         }));
@@ -106,7 +112,7 @@ gulp.task('clientTest', function () {
 gulp.task('clientTestBuild', function () {
     gulp.src('notexisting')
         .pipe(plugins.karma({
-            configFile: config.clientTestBuildConf,
+            configFile: clientConf.testBuildConf,
             action    : 'run'
         }));
 });
@@ -116,7 +122,7 @@ gulp.task('clientBuild', ['clientTest', 'clientLint', 'clientLibJs', 'clientJs',
 gulp.task('clientBuildDev', ['clientTest', 'clientLint', 'clientDoc']);
 
 gulp.task('clientDev', ['clientBuildDev'], function () {
-    gulp.watch([config.clientJs, config.clientTests], ['clientBuildDev']);
+    gulp.watch([clientConf.js, clientConf.tests], ['clientBuildDev']);
 });
 
 gulp.task('default', []);
