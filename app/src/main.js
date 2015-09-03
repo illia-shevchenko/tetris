@@ -7,8 +7,8 @@
 requirejs.config({
     baseUrl: 'src',
     paths  : {
-        json: '../lib/requirejs-plugins/json',
-        text: '../lib/requirejs-plugins/text'
+        json: '../bower_components/requirejs-plugins/src/json',
+        text: '../bower_components/requirejs-plugins/lib/text'
     }
 });
 

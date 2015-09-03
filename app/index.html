@@ -3,7 +3,9 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>My cool tested tetris</title>
-    <link rel="stylesheet" href="app.css">
+    <!-- build:css app.css-->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- /build-->
 </head>
 <body>
     <div class="canvas" id="canvas">
@@ -18,6 +20,8 @@
             <!--<button>Save</button>-->
         </div>
     </div>
-    <script data-main="app" src="require.js"></script>
+    <!-- build:replace '<script data-main="app" src="require.js"></script>' -->
+    <script data-main="src/main" src="bower_components/requirejs/require.js"></script>
+    <!-- /build -->
 </body>
 </html>

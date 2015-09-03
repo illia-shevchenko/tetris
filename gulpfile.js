@@ -89,9 +89,9 @@ gulp.task('clientDoc', function () {
         });
 });
 
-//TODO: Add process html to make work app without building and change it on building
 gulp.task('clientHtml', function () {
     gulp.src(clientConf.html)
+        .pipe(plugins.processhtml())
         .pipe(gulp.dest(clientConf.dest));
 });
 
