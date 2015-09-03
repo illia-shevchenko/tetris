@@ -7,7 +7,7 @@
 /**
  * set up
  */
-let serverDir  = './server',
+let serverDir  = `./${process.env.NODE_DEST || 'server'}`,
     mwDir      = `${serverDir}/middleware`,
 
     express    = require('express'),

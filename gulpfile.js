@@ -35,7 +35,7 @@ var gulp = require('gulp'),
         folder: './server',
         dest  : destination,
 
-        js    : '',
+        js    : ['./server/**/*.js', '!**/*.spec.js', '!**/tests/**'],
         tests : './server/**/*.spec.js'
     },
 
@@ -127,7 +127,11 @@ gulp.task('serverJs', function () {
         return;
     }
 
-    gulp.src()
+    gulp.src(serverConf.js)
+        .pipe(plugins.sourcemaps.init())
+        .pipe(plugins.babel())
+        .pipe(plugins.sourcemaps.write())
+        .pipe(gulp.dest(serverConf.dest));
 });
 
 
