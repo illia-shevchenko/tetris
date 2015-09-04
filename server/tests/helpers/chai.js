@@ -4,9 +4,11 @@
 'use strict';
 
 
-let chai = require('chai');
+let chai = require('chai'),
+    chaiSubset = require('chai-subset');
 
 chai.config.includeStack = true;
+chai.use(chaiSubset);
 
 global.expect = chai.expect;
 global.AssertionError = chai.AssertionError;

@@ -15,14 +15,6 @@ class CustomError extends Error {
         this.type = type;
         this.status = status;
     }
-
-    toString() {
-        return JSON.stringify({
-            errorMessage: this.errorMessage,
-            data: this.data,
-            type: this.type
-        });
-    }
 }
 
 module.exports = CustomError;

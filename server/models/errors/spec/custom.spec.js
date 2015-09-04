@@ -11,12 +11,24 @@ describe('CustomError', function () {
     it('should provide default parameters', function () {
         let custom = new CustomError('message');
 
-        console.log(Object.keys(custom));
-        expect(custom.errorMessage).to.equal('message');
-        expect(custom.data).to.equal('');
-        expect(custom.type).to.equal('unknown');
-        expect(custom.status).to.equal(400);
+        expect(custom).to.containSubset({
+            errorMessage: 'message',
+            data: '',
+            type: 'unknown',
+            status: 400
+        });
+    });
 
-        //expect(custom.toString()).toEqual('');
+    it('should set error properties parameters', function () {
+        let custom = new CustomError('custom message', 500, { foo: 'bar' }, 'internal');
+
+        expect(custom).to.containSubset({
+            errorMessage: 'custom message',
+            data: {
+                foo: 'bar'
+            },
+            type: 'internal',
+            status: 500
+        });
     });
 });

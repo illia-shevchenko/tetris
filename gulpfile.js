@@ -194,7 +194,11 @@ function serverTest() {
     return gulp.src(serverConf.tests)
         .pipe(plugins.mocha({
             require: ['./server/tests/helpers/run.js']
-        }));
+        }))
+        .on('error', function (err) {
+            console.log(err.toString());//eslint-disable-line no-console
+            this.emit('end');
+        });
 }
 
 function serverTestEnd() {
