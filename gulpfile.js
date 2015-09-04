@@ -159,29 +159,30 @@ gulp.task('serverLint', function () {
 });
 
 
+//TODO: JSDoc not supported ES6 currently @see https://github.com/jsdoc3/jsdoc/issues/555
 gulp.task('serverDoc', function () {
-    require('del')(serverConf.docOut + '/**')
-        .then(function () {
-            gulp.src(serverConf.js)
-                .pipe(plugins.jsdoc(serverConf.docOut));
-        });
+    //require('del')(serverConf.docOut + '/**')
+    //    .then(function () {
+    //        gulp.src(serverConf.js)
+    //            .pipe(plugins.jsdoc(serverConf.docOut));
+    //    });
 });
 
 gulp.task('serverBuild', ['serverLint', 'serverJs']);
 
-gulp.task('serverTest', ['serverBuild'], function () {
-    gulp.src(serverConf.tests)
+function serverTest() {
+    return gulp.src(serverConf.tests)
         .pipe(plugins.mocha({
             require: ['./server/tests/helpers/run.js']
-        }))/*
-     .once('error', process.exit.bind(process, 1))
-     .once('end', process.exit)*/;
+        }));
+}
+
+gulp.task('serverTest:end', ['serverBuild'], function () {
+    serverTest().once('error', process.exit.bind(process, 1))
+        .once('end', process.exit);
 });
 
-
-gulp.task('server:restart', function () {
-    gulp.watch([ './app.js' ], plugins.developServer.restart);
-});
+gulp.task('serverTest', ['serverBuild'], serverTest);
 
 gulp.task('clientBuild', ['clientTest', 'clientLint', 'clientLibJs', 'clientJs', 'clientHtml', 'clientCss']);
 gulp.task('clientBuildDev', ['clientTest', 'clientLint', 'clientDoc']);
@@ -190,8 +191,11 @@ gulp.task('clientDev', ['clientBuildDev'], function () {
     gulp.watch([clientConf.js, clientConf.tests], ['clientBuildDev']);
 });
 
-gulp.task('serverBuildDev', ['serverTest', 'serverDoc']);
+gulp.task('serverBuildDev', ['serverDoc', 'serverTest']);
+gulp.task('serverBuildDev:end', ['serverDoc', 'serverTest:end']);
 
+
+//TODO: This is not working properly, we requires server.js only on starting and then it is not reloaded
 gulp.task('serverDev', ['serverBuildDev'], function () {
     gulp.watch([serverConf.js, serverConf.tests], ['serverBuildDev']);
 });
@@ -199,4 +203,4 @@ gulp.task('serverDev', ['serverBuildDev'], function () {
 gulp.task('build', ['clientBuild', 'serverBuild']);
 gulp.task('dev', ['clientDev', 'serverDev']);
 
-gulp.task('default', ['clientBuild', 'serverTest']);
+gulp.task('default', ['clientBuild', 'serverBuildDev']);
