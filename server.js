@@ -22,7 +22,9 @@ let serverDir  = `./${process.env.NODE_DEST || 'server'}`,
 mongoose.connect(database.url);
 
 
-
+/**
+ * middleware
+ */
 app.use(express.static(__dirname + '/app'));
 app.use(bodyParser.urlencoded({
     extended: 'true'
@@ -30,14 +32,20 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.json());
 
+
 /**
  * routes
  */
 app.use('/', require(`${serverDir}/routes`));
 
 
+/**
+ * middleware for router
+ */
 app.use(require(`${mwDir}/404`));
 app.use(require(`${mwDir}/handle-errors`));
+
+
 /**
  * listen (start app with node server.js)
  */
