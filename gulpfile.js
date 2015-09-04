@@ -44,10 +44,7 @@ var gulp = require('gulp'),
     initEnv = function () {
         process.env.NODE_TRANSPILE = transpile;
         process.env.NODE_DEST      = destination;
-    },
-    cleanEnv = function () {
-        process.env.NODE_TRANSPILE = null;
-        process.env.NODE_DEST      = null;
+        process.env.NODE_IS_RUN    = '';
     };
 
 
@@ -63,8 +60,6 @@ initEnv();
 
     require('gulp-babel/node_modules/babel-core/register');
 })();
-
-gulp.task('clean', cleanEnv);
 
 
 /**
@@ -83,7 +78,7 @@ gulp.task('clientLibJs', function () {
         .pipe(gulp.dest(clientConf.dest));
 });
 
-gulp.task('clientJs', function () {
+gulp.task('clientJs', function (cb) {
     gulp.src(clientConf.mainJs)
         .pipe(plugins.sourcemaps.init())
         .pipe(plugins.requirejsOptimize({
@@ -96,7 +91,8 @@ gulp.task('clientJs', function () {
             out: clientConf.jsOut
         }))
         .pipe(plugins.sourcemaps.write())
-        .pipe(gulp.dest(clientConf.dest));
+        .pipe(gulp.dest(clientConf.dest))
+        .once('end', cb);
 });
 
 gulp.task('clientLint', function () {
@@ -114,18 +110,20 @@ gulp.task('clientDoc', function () {
         });
 });
 
-gulp.task('clientHtml', function () {
+gulp.task('clientHtml', function (cb) {
     gulp.src(clientConf.html)
         .pipe(plugins.processhtml())
-        .pipe(gulp.dest(clientConf.dest));
+        .pipe(gulp.dest(clientConf.dest))
+        .once('end', cb);
 });
 
 
-gulp.task('clientCss', function () {
+gulp.task('clientCss', function (cb) {
     gulp.src(clientConf.css)
         .pipe(plugins.minifyCss())
         .pipe(plugins.concat(clientConf.cssOut))
-        .pipe(gulp.dest(clientConf.dest));
+        .pipe(gulp.dest(clientConf.dest))
+        .once('end', cb);
 });
 
 gulp.task('clientTest', function () {
@@ -160,7 +158,7 @@ gulp.task('clientDev', ['clientBuildDev'], function () {
  */
 
 
-gulp.task('serverJs', function () {
+gulp.task('serverJs', function (cb) {
     if (!transpile) {
         return;
     }
@@ -169,7 +167,8 @@ gulp.task('serverJs', function () {
         .pipe(plugins.sourcemaps.init())
         .pipe(plugins.babel())
         .pipe(plugins.sourcemaps.write())
-        .pipe(gulp.dest(serverConf.dest));
+        .pipe(gulp.dest(serverConf.dest))
+        .once('end', cb);
 });
 
 gulp.task('serverLint', function () {
