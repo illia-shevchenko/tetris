@@ -12,7 +12,7 @@ describe('CustomError', function () {
         let custom = new CustomError('message');
 
         expect(custom).to.containSubset({
-            errorMessage: 'message',
+            message: 'message',
             data: '',
             type: 'unknown',
             status: 400
@@ -23,12 +23,24 @@ describe('CustomError', function () {
         let custom = new CustomError('custom message', 500, { foo: 'bar' }, 'internal');
 
         expect(custom).to.containSubset({
-            errorMessage: 'custom message',
+            message: 'custom message',
             data: {
                 foo: 'bar'
             },
             type: 'internal',
             status: 500
         });
+    });
+
+    it('should properly be converted to a string with using prefix parameter and also set errorMessage property', function () {
+        let custom = new CustomError('it was used not properly', 500, '', 'internal', 'Thrown');
+        expect(custom.toString()).to.equal('Thrown error: it was used not properly');
+        expect(custom.errorMessage).to.equal('Thrown error: it was used not properly');
+    });
+
+    it('should set error properties parameters and also set errorMessage property', function () {
+        let custom = new CustomError('it was your fault', 500, '', 'internal');
+        expect(custom.toString()).to.equal('Internal error: it was your fault');
+        expect(custom.errorMessage).to.equal('Internal error: it was your fault');
     });
 });
