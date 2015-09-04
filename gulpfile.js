@@ -65,6 +65,13 @@ initEnv();
 })();
 
 gulp.task('clean', cleanEnv);
+
+
+/**
+ * Client tasks
+ */
+
+
 gulp.task('clientLibJs', function () {
     var files = mainBowerFiles({
         paths: clientConf.folder,
@@ -140,6 +147,19 @@ gulp.task('clientTestBuild', function () {
 });
 
 
+gulp.task('clientBuild', ['clientTest', 'clientLint', 'clientLibJs', 'clientJs', 'clientHtml', 'clientCss']);
+gulp.task('clientBuildDev', ['clientTest', 'clientLint', 'clientDoc']);
+
+gulp.task('clientDev', ['clientBuildDev'], function () {
+    gulp.watch([clientConf.js, clientConf.tests], ['clientBuildDev']);
+});
+
+
+/**
+ * Server tasks
+ */
+
+
 gulp.task('serverJs', function () {
     if (!transpile) {
         return;
@@ -169,6 +189,7 @@ gulp.task('serverDoc', function () {
 });
 
 gulp.task('serverBuild', ['serverLint', 'serverJs']);
+gulp.task('serverBuildDev', ['serverDoc', 'serverBuild']);
 
 function serverTest() {
     return gulp.src(serverConf.tests)
@@ -177,30 +198,29 @@ function serverTest() {
         }));
 }
 
-gulp.task('serverTest:end', ['serverBuild'], function () {
+function serverTestEnd() {
     serverTest().once('error', process.exit.bind(process, 1))
         .once('end', process.exit);
+}
+
+gulp.task('serverTest', ['serverBuild'], serverTestEnd);
+
+gulp.task('server:start', ['serverBuildDev'], function () {
+    process.env.NODE_IS_RUN = true;
+    plugins.developServer.listen({
+        path: serverConf.main
+    }, serverTest);
 });
 
-gulp.task('serverTest', ['serverBuild'], serverTest);
-
-gulp.task('clientBuild', ['clientTest', 'clientLint', 'clientLibJs', 'clientJs', 'clientHtml', 'clientCss']);
-gulp.task('clientBuildDev', ['clientTest', 'clientLint', 'clientDoc']);
-
-gulp.task('clientDev', ['clientBuildDev'], function () {
-    gulp.watch([clientConf.js, clientConf.tests], ['clientBuildDev']);
+gulp.task('server:restart', ['serverBuildDev'], function () {
+    plugins.developServer.restart(serverTest);
 });
 
-gulp.task('serverBuildDev', ['serverDoc', 'serverTest']);
-gulp.task('serverBuildDev:end', ['serverDoc', 'serverTest:end']);
-
-
-//TODO: This is not working properly, we requires server.js only on starting and then it is not reloaded
-gulp.task('serverDev', ['serverBuildDev'], function () {
-    gulp.watch([serverConf.js, serverConf.tests], ['serverBuildDev']);
+gulp.task('serverDev', ['server:start'], function () {
+    gulp.watch([serverConf.js, serverConf.tests], ['server:restart']);
 });
 
-gulp.task('build', ['clientBuild', 'serverBuild']);
+gulp.task('build', ['clientBuild', 'serverTest']);
 gulp.task('dev', ['clientDev', 'serverDev']);
 
-gulp.task('default', ['clientBuild', 'serverBuildDev']);
+gulp.task('default', ['dev']);

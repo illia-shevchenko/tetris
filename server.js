@@ -21,6 +21,8 @@ let serverDir  = `./${process.env.NODE_DEST || 'server'}`,
  */
 mongoose.connect(database.url);
 
+
+
 app.use(express.static(__dirname + '/app'));
 app.use(bodyParser.urlencoded({
     extended: 'true'

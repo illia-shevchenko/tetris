@@ -14,6 +14,7 @@
     "gulp": "^3.9.0",
     "gulp-babel": "^5.2.1",
     "gulp-concat": "^2.6.0",
+    "gulp-develop-server": "^0.4.3",
     "gulp-eslint": "^1.0.0",
     "gulp-jsdoc": "^0.1.4",
     "gulp-karma": "0.0.4",

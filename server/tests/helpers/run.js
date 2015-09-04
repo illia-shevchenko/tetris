@@ -4,5 +4,5 @@
 'use strict';
 
 require('./chai');
-require('./api-mock');
+require('./request');
 require('./supertest-end');
