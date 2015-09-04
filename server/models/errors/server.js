@@ -6,8 +6,12 @@
 let CustomError = require('./custom');
 
 class ServerError extends CustomError {
-    constructor(message, data) {
-        super(message, 500, data, 'server', 'Server internal');
+    constructor(message, status, data) {
+        if (!status || status < 500 || status >= 600) {
+            status = 500;
+        }
+
+        super(message, status, data, 'server', 'Server internal');
     }
 }
 

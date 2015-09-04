@@ -7,7 +7,7 @@ let CustomError = require('./custom');
 
 class HttpError extends CustomError {
     constructor(message, status, data) {
-        if (status < 400 || status >= 500) {
+        if (!status || status < 400 || status >= 500) {
             status = 400;
         }
 

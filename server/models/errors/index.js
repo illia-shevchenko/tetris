@@ -6,5 +6,6 @@
 
 module.exports = {
     ServerError: require('./server'),
-    HttpError  : require('./http')
+    HttpError  : require('./http'),
+    CustomError: require('./custom')
 };
