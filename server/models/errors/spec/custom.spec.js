@@ -4,8 +4,7 @@
 'use strict';
 /*eslint max-nested-callbacks: 0*/
 
-let CustomError = require('../custom'),
-    expect = require('chai').expect;
+let CustomError = require('../custom');
 
 describe('CustomError', function () {
     it('should provide default parameters', function () {

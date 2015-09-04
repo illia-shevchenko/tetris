@@ -4,9 +4,9 @@
 'use strict';
 
 
-const CustomError = require('../models/errors/custom');
+const HttpError = require('../models/errors/http');
 
 module.exports = function (req, res, next) {
-    let err = new CustomError('Not Found', 404);
+    let err = new HttpError('Not Found', 404);
     next(err);
 };
