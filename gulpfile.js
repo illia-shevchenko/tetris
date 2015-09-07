@@ -178,13 +178,14 @@ gulp.task('serverLint', function () {
 });
 
 
-//TODO: JSDoc not supported ES6 currently @see https://github.com/jsdoc3/jsdoc/issues/555
 gulp.task('serverDoc', function () {
-    //require('del')(serverConf.docOut + '/**')
-    //    .then(function () {
-    //        gulp.src(serverConf.js)
-    //            .pipe(plugins.jsdoc(serverConf.docOut));
-    //    });
+    require('del')(serverConf.docOut + '/**')
+        .then(function () {
+            gulp.src(serverConf.folder)
+                .pipe(plugins.esdoc({
+                    destination: serverConf.docOut
+                }));
+        });
 });
 
 gulp.task('serverBuild', ['serverLint', 'serverJs']);

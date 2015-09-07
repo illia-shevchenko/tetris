@@ -3,10 +3,9 @@
  */
 'use strict';
 
+import HttpError from '../models/errors/http';
 
-const HttpError = require('../models/errors/http');
-
-module.exports = function (req, res, next) {
+export default function (req, res, next) {
     let err = new HttpError('Not Found', 404);
     next(err);
-};
+}

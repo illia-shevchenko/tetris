@@ -1,5 +1,7 @@
 {
-    "ecmaFeatures": {},
+    "ecmaFeatures": {
+        "modules": true
+    },
     "parser": "espree",
     "env": {
         "browser": true,
@@ -169,7 +171,7 @@
         "space-unary-ops": [2, { "words": true, "nonwords": false }],
         "spaced-comment": 0,
         "spaced-line-comment": [0, "always"],
-        "strict": [2, "global"],
+        "strict": [0, "global"],
         "use-isnan": 2,
         "valid-jsdoc": 0,
         "valid-typeof": 2,
