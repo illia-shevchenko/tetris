@@ -4,11 +4,16 @@
 'use strict';
 
 import express from 'express';
+import list from './list';
+import update from './update';
+import create from './create';
+import del    from './delete';
+
 let router = express.Router();// eslint-disable-line new-cap
 
-router.get('/:q', require('./list'));
-router.put('/:id', require('./update'));
-router.post('/', require('./create'));
-router.delete('/:id', require('./delete'));
+router.get('/:q', list);
+router.put('/:id', update);
+router.post('/', create);
+router.delete('/:id', del);
 
 export { router as default };
