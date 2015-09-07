@@ -4,8 +4,8 @@
 'use strict';
 /*eslint max-nested-callbacks: 0*/
 
-let ServerError = require('../server'),
-    CustomError = require('../custom');
+import ServerError from '../server';
+import CustomError from '../custom';
 
 describe('ServerError', function () {
     it('should provide "server" type', function () {

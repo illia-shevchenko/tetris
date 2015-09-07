@@ -4,8 +4,8 @@
 'use strict';
 /*eslint max-nested-callbacks: 0*/
 
-let HttpError = require('../http'),
-    CustomError = require('../custom');
+import HttpError from'../http';
+import CustomError from '../custom';
 
 describe('HttpError', function () {
     it('should provide "http" type', function () {

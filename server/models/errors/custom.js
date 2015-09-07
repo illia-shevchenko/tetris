@@ -4,7 +4,7 @@
 'use strict';
 
 
-class CustomError extends Error {
+export default class CustomError extends Error {
     constructor(message, status = 400, data = '', type = 'unknown', pre = null) {
         super(message);
 
@@ -24,6 +24,3 @@ class CustomError extends Error {
         });
     }
 }
-
-
-module.exports = CustomError;

@@ -4,7 +4,7 @@
 'use strict';
 
 
-module.exports = {
+export default {
     ServerError: require('./server'),
     HttpError  : require('./http'),
     CustomError: require('./custom')

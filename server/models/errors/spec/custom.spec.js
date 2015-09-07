@@ -4,7 +4,7 @@
 'use strict';
 /*eslint max-nested-callbacks: 0*/
 
-let CustomError = require('../custom');
+import CustomError from '../custom';
 
 describe('CustomError', function () {
     it('should provide default parameters', function () {

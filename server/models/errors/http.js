@@ -3,9 +3,9 @@
  */
 'use strict';
 
-let CustomError = require('./custom');
+import CustomError from './custom';
 
-class HttpError extends CustomError {
+export default class HttpError extends CustomError {
     constructor(message, status, data) {
         if (!status || status < 400 || status >= 500) {
             status = 400;
@@ -14,5 +14,3 @@ class HttpError extends CustomError {
         super(message, status, data, 'http');
     }
 }
-
-module.exports = HttpError;

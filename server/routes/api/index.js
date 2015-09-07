@@ -3,11 +3,12 @@
  */
 'use strict';
 
-let router = require('express').Router();// eslint-disable-line new-cap
+import express from 'express';
+let router = express.Router();// eslint-disable-line new-cap
 
 router.use('/game', require('./game'));
 router.get('/about', function (req, res) {
     res.send('Here is cool api version 0.0.0-pre-alfa');
 });
 
-module.exports = router;
+export { router as default };

@@ -4,6 +4,6 @@
 'use strict';
 
 
-module.exports = function (req, res) {
+export default function (req, res) {
     res.send('Here your list: ' + req.params.q);
-};
+}

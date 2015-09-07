@@ -3,8 +3,9 @@
  */
 'use strict';
 
-let router = require('express').Router();// eslint-disable-line new-cap
+import express from 'express';
+let router = express.Router();// eslint-disable-line new-cap
 
 router.use('/api', require('./api'));
 
-module.exports = router;
+export { router as default };
