@@ -7,14 +7,14 @@
 import ServerError from '../server';
 import CustomError from '../custom';
 
-describe('ServerError', function () {
-    it('should provide "server" type', function () {
+describe('ServerError', () => {
+    it('should provide "server" type', () => {
         let custom = new ServerError('model error');
 
         expect(custom.type).to.equal('server');
     });
 
-    it('should change statuses out of range 500 to 599 to 500', function () {
+    it('should change statuses out of range 500 to 599 to 500', () => {
         let custom = new ServerError('model error', 400);
         expect(custom.status).to.equal(500);
 
@@ -25,17 +25,17 @@ describe('ServerError', function () {
         expect(custom.status).to.equal(500);
     });
 
-    it('should extend CustomError class', function () {
+    it('should extend CustomError class', () => {
         let custom = new ServerError('model error', 500);
         expect(custom).to.be.instanceof(CustomError);
     });
 
-    it('should set properly string representing starts with "Server internal"', function () {
+    it('should set properly string representing starts with "Server internal"', () => {
         let custom = new ServerError('model error');
         expect(custom.errorMessage).to.match(/^Server internal/);
     });
     
-    it('should set data and message from given parameters', function () {
+    it('should set data and message from given parameters', () => {
         let custom = new ServerError('model error', 0, { foo: 'bar' });
 
         expect(custom).to.containSubset({
