@@ -7,7 +7,7 @@
         "browser": true,
         "node": true,
         "amd": true,
-        "mocha": false,
+        "mocha": true,
         "jasmine": true,
         "es6" : true
     },
