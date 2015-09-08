@@ -4,8 +4,8 @@
 'use strict';
 
 
-let chai = require('chai'),
-    chaiSubset = require('chai-subset');
+import chai from 'chai';
+import chaiSubset from 'chai-subset';
 
 chai.config.includeStack = true;
 chai.use(chaiSubset);

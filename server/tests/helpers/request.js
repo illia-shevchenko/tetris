@@ -4,7 +4,7 @@
 'use strict';
 
 
-let request = require('supertest');
+import request from 'supertest';
 
 if (process.env.NODE_IS_RUN) {
     global.request = request(`http://localhost:${process.env.PORT || 8080}`);
