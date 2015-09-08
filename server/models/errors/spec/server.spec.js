@@ -9,36 +9,36 @@ import CustomError from '../custom';
 
 describe('ServerError', () => {
     it('should provide "server" type', () => {
-        let custom = new ServerError('model error');
+        let error = new ServerError('model error');
 
-        expect(custom.type).to.equal('server');
+        expect(error.type).to.equal('server');
     });
 
     it('should change statuses out of range 500 to 599 to 500', () => {
-        let custom = new ServerError('model error', 400);
-        expect(custom.status).to.equal(500);
+        let error = new ServerError('model error', 400);
+        expect(error.status).to.equal(500);
 
-        custom = new ServerError('model error', 600);
-        expect(custom.status).to.equal(500);
+        error = new ServerError('model error', 600);
+        expect(error.status).to.equal(500);
 
-        custom = new ServerError('model error');
-        expect(custom.status).to.equal(500);
+        error = new ServerError('model error');
+        expect(error.status).to.equal(500);
     });
 
     it('should extend CustomError class', () => {
-        let custom = new ServerError('model error', 500);
-        expect(custom).to.be.instanceof(CustomError);
+        let error = new ServerError('model error', 500);
+        expect(error).to.be.instanceof(CustomError);
     });
 
     it('should set properly string representing starts with "Server internal"', () => {
-        let custom = new ServerError('model error');
-        expect(custom.errorMessage).to.match(/^Server internal/);
+        let error = new ServerError('model error');
+        expect(error.errorMessage).to.match(/^Server internal/);
     });
     
     it('should set data and message from given parameters', () => {
-        let custom = new ServerError('model error', 0, { foo: 'bar' });
+        let error = new ServerError('model error', 0, { foo: 'bar' });
 
-        expect(custom).to.containSubset({
+        expect(error).to.containSubset({
             message: 'model error',
             data: {
                 foo: 'bar'

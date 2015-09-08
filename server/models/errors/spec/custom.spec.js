@@ -8,9 +8,9 @@ import CustomError from '../custom';
 
 describe('CustomError', () => {
     it('should provide default parameters', () => {
-        let custom = new CustomError('message');
+        let error = new CustomError('message');
 
-        expect(custom).to.containSubset({
+        expect(error).to.containSubset({
             message: 'message',
             data: '',
             type: 'unknown',
@@ -19,9 +19,9 @@ describe('CustomError', () => {
     });
 
     it('should set error properties parameters', () => {
-        let custom = new CustomError('custom message', 500, { foo: 'bar' }, 'internal');
+        let error = new CustomError('custom message', 500, { foo: 'bar' }, 'internal');
 
-        expect(custom).to.containSubset({
+        expect(error).to.containSubset({
             message: 'custom message',
             data: {
                 foo: 'bar'
@@ -32,14 +32,14 @@ describe('CustomError', () => {
     });
 
     it('should properly be converted to a string with using prefix parameter and also set errorMessage property', () => {
-        let custom = new CustomError('it was used not properly', 500, '', 'internal', 'Thrown');
-        expect(custom.toString()).to.equal('Thrown error: it was used not properly');
-        expect(custom.errorMessage).to.equal('Thrown error: it was used not properly');
+        let error = new CustomError('it was used not properly', 500, '', 'internal', 'Thrown');
+        expect(error.toString()).to.equal('Thrown error: it was used not properly');
+        expect(error.errorMessage).to.equal('Thrown error: it was used not properly');
     });
 
     it('should set error properties parameters and also set errorMessage property', () => {
-        let custom = new CustomError('it was your fault', 500, '', 'internal');
-        expect(custom.toString()).to.equal('Internal error: it was your fault');
-        expect(custom.errorMessage).to.equal('Internal error: it was your fault');
+        let error = new CustomError('it was your fault', 500, '', 'internal');
+        expect(error.toString()).to.equal('Internal error: it was your fault');
+        expect(error.errorMessage).to.equal('Internal error: it was your fault');
     });
 });

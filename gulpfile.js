@@ -189,7 +189,7 @@ gulp.task('serverDoc', function () {
 });
 
 gulp.task('serverBuild', ['serverLint', 'serverJs']);
-gulp.task('serverBuildDev', ['serverDoc', 'serverBuild']);
+gulp.task('serverBuildDev', ['serverBuild']);
 
 function serverTest() {
     return gulp.src(serverConf.tests)
