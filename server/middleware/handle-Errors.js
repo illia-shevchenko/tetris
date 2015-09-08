@@ -7,8 +7,9 @@
 const CustomError = require('../models/errors/custom');
 module.exports = function (err, req, res, next) { //eslint-disable-line no-unused-vars
     if (!(err instanceof CustomError)) {
-        err = new CustomError('Error!', 500, err);
-        console.log('Error!: ', err);
+        res.status(500)
+            .send(err.toString());
+        return;
     }
 
     res.status(err.status)

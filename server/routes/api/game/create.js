@@ -7,18 +7,12 @@ import Game from '../../../models/game';
 
 
 export default function (req, res, next) {
-    //try {
-        let game = new Game(req.body);
-        game.save((err) => {
-            if (err) {
-                return next(err);
-            }
+    let game = new Game(req.body);
+    game.save((err) => {
+        if (err) {
+            return next(err);
+        }
 
-            res.send(game);
-        });
-
-        //res.send('Created new item with name:' + req.body.name);
-    //} catch (error) {
-    //    next(error);
-    //}
+        res.send(game);
+    });
 }

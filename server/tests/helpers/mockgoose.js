@@ -8,5 +8,3 @@ import mongoose from 'mongoose';
 import mockgoose from 'mockgoose';
 
 mockgoose(mongoose);
-
-//after(()=> mockgoose.reset());

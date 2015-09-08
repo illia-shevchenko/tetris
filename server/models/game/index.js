@@ -5,7 +5,7 @@
 
 import mongoose from 'mongoose';
 
-let Game = mongoose.Schema({  // eslint-disable-line new-cap
+let schema = {
         nextFigure: {
             left  : Number,
             top   : Number,
@@ -26,7 +26,11 @@ let Game = mongoose.Schema({  // eslint-disable-line new-cap
         },
         score: Number,
         user : String
-    });
+    },
+    game = new mongoose.Schema(schema);
 
+game.eachPath((path, schemaType) => {
+    schemaType.required(true);
+});
 
-export default mongoose.model('Game', Game);
+export default mongoose.model('Game', game);
