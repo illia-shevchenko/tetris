@@ -12,9 +12,9 @@
 define(function () {
     /**
      * @param {Object} settings Settings to create a element
-     * @param {Object} [settings.left = 0] Left position of the element
-     * @param {Object} [settings.top  = 0] Top position of the element
-     * @param {Object} [settings.width = 0] Width of the element
+     * @param {number} [settings.left = 0] Left position of the element
+     * @param {number} [settings.top  = 0] Top position of the element
+     * @param {number} [settings.width = 0] Width of the element
      *
      * @constructor
      * @alias GameElement
