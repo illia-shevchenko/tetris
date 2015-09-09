@@ -21,7 +21,6 @@ define(function () {
      * @param {string} [settings.elementClass = 'element'] Base class for elements
      * @constructor
      * @alias Canvas
-     * @todo: container class as parameter?
      */
     var Canvas = function (settings) {
             this._node   = settings.node;
