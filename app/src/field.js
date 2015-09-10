@@ -66,6 +66,7 @@ define(['./element'], function (GameElement) {
      * Check map suits current field. Also maps that does not suit width if the field will be rejected
      * @param {Map} map Map to check
      * @returns {boolean} True if map suits the field
+     * @todo: this should not check overSize too. It would couple it to a Tetris. Remove it and use both checkOverlay and checkOversize in Tetris
      */
     Field.prototype.checkOverlay = function (map) {
         var fieldPoints = this._normalizePoints(this._points);
