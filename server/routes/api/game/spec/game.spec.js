@@ -6,7 +6,7 @@
 /*global request, testEnd*///see helpers/
 
 describe('GAME api', () => {
-    describe('POST api/game', () => {
+   /* describe('POST api/game', () => {
         it('should create new Game document', done => {
             let game = {
                     nextFigure: {
@@ -45,7 +45,7 @@ describe('GAME api', () => {
                     end();
                 });
         });
-    });
+    });*/
     
     
     describe('GET api/game/:q', () => {
