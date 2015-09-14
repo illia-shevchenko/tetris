@@ -1,5 +1,0 @@
-{
-  "events": {
-    "start": "sleep 5 && npm run test_server"
-  }
-}

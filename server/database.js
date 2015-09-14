@@ -4,6 +4,6 @@
 'use strict';
 
 
-module.exports = {
+export default {
     url : 'mongodb://server:server@ds035563.mongolab.com:35563/games'
 };

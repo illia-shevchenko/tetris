@@ -14,7 +14,7 @@ let serverDir  = `./${process.env.NODE_DEST || 'server'}`,
     app        = express(),
     mongoose   = require('mongoose'),
     port       = process.env.PORT || 8080,
-    database   = require('./config/database'),
+    database   = require(`${serverDir}/database`),
     bodyParser = require('body-parser');
 /**
  * configuration
