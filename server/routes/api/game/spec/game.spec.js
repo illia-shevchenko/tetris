@@ -48,11 +48,11 @@ describe('GAME api', () => {
     });*/
     
     
-    describe('GET api/game/:q', () => {
-        it('should returns 200 OK and list of games', done => {
-            request.get('/api/game/search_string')
-                .expect(200, 'Here your list: search_string')
-                .end(testEnd(done));
-        });
-    });
+    //describe('GET api/game/:q', () => {
+    //    it('should returns 200 OK and list of games', done => {
+    //        request.get('/api/game/search_string')
+    //            .expect(200, 'Here your list: search_string')
+    //            .end(testEnd(done));
+    //    });
+    //});
 });

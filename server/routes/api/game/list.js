@@ -3,7 +3,11 @@
  */
 'use strict';
 
+import Game from '../../../models/game';
 
 export default function (req, res) {
-    res.send('Here your list: ' + req.params.q);
+    let params = Object.assign({}, req.query, req.params);
+
+    Game.findByQuery(params)
+        .then(res.send.bind(res));
 }
