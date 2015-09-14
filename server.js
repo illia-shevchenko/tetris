@@ -12,14 +12,13 @@ let serverDir  = `./${process.env.NODE_DEST || 'server'}`,
 
     express    = require('express'),
     app        = express(),
-    mongoose   = require('mongoose'),
     port       = process.env.PORT || 8080,
     database   = require(`${serverDir}/database`),
     bodyParser = require('body-parser');
 /**
  * configuration
  */
-mongoose.connect(database.url);
+database.connect();
 
 
 /**

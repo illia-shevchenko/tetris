@@ -3,7 +3,8 @@
  */
 'use strict';
 
+import mongoose from 'mongoose';
 
-export default {
-    url : 'mongodb://server:server@ds035563.mongolab.com:35563/games'
-};
+export function connect() {
+    return mongoose.connect('mongodb://server:server@ds035563.mongolab.com:35563/games');
+}
