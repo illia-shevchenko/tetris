@@ -36,9 +36,9 @@ var gulp = require('gulp'),
         folder: './server',
         dest  : destination,
 
-        js    : ['./server/**/*.js', '!**/*.spec.js', '!**/tests/**'],
+        js    : './server/**/*.js',
         tests : './server/**/*.spec.js',
-        docOut: './server/documentation',
+        docOut: './server_documentation',
         main  : './server.js'
     },
     initEnv = function () {
@@ -164,19 +164,14 @@ gulp.task('serverJs', function (cb) {
     }
 
     gulp.src(serverConf.js)
+        .pipe(plugins.eslint())
+        .pipe(plugins.eslint.format())
         .pipe(plugins.sourcemaps.init())
         .pipe(plugins.babel())
         .pipe(plugins.sourcemaps.write())
         .pipe(gulp.dest(serverConf.dest))
         .once('end', cb);
 });
-
-gulp.task('serverLint', function () {
-    gulp.src(serverConf.js)
-        .pipe(plugins.eslint())
-        .pipe(plugins.eslint.format());
-});
-
 
 gulp.task('serverDoc', function () {
     require('del')(serverConf.docOut + '/**')
@@ -188,7 +183,7 @@ gulp.task('serverDoc', function () {
         });
 });
 
-gulp.task('serverBuild', ['serverLint', 'serverJs']);
+gulp.task('serverBuild', ['serverJs']);
 gulp.task('serverBuildDev', ['serverBuild']);
 
 function serverTest() {

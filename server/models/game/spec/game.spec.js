@@ -3,17 +3,17 @@
  */
 'use strict';
 /*eslint max-nested-callbacks: 0*/
-/*global proxyquire, sinon*///see helpers/
+///*global proxyquire, sinon*///see helpers/
 
 
 describe('Game model', () => {
-    var Game;
+    //var Game;
     before(() => {
-        Game = proxyquire('../');
+        //Game = proxyquire('../');
     });
 
     describe('create and save', function () {
-        let callback = sinon.spy();
+        //let callback = sinon.spy();
         //Game.create
     });
 });

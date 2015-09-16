@@ -2,8 +2,8 @@
  * Created by Illia_Shevchenko on 31.08.2015.
  */
 'use strict';
-/*eslint max-nested-callbacks: 0*/
-/*global request, testEnd*///see helpers/
+///*eslint max-nested-callbacks: 0*/
+///*global request, testEnd*///see helpers/
 
 describe('GAME api', () => {
    /* describe('POST api/game', () => {
