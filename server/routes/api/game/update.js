@@ -3,11 +3,13 @@
  */
 'use strict';
 
+import Game from '../../../models/game';
 
 export default function (req, res, next) {
-    try {
-        res.send('Updated item with id: {' + req.params.id + '} and name: ' + req.body.name);
-    } catch (error) {
-        next(error);
-    }
+    Game.updateById(req.params.id, req.body)
+        .then(() => {
+            Game.queryWithCount()
+                .then(res.send.bind(res))
+                .catch(next);
+        });
 }

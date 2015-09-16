@@ -8,7 +8,7 @@ import Game from '../../../models/game';
 export default function (req, res, next) {
     let params = Object.assign({}, req.query, req.params);
 
-    Game.findByQuery(params)
+    Game.queryWithCount(params)
         .then(res.send.bind(res))
         .catch(next);
 }

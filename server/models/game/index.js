@@ -34,11 +34,8 @@ game.eachPath((path, schemaType) => {
     schemaType.required(true);
 });
 
-game.methods.func = function () {
 
-};
-
-game.statics.findByQuery = function ({ q = 'null', min = 0, max = Number.MAX_VALUE }) {
+game.statics.findByQuery = function ({ q = 'null', min = 0, max = Number.MAX_VALUE } = {}) {
     try {
         let regExp = q === 'null' ? /.*/ : new RegExp(q);
 
@@ -52,10 +49,33 @@ game.statics.findByQuery = function ({ q = 'null', min = 0, max = Number.MAX_VAL
                 user: { $regex: regExp }
             }, {
                 name: { $regex: regExp }
-            }]);
+            }])
+            .select('-__v');
     } catch (err) {
-        throw new DbError('Find by query error', err.toString());
+        return Promise.reject(new DbError('Find by query error', err.toString()));
     }
+};
+
+
+game.statics.queryWithCount = function (query) {
+    return Promise.all([this.count(), this.findByQuery(query)])
+        .then(([count, games]) => {
+            return {
+                count: count,
+                games: games
+            };
+        });
+};
+
+
+game.statics.updateById = function (id, newGame) {
+    return this.findOne({
+        _id: id
+    })
+        .then((game) => {
+            Object.assign(game, newGame);
+            return game.save();
+        });
 };
 
 export default mongoose.model('Game', game);

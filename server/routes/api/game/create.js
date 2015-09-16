@@ -6,11 +6,13 @@
 import Game from '../../../models/game';
 
 export default function (req, res, next) {
-    Game.create(req.body, (err, game) => {
+    Game.create(req.body, (err) => {
         if (err) {
             return next(err);
         }
 
-        res.send(game);
+        Game.queryWithCount()
+            .then(res.send.bind(res))
+            .catch(next);
     });
 }
