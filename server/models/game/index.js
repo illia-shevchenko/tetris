@@ -52,13 +52,9 @@ game.statics.findByQuery = function ({ q = 'null', min = 0, max = Number.MAX_VAL
                 user: { $regex: regExp }
             }, {
                 name: { $regex: regExp }
-            }])
-            .then((result) => result) //Query has only then method, so to use .catch we need to create promise first
-            .catch((err) => {
-                throw new DbError('unhandled error', err);
-            });
+            }]);
     } catch (err) {
-        throw new DbError('unhandled error', err);
+        throw new DbError('Find by query error', err.toString());
     }
 };
 

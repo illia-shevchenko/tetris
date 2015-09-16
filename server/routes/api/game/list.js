@@ -5,9 +5,10 @@
 
 import Game from '../../../models/game';
 
-export default function (req, res) {
+export default function (req, res, next) {
     let params = Object.assign({}, req.query, req.params);
 
     Game.findByQuery(params)
-        .then(res.send.bind(res));
+        .then(res.send.bind(res))
+        .catch(next);
 }

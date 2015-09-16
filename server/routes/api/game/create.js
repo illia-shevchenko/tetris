@@ -5,10 +5,8 @@
 
 import Game from '../../../models/game';
 
-
 export default function (req, res, next) {
-    let game = new Game(req.body);
-    game.save((err) => {
+    Game.create(req.body, (err, game) => {
         if (err) {
             return next(err);
         }
