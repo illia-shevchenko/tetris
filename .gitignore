@@ -5,6 +5,7 @@ lib
 tmp
 documentation
 documentation_server
+server_documentation
 docs
 **-built**
 build

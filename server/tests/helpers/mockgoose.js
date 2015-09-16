@@ -6,11 +6,10 @@
 
 //import mongoose from 'mongoose';
 //import mockgoose from 'mockgoose';
-import mongooseMock from 'mongoose-mock';
-import proxyquire from 'proxyquire';
+//import mongooseMock from 'mongoose-mock';
+//import proxyquire from 'proxyquire';
 
 //mockgoose(mongoose);
 
-global.proxyquire = function (module) {
-    return proxyquire(module, { mongoose: mongooseMock });
-};
+//global.proxyquire = proxyquire;
+//global.mongooseMock = { mongoose: mongooseMock };
