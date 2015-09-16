@@ -9,6 +9,5 @@ export default function (req, res, next) {
     let params = Object.assign({}, req.query, req.params);
 
     Game.queryWithCount(params)
-        .then(res.send.bind(res))
-        .catch(next);
+        .then(res.send.bind(res), next);
 }

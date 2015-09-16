@@ -7,9 +7,6 @@ import Game from '../../../models/game';
 
 export default function (req, res, next) {
     Game.updateById(req.params.id, req.body)
-        .then(() => {
-            Game.queryWithCount()
-                .then(res.send.bind(res))
-                .catch(next);
-        });
+        .then(Game.queryWithCount.bind(Game))
+        .then(res.send.bind(res), next);
 }
