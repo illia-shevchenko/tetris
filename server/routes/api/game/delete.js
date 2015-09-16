@@ -6,16 +6,7 @@
 import Game from '../../../models/game';
 
 export default function (req, res, next) {
-    Game.remove({
-        _id: req.params.id
-    }, (err/*, game*/) => {
-        if (err) {
-            return next(err);
-        }
-
-        //res.send(game);
-        Game.queryWithCount()
-            .then(res.send.bind(res))
-            .catch(next);
-    });
+    Game.removeById(req.params.id)
+        .then(Game.queryWithCount.bind(Game))
+        .then(res.send.bind(res), next);
 }

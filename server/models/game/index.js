@@ -28,6 +28,7 @@ let schema = {
         score: Number,
         user : String
     },
+
     game = new mongoose.Schema(schema);
 
 game.eachPath((path, schemaType) => {
@@ -65,6 +66,13 @@ game.statics.queryWithCount = function (query) {
                 games: games
             };
         });
+};
+
+
+game.statics.removeById = function (id) {
+    return this.remove({
+        _id: id
+    });
 };
 
 
