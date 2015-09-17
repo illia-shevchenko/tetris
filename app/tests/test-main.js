@@ -22,7 +22,9 @@ require.config({
     paths: {
         Squire: '../bower_components/squire/src/Squire',
         json  : '../bower_components/requirejs-plugins/src/json',
-        text  : '../bower_components/requirejs-plugins/lib/text'
+        text  : '../bower_components/requirejs-plugins/lib/text',
+        lodash: '../bower_components/lodash/lodash',
+        bluebird: '../bower_components/bluebird/js/browser/bluebird'
     }
 });
 

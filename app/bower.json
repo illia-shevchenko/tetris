@@ -13,8 +13,10 @@
     "tests"
   ],
   "dependencies": {
-    "requirejs-plugins": "~1.0.3",
+    "bluebird": "~2.10.0",
+    "lodash": "~3.10.1",
     "requirejs": "~2.1.20",
+    "requirejs-plugins": "~1.0.3",
     "squire": "~0.2.0"
   }
 }
