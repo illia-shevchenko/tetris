@@ -13,3 +13,4 @@ server/public
 dist
 npm-debug.log
 *-es5*
+coverage

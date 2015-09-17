@@ -215,12 +215,17 @@ define(function () {
 
 
         /**
+         * @global
+         * @typedef {Object} TetrisGame
+         * @property {Map} field New map for field
+         * @property {Map} figure New map for figure
+         * @property {Map} nextFigure New map for next figure
+         * @property {number} score New score
+         */
+
+        /**
          * Sets new sate for a game and update canvas and preview with new elements
-         * @param {object} state State to set
-         * @param {Map} state.field New map for field
-         * @param {Map} state.figure New map for figure
-         * @param {Map} state.nextFigure New map for next figure
-         * @param {number} state.score New score
+         * @param {TetrisGame} state State to set
          */
         setState: function (state) {
             this._field.setMap(state.field);
@@ -238,7 +243,7 @@ define(function () {
 
         /**
          * Returns current game state as an object
-         * @returns {{nextFigure: (Map), figure: (Map), field: (Map), score: (number)}}
+         * @returns {TetrisGame}
          */
         getState: function () {
             return {
