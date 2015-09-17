@@ -7,7 +7,7 @@
 import mongooseMock from '../../../tests/helpers/mockgoose.js'; //there are some additional manipulations on it
 import proxyquire from 'proxyquire';
 
-
+/** @test {GameModel} */
 describe('Game model', () => {
     var Game;
 
@@ -15,7 +15,7 @@ describe('Game model', () => {
         Game = proxyquire('../../game', { mongoose: mongooseMock });
     });
 
-
+    /** @test {GameModel#findByQuery} */
     describe('query', () => {
         describe('query with proper parameters', () => {
             let result;
@@ -49,7 +49,7 @@ describe('Game model', () => {
         });
     });
 
-
+    /** @test {GameModel#queryWithCount} */
     describe('query with count', () => {
         let result;
 
@@ -82,7 +82,7 @@ describe('Game model', () => {
         });
     });
 
-
+    /** @test {GameModel#removeById} */
     describe('remove by id', () => {
         beforeEach(() => {
             Game.removeById('coolId');
@@ -100,6 +100,7 @@ describe('Game model', () => {
         });
     });
 
+    /** @test {GameModel#updateById} */
     describe('update by id', () => {
         let newGame = {
                 nextFigure: {

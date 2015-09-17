@@ -178,7 +178,11 @@ gulp.task('serverDoc', function () {
         .then(function () {
             gulp.src(serverConf.folder)
                 .pipe(plugins.esdoc({
-                    destination: serverConf.docOut
+                    destination: serverConf.docOut,
+                    test: {
+                        type: 'mocha',
+                        source: serverConf.folder
+                    }
                 }));
         });
 });
@@ -186,6 +190,8 @@ gulp.task('serverDoc', function () {
 gulp.task('serverBuild', ['serverJs']);
 gulp.task('serverBuildDev', ['serverBuild']);
 
+
+//TODO: We need separate tasks for unit tests and integration (they are not currently valid). For unit we don't need run the server
 function serverTest() {
     return gulp.src(serverConf.tests)
         .pipe(plugins.mocha({
