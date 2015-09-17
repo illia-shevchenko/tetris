@@ -38,6 +38,7 @@ var gulp = require('gulp'),
 
         js    : './server/**/*.js',
         tests : './server/**/*.spec.js',
+        integrationTests : './server/**/*.integration.js',
         docOut: './server_documentation',
         main  : './server.js'
     },

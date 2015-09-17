@@ -6,7 +6,4 @@
 import './chai';
 import './sinon';
 
-import './mockgoose'; //mckgose should be before then running up
-
 import './request';
-import './supertest-end';

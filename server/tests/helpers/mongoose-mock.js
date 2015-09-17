@@ -4,13 +4,6 @@
 'use strict';
 
 
-//import mongoose from 'mongoose';
-//import mockgoose from 'mockgoose';
-//import proxyquire from 'proxyquire';
-
-//mockgoose(mongoose);
-
-
 import mongooseMock from 'mongoose-mock';
 import sinon from 'sinon';
 

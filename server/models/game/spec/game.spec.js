@@ -4,7 +4,7 @@
 'use strict';
 /*eslint max-nested-callbacks: 0*/
 
-import mongooseMock from '../../../tests/helpers/mockgoose.js'; //there are some additional manipulations on it
+import mongooseMock from '../../../tests/helpers/mongoose-mock.js'; //there are some additional manipulations on it
 import proxyquire from 'proxyquire';
 
 /** @test {GameModel} */
