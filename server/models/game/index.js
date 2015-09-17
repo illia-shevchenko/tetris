@@ -140,7 +140,7 @@ game.statics.updateById = function (id, newGame) {
 
 /**
  * Defines model for Game database instances
- * @construct
+ * @constructs
  * @name GameModel
  * @extends external:Mongoose.Model
  * @param {Game~schema} schema Schema for model

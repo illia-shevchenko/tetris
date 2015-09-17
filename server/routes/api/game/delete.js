@@ -5,6 +5,10 @@
 
 import Game from '../../../models/game';
 
+
+/**
+ * Middleware for deletion game endpoint
+ */
 export default function (req, res, next) {
     Game.removeById(req.params.id)
         .then(Game.queryWithCount.bind(Game))

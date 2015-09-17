@@ -5,6 +5,10 @@
 
 import Game from '../../../models/game';
 
+
+/**
+ * Middleware for querying list of games endpoint
+ */
 export default function (req, res, next) {
     let params = Object.assign({}, req.query, req.params);
 

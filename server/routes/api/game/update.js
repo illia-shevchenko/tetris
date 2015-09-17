@@ -5,6 +5,10 @@
 
 import Game from '../../../models/game';
 
+
+/**
+ * Middleware for updating game endpoint
+ */
 export default function (req, res, next) {
     Game.updateById(req.params.id, req.body)
         .then(Game.queryWithCount.bind(Game))

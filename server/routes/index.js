@@ -8,4 +8,8 @@ let router = express.Router();// eslint-disable-line new-cap
 
 router.use('/api', require('./api'));
 
+
+/**
+ * Middleware for /api endpoint
+ */
 export { router as default };
