@@ -44,7 +44,7 @@ describe('Game model', () => {
             });
 
             it('should set "null" as default q', () => {
-
+                //@todo: how to do this?
             });
         });
     });
