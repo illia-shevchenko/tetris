@@ -5,71 +5,41 @@
 /*eslint no-process-exit: 0*/
 
 
-var gulp = require('gulp'),
+/**
+ * ===========
+ * Client tasks
+ * ===========
+ */
+let gulp = require('gulp'),
     plugins = require('gulp-load-plugins')(),
     mainBowerFiles = require('main-bower-files'),
     args    = require('yargs').argv,
 
     transpile = args.es5,
-    destination = 'server' + (transpile ? '-es5' : ''),
+    destination = 'server' + (transpile ? '-es5' : '');
 
-    clientConf = {
-        folder: './app/',
-        dest  : destination + '/public',
-        source: './app/src',
-        mainJs  : './app/src/main.js',
-        js    : './app/src/**/*.js',
-        html  : './app/index.html',
-        css   : './app/styles/main.css',
+const clientConf = {
+    folder: './app/',
+    dest  : destination + '/public',
+    source: './app/src',
+    mainJs  : './app/src/main.js',
+    js    : './app/src/**/*.js',
+    html  : './app/index.html',
+    css   : './app/styles/main.css',
 
-        tests: './app/tests/**/*.spec.js',
-        jsOut : 'app.js',
-        cssOut: 'app.css',
-        libJsOut: 'lib.js',
-        docOut     : './app/documentation',
+    tests: './app/tests/**/*.spec.js',
+    jsOut : 'app.js',
+    cssOut: 'app.css',
+    libJsOut: 'lib.js',
+    docOut     : './app/documentation',
 
-        testConf: './app/karma.conf.js',
-        testBuildConf: './app/karma.conf.build.js'
-    },
-
-    serverConf = {
-        folder: './server',
-        dest  : destination,
-
-        js    : './server/**/*.js',
-        tests : './server/**/*.spec.js',
-        integrationTests : './server/**/*.integration.js',
-        docOut: './server_documentation',
-        main  : './server.js'
-    },
-    initEnv = function () {
-        process.env.NODE_TRANSPILE = transpile;
-        process.env.NODE_DEST      = destination;
-        process.env.NODE_IS_RUN    = '';
-    };
+    testConf: './app/karma.conf.js',
+    testBuildConf: './app/karma.conf.build.js'
+};
 
 
-//init environment variables
-initEnv();
-
-
-//do something additional if transpile is needed
-(function () {
-    if (!transpile) {
-        return;
-    }
-
-    require('gulp-babel/node_modules/babel-core/register');
-})();
-
-
-/**
- * Client tasks
- */
-
-
-gulp.task('clientLibJs', function () {
-    var files = mainBowerFiles({
+gulp.task('clientLibJs', () => {
+    let files = mainBowerFiles({
         paths: clientConf.folder,
         filter: /require.js/
     });
@@ -79,7 +49,7 @@ gulp.task('clientLibJs', function () {
         .pipe(gulp.dest(clientConf.dest));
 });
 
-gulp.task('clientJs', function (cb) {
+gulp.task('clientJs', (cb) => {
     gulp.src(clientConf.mainJs)
         .pipe(plugins.sourcemaps.init())
         .pipe(plugins.requirejsOptimize({
@@ -96,14 +66,14 @@ gulp.task('clientJs', function (cb) {
         .once('end', cb);
 });
 
-gulp.task('clientLint', function () {
+gulp.task('clientLint', () => {
     gulp.src(clientConf.js)
         .pipe(plugins.eslint())
         .pipe(plugins.eslint.format());
 });
 
 
-gulp.task('clientDoc', function () {
+gulp.task('clientDoc', () => {
     require('del')(clientConf.docOut + '/**')
         .then(function () {
             gulp.src(clientConf.js)
@@ -111,7 +81,7 @@ gulp.task('clientDoc', function () {
         });
 });
 
-gulp.task('clientHtml', function (cb) {
+gulp.task('clientHtml', (cb) => {
     gulp.src(clientConf.html)
         .pipe(plugins.processhtml())
         .pipe(gulp.dest(clientConf.dest))
@@ -119,7 +89,7 @@ gulp.task('clientHtml', function (cb) {
 });
 
 
-gulp.task('clientCss', function (cb) {
+gulp.task('clientCss', (cb) => {
     gulp.src(clientConf.css)
         .pipe(plugins.minifyCss())
         .pipe(plugins.concat(clientConf.cssOut))
@@ -127,7 +97,7 @@ gulp.task('clientCss', function (cb) {
         .once('end', cb);
 });
 
-gulp.task('clientTest', function () {
+gulp.task('clientTest', () => {
     gulp.src('notexisting')
     .pipe(plugins.karma({
             configFile: clientConf.testConf,
@@ -137,7 +107,7 @@ gulp.task('clientTest', function () {
 });
 
 //TODO: This is not working. Because we bootstrap main.js file also to build. And karma runs it.
-gulp.task('clientTestBuild', function () {
+gulp.task('clientTestBuild', () => {
     gulp.src('notexisting')
         .pipe(plugins.karma({
             configFile: clientConf.testBuildConf,
@@ -149,17 +119,50 @@ gulp.task('clientTestBuild', function () {
 gulp.task('clientBuild', ['clientTest', 'clientLint', 'clientLibJs', 'clientJs', 'clientHtml', 'clientCss']);
 gulp.task('clientBuildDev', ['clientTest', 'clientLint', 'clientDoc']);
 
-gulp.task('clientDev', ['clientBuildDev'], function () {
+gulp.task('clientDev', ['clientBuildDev'], () => {
     gulp.watch([clientConf.js, clientConf.tests], ['clientBuildDev']);
 });
 
 
 /**
+ * ===========
  * Server tasks
+ * ===========
  */
 
+let serverConf = {
+        folder: './server',
+        dest  : destination,
 
-gulp.task('serverJs', function (cb) {
+        js    : './server/**/*.js',
+        tests : './server/**/*.spec.js',
+        integrationTests : './server/**/*.integration.js',
+        docOut: './server_documentation',
+        main  : './server.js'
+    },
+    initEnv = () => {
+        process.env.NODE_TRANSPILE = transpile;
+        process.env.NODE_DEST      = destination;
+        process.env.NODE_IS_RUN    = '';
+    };
+
+
+//init environment variables
+initEnv();
+
+
+//do something additional if transpile is needed
+(function () {
+    if (!transpile) {
+        return;
+    }
+
+    //for mocha
+    require('gulp-babel/node_modules/babel-core/register');
+})();
+
+
+gulp.task('serverJs', (cb) => {
     if (!transpile) {
         return;
     }
@@ -173,6 +176,7 @@ gulp.task('serverJs', function (cb) {
         .pipe(gulp.dest(serverConf.dest))
         .once('end', cb);
 });
+
 
 gulp.task('serverDoc', function () {
     require('del')(serverConf.docOut + '/**')
@@ -188,13 +192,9 @@ gulp.task('serverDoc', function () {
         });
 });
 
-gulp.task('serverBuild', ['serverJs']);
-gulp.task('serverBuildDev', ['serverBuild']);
 
-
-//TODO: We need separate tasks for unit tests and integration (they are not currently valid). For unit we don't need run the server
-function serverTest() {
-    return gulp.src(serverConf.tests)
+gulp.task('serverUnitTest', () => {
+    gulp.src(serverConf.tests)
         .pipe(plugins.mocha({
             require: ['./server/tests/helpers/run.js']
         }))
@@ -202,29 +202,58 @@ function serverTest() {
             console.log(err.toString());//eslint-disable-line no-console
             this.emit('end');
         });
+});
+
+
+gulp.task('serverUnitBuild', ['serverUnitTest', 'serverDoc', 'serverJs']);
+gulp.task('serverBuild', ['serverJs']);
+gulp.task('serverBuildDev', ['serverBuild', 'serverDoc']);
+
+
+function serverIntegrationTest() {
+    return gulp.src(serverConf.integrationTests)
+        .pipe(plugins.mocha({
+            require: ['./server/tests/helpers-int/run.js']
+        }))
+        .on('error', function (err) {
+            console.log(err.toString());//eslint-disable-line no-console
+            this.emit('end');
+        });
 }
 
-function serverTestEnd() {
-    serverTest().once('error', process.exit.bind(process, 1))
-        .once('end', process.exit);
+function processEnd(proc) {
+    proc.once('error', process.exit.bind(process, 1))
+           .once('end', process.exit);
 }
 
-gulp.task('serverTest', ['serverBuild'], serverTestEnd);
 
-gulp.task('server:start', ['serverBuildDev'], function () {
+gulp.task('serverTest', ['serverBuild'], () => {
+    processEnd(serverIntegrationTest());
+});
+
+
+gulp.task('server:start', ['serverBuildDev'], () => {
     process.env.NODE_IS_RUN = true;
     plugins.developServer.listen({
         path: serverConf.main
-    }, serverTest);
+    }, serverIntegrationTest);
 });
 
-gulp.task('server:restart', ['serverBuildDev'], function () {
-    plugins.developServer.restart(serverTest);
+
+gulp.task('server:restart', ['serverBuildDev'], () => {
+    plugins.developServer.restart(serverIntegrationTest);
 });
 
-gulp.task('serverDev', ['server:start'], function () {
+
+gulp.task('serverDev', ['server:start'], () => {
     gulp.watch([serverConf.js, serverConf.tests], ['server:restart']);
 });
+
+
+gulp.task('serverUnitDev', ['serverUnitBuild'], () => {
+    gulp.watch([serverConf.js, serverConf.tests], ['serverUnitBuild']);
+});
+
 
 gulp.task('build', ['clientBuild', 'serverTest']);
 gulp.task('dev', ['clientDev', 'serverDev']);

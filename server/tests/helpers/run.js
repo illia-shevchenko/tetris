@@ -5,5 +5,3 @@
 
 import './chai';
 import './sinon';
-
-import './request';
