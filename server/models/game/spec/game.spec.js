@@ -16,8 +16,8 @@ describe('Game model', () => {
     });
 
     /** @test {GameModel#findByQuery} */
-    describe('query', () => {
-        describe('query with proper parameters', () => {
+    describe('Find by query', () => {
+        describe('Query with proper parameters', () => {
             let result;
 
             beforeEach(() => {
@@ -34,7 +34,7 @@ describe('Game model', () => {
             });
         });
 
-        describe('default parameters', () => {
+        describe('Default parameters', () => {
             beforeEach(() => {
                 Game.findByQuery();
             });
@@ -50,15 +50,11 @@ describe('Game model', () => {
     });
 
     /** @test {GameModel#queryWithCount} */
-    describe('query with count', () => {
+    describe('Find by query with count', () => {
         let result;
 
         beforeEach(() => {
-            result = Game.queryWithCount({
-                q: 'filter',
-                min: 11,
-                max: 222
-            });
+            result = Game.queryWithCount();
         });
 
         it('should call for count', () => {
@@ -83,7 +79,7 @@ describe('Game model', () => {
     });
 
     /** @test {GameModel#removeById} */
-    describe('remove by id', () => {
+    describe('Remove by id', () => {
         beforeEach(() => {
             Game.removeById('coolId');
         });
@@ -101,7 +97,7 @@ describe('Game model', () => {
     });
 
     /** @test {GameModel#updateById} */
-    describe('update by id', () => {
+    describe('Update by id', () => {
         let newGame = {
                 nextFigure: {
                     top   : 1,
