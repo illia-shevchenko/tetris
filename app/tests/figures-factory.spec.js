@@ -6,9 +6,6 @@
 
 
 define(['Squire'], function (Squire) {
-    /**
-     * @type {Class}
-     */
     var FigureMock = function (settings) {
             this.settings = settings;
         },
