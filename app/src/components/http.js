@@ -12,11 +12,11 @@ define(['lodash', 'bluebird'], function (_, Promise) {
     /**
      * Creates http cal with given parameters
      * @param {Object} settings Settings for call
-     * @param {string} settings.url Url to call
-     * @param {string} settings.method Http method - 'GET', 'POST' etc
-     * @param {Object} settings.headers SObject where key is header name and value is i's value
-     * @param {string} settings.user User name for a call
-     * @param {string} settings.password Password for the call
+     * @param {string} [settings.url = 'http://localhost'] Url to call
+     * @param {string} [settings.method] Http method - 'GET', 'POST' etc
+     * @param {Object} [settings.headers] SObject where key is header name and value is i's value
+     * @param {string} [settings.user] User name for a call
+     * @param {string} [settings.password] Password for the call
      * @returns {Promise} Promise for request. Cancelable.
      * @see https://github.com/petkaantonov/bluebird/blob/master/API.md#cancellable---promise
      * @alias module:http
@@ -24,14 +24,14 @@ define(['lodash', 'bluebird'], function (_, Promise) {
     var http = function (settings) {
             var xhr = new XMLHttpRequest();
 
-            _.assign({
+            _.defaults(settings, {
                 headers: {},
                 method : 'GET',
                 url    : 'http://localhost'
-            }, settings);
+            });
 
+            setHeaders(xhr, settings.headers || {});
 
-            setHeaders(xhr, settings.headers);
             xhr.open(settings.method, settings.url, true, settings.user, settings.password);
 
             return new Promise(function (resolve, reject) {
@@ -40,18 +40,24 @@ define(['lodash', 'bluebird'], function (_, Promise) {
                  * @returns {{responseHeaders: *, statusText: *, response, request: Object, status: *}}
                  */
                 var getResponseData = function () {
-                    try {
-                        return {
-                            responseHeaders: getResponseHeaders(xhr),
-                            statusText     : this.statusText,
+                    var response = this.response;
 
-                            response: JSON.parse(this.response),
-                            request : settings,
-                            status  : this.status
-                        };
-                    } catch (error) {
-                        reject(error);
+                    if (typeof this.response === 'object') {
+                        try {
+                            response = JSON.parse(this.response);
+                        } catch (error) {
+                            reject(error);
+                        }
                     }
+
+                    return {
+                        responseHeaders: getResponseHeaders(xhr),
+                        statusText     : this.statusText,
+
+                        response: response,
+                        request : settings,
+                        status  : this.status
+                    };
                 };
 
                 xhr.addEventListener('error timeout', function () {
@@ -72,12 +78,12 @@ define(['lodash', 'bluebird'], function (_, Promise) {
         },
 
 
-        /**
-         * @typedef {Object} http~config Configuration object for http shortcuts
-         * @property {Object} headers Object where key is header name and value is i's value
-         * @property {string} settings.user User name for a call
-         * @property {string} settings.password Password for the call
-         */
+    /**
+     * @typedef {Object} http~config Configuration object for http shortcuts
+     * @property {Object} headers Object where key is header name and value is i's value
+     * @property {string} settings.user User name for a call
+     * @property {string} settings.password Password for the call
+     */
 
 
         /**

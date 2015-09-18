@@ -99,11 +99,14 @@ gulp.task('clientCss', (cb) => {
 
 gulp.task('clientTest', () => {
     gulp.src('notexisting')
-    .pipe(plugins.karma({
+        .pipe(plugins.karma({
             configFile: clientConf.testConf,
             logLevel  : 'ERROR',
             action    : 'run'
-        }));
+        }))
+        .on('error', function () {
+
+        });
 });
 
 //TODO: This is not working. Because we bootstrap main.js file also to build. And karma runs it.

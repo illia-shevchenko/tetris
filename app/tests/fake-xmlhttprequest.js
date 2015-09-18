@@ -144,7 +144,7 @@ define(function () {
         for (var i = events.length - 1; i >= 0; i--) {
             _addEventListener(events[i], this);
         }
-    };
+    }
 
     EventedObject.prototype = {
         /*
@@ -197,13 +197,12 @@ define(function () {
             event.total = total;
             this.dispatchEvent(event);
         }
-    }
+    };
 
     /*
      Constructor for a fake window.XMLHttpRequest
      */
     function FakeXMLHttpRequest() {
-        console.log('=============this is fake!!!');
         EventedObject.call(this);
         this.readyState = FakeXMLHttpRequest.UNSENT;
         this.requestHeaders = {};
@@ -211,6 +210,18 @@ define(function () {
         this.status = 0;
         this.statusText = "";
         this.upload = new EventedObject();
+
+
+        /**
+         * For testing purposes
+         */
+        FakeXMLHttpRequest.requests.push(this);
+        Object.keys(this)
+            .forEach(function (key) {
+                if (typeof this[key] === 'function') {
+                    spyOn(this, key);
+                }
+            }, this)
     }
 
     FakeXMLHttpRequest.prototype = new EventedObject();
@@ -222,6 +233,16 @@ define(function () {
     FakeXMLHttpRequest.HEADERS_RECEIVED = 2;
     FakeXMLHttpRequest.LOADING = 3;
     FakeXMLHttpRequest.DONE = 4;
+
+
+    /**
+     * For testing purposes
+     */
+    FakeXMLHttpRequest.requests = [];
+    FakeXMLHttpRequest.clearRequests = function () {
+        FakeXMLHttpRequest.requests = [];
+    };
+
 
     var FakeXMLHttpRequestProto = {
         UNSENT: 0,
