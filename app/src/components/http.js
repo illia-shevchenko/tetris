@@ -166,15 +166,6 @@ define(['lodash', 'bluebird'], function (_, Promise) {
     http['delete'] = httpMethod.bind(http, 'DELETE');
 
     /**
-     * Shortcut method for 'PUT' request
-     * @function
-     * @param {string} url Url to call
-     * @param {Object} [params] Parameters for call
-     * @returns {Promise} Promise for request
-     */
-    http.put       = httpMethod.bind(http, 'PUT');
-
-    /**
      * Shortcut method for 'HEAD' request
      * @function
      * @param {string} url Url to call
@@ -192,6 +183,16 @@ define(['lodash', 'bluebird'], function (_, Promise) {
      * @returns {Promise} Promise for request
      */
     http.post      = httpMethodWithBody.bind(http, 'POST');
+
+    /**
+     * Shortcut method for 'PUT' request
+     * @function
+     * @param {string} url Url to call
+     * @param {Object} data Data to set as request body
+     * @param {Object} [params] Parameters for call
+     * @returns {Promise} Promise for request
+     */
+    http.put       = httpMethodWithBody.bind(http, 'PUT');
 
     return http;
 });

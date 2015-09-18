@@ -9,55 +9,73 @@ define(['fake-xmlhttprequest', 'components/http'], function (fakeXMLHttpRequest,
     describe('http', function () {
         var nativeXMLHttpRequest = window.XMLHttpRequest;
 
-        beforeEach(function () {
+        beforeAll(function () {
             window.XMLHttpRequest = fakeXMLHttpRequest;
         });
 
-        afterEach(function () {
-            window.XMLHttpRequest = nativeXMLHttpRequest;
-        });
-
-
-        describe('create and open', function () {
+        function testSuit(func, mehod, url, username, password) {
             var xhr;
 
-            beforeEach(function () {
-                http({
+            beforeAll(function () {
+                func();
+                xhr = fakeXMLHttpRequest.requests[0];
+            });
+
+            it('should create XMLHttpRequest', function () {
+                expect(fakeXMLHttpRequest.requests.length).toBe(1);
+                expect(fakeXMLHttpRequest.requests).toContain(jasmine.any(fakeXMLHttpRequest));
+            });
+
+            it('should create XMLHttpRequest with proper METHOD', function () {
+                expect(xhr.method).toBe(mehod);
+            });
+
+            it('should create XMLHttpRequest with proper URL', function () {
+                expect(xhr.url).toBe(url);
+            });
+
+            it('should create XMLHttpRequest with proper USER and PASSWORD', function () {
+                expect(xhr.username).toBe(username);
+                expect(xhr.password).toBe(password);
+            });
+
+            it('should create ASYNC XMLHttpRequest', function () {
+                expect(xhr.async).toBe(true);
+            });
+
+            afterAll(function () {
+                fakeXMLHttpRequest.clearRequests();
+            });
+        }
+
+        describe('create and open', function () {
+            var func = http.bind(http, {
                     url     : 'http://example.com',
                     method  : 'GET',
                     user    : 'test',
                     password: 'fake'
                 });
 
-                xhr = fakeXMLHttpRequest.requests[0];
-            });
+            testSuit(func, 'GET', 'http://example.com', 'test', 'fake');
+        });
 
-            afterEach(function () {
-                fakeXMLHttpRequest.clearRequests();
-            });
+        describe('shortcut methods', function () {
+            function testShortcut(name, data) {
+                var url  = 'http://example.com/' + name,
+                    func = http[name].bind(http, url, data);
 
-            it('should create XMLHttpRequest', function () {
-                expect(fakeXMLHttpRequest.requests.length).toBe(1);
+                testSuit(func, name.toUpperCase(), url);
+            }
 
-                expect(fakeXMLHttpRequest.requests).toContain(jasmine.any(fakeXMLHttpRequest));
-            });
+            describe('get', function () { testShortcut('get'); });
+            describe('delete', function () { testShortcut('delete'); });
+            describe('head', function () { testShortcut('head'); });
+            describe('post', function () { testShortcut('post', { test: 'fake' }); });
+            describe('put', function () { testShortcut('put', { test: 'fake' }); });
+        });
 
-            it('should create XMLHttpRequest with proper METHOD', function () {
-                expect(xhr.method).toBe('GET');
-            });
-
-            it('should create XMLHttpRequest with proper URL', function () {
-                expect(xhr.url).toBe('http://example.com');
-            });
-
-            it('should create XMLHttpRequest with proper USER and PASSWORD', function () {
-                expect(xhr.username).toBe('test');
-                expect(xhr.password).toBe('fake');
-            });
-
-            it('should create ASYNC XMLHttpRequest', function () {
-                expect(xhr.async).toBe(true);
-            });
+        afterAll(function () {
+            window.XMLHttpRequest = nativeXMLHttpRequest;
         });
     });
 });
