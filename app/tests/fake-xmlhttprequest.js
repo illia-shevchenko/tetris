@@ -216,12 +216,6 @@ define(function () {
          * For testing purposes
          */
         FakeXMLHttpRequest.requests.push(this);
-        Object.keys(this)
-            .forEach(function (key) {
-                if (typeof this[key] === 'function') {
-                    spyOn(this, key);
-                }
-            }, this)
     }
 
     FakeXMLHttpRequest.prototype = new EventedObject();
@@ -450,11 +444,9 @@ define(function () {
                 }
             }
 
-            if (this.async) {
-                this._readyStateChange(FakeXMLHttpRequest.DONE);
-            } else {
-                this.readyState = FakeXMLHttpRequest.DONE;
-            }
+
+            //TODO: Add support of different responseType(s):  https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#Properties
+            this.response = this.responseText;
         },
 
         /*
@@ -470,6 +462,22 @@ define(function () {
             this.status = typeof status == "number" ? status : 200;
             this.statusText = httpStatusCodes[this.status];
             this._setResponseBody(body || "");
+
+            if (this.async) {
+                this._readyStateChange(FakeXMLHttpRequest.DONE);
+            } else {
+                this.readyState = FakeXMLHttpRequest.DONE;
+            }
+        },
+
+
+        respondError: function (status, headers, body) {
+            this._setResponseHeaders(headers || {});
+            this.status = typeof status == "number" ? status : 500;
+            this.statusText = httpStatusCodes[this.status];
+            this._setResponseBody(body || "");
+
+            this.dispatchEvent(new _Event("error", false, false, this));
         }
     };
 

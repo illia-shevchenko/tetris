@@ -30,9 +30,8 @@ define(['lodash', 'bluebird'], function (_, Promise) {
                 url    : 'http://localhost'
             });
 
-            setHeaders(xhr, settings.headers || {});
-
             xhr.open(settings.method, settings.url, true, settings.user, settings.password);
+            setHeaders(xhr, settings.headers || {});
 
             return new Promise(function (resolve, reject) {
                 /**
@@ -42,11 +41,11 @@ define(['lodash', 'bluebird'], function (_, Promise) {
                 var getResponseData = function () {
                     var response = this.response;
 
-                    if (typeof this.response === 'object') {
+                    if (typeof this.response === 'string') {
                         try {
                             response = JSON.parse(this.response);
                         } catch (error) {
-                            reject(error);
+                            response = this.response;
                         }
                     }
 
@@ -60,12 +59,22 @@ define(['lodash', 'bluebird'], function (_, Promise) {
                     };
                 };
 
-                xhr.addEventListener('error timeout', function () {
-                    reject(getResponseData.apply(this));
+                xhr.addEventListener('error', function () {
+                    reject(getResponseData.call(this));
+                });
+
+                xhr.addEventListener('timeout', function () {
+                    reject(getResponseData.call(this));
                 });
 
                 xhr.addEventListener('load', function () {
-                    resolve(getResponseData.apply(this));
+                    var responseData = getResponseData.call(this);
+
+                    if (responseData.status >= 400) { //only status codes form 400 treated as errors
+                        return reject(responseData);
+                    }
+
+                    resolve(responseData);
                 });
 
                 xhr.send(settings.data);
