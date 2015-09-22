@@ -38,7 +38,7 @@ define(['lodash', 'bluebird'], function (_, Promise) {
                  * Creates response data object
                  * @returns {{responseHeaders: *, statusText: *, response, request: Object, status: *}}
                  */
-                var getResponseData = function () {
+                xhr.getResponseData = function () {
                     var response = this.response;
 
                     if (typeof this.response === 'string') {
@@ -50,7 +50,7 @@ define(['lodash', 'bluebird'], function (_, Promise) {
                     }
 
                     return {
-                        responseHeaders: getResponseHeaders(xhr),
+                        responseHeaders: getResponseHeaders(this),
                         statusText     : this.statusText,
 
                         response: response,
@@ -60,15 +60,15 @@ define(['lodash', 'bluebird'], function (_, Promise) {
                 };
 
                 xhr.addEventListener('error', function () {
-                    reject(getResponseData.call(this));
+                    reject(xhr.getResponseData());
                 });
 
                 xhr.addEventListener('timeout', function () {
-                    reject(getResponseData.call(this));
+                    reject(xhr.getResponseData());
                 });
 
                 xhr.addEventListener('load', function () {
-                    var responseData = getResponseData.call(this);
+                    var responseData = xhr.getResponseData();
 
                     if (responseData.status >= 400) { //only status codes form 400 treated as errors
                         return reject(responseData);

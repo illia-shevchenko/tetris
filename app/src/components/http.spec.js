@@ -5,6 +5,7 @@
 /*eslint max-nested-callbacks: 0*/
 
 
+//TODO: Add tests for canceling
 define(['fake-xmlhttprequest', 'bluebird', 'components/http'], function (fakeXMLHttpRequest, Promise, http) {
     describe('http', function () {
         var nativeXMLHttpRequest = window.XMLHttpRequest;
