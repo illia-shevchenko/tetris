@@ -60,15 +60,15 @@ define(['lodash', 'bluebird'], function (_, Promise) {
                 };
 
                 xhr.addEventListener('error', function () {
-                    reject(xhr.getResponseData());
+                    reject(this.getResponseData());
                 });
 
                 xhr.addEventListener('timeout', function () {
-                    reject(xhr.getResponseData());
+                    reject(this.getResponseData());
                 });
 
                 xhr.addEventListener('load', function () {
-                    var responseData = xhr.getResponseData();
+                    var responseData = this.getResponseData();
 
                     if (responseData.status >= 400) { //only status codes form 400 treated as errors
                         return reject(responseData);
