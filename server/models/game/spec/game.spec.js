@@ -25,8 +25,7 @@ describe('Game model', () => {
             });
 
             it('should call find', () => {
-                //using expect(Game.find).calledOnce makes both WebStorm and ESLint crazy
-                expect(Game.find.calledOnce).to.equal(true);
+                return expect(Game.find).have.been.calledOnce;
             });
 
             it('should be a promise', () => {
@@ -58,11 +57,11 @@ describe('Game model', () => {
         });
 
         it('should call for count', () => {
-            expect(Game.count.calledOnce).to.equal(true);
+            return expect(Game.count).have.been.calledOnce;
         });
 
         it('should call find', () => {
-            expect(Game.find.calledOnce).to.equal(true);
+            return expect(Game.find).have.been.calledOnce;
         });
 
         it('should be a promise', () => {
@@ -89,10 +88,10 @@ describe('Game model', () => {
         });
 
         it('should call remove with proper parameters', function () {
-            expect(Game.remove.calledOnce).to.equal(true);
             expect(Game.remove.getCall(0).args[0]).to.containSubset({
                 _id: 'coolId'
             });
+            return expect(Game.remove).have.been.calledOnce;
         });
     });
 
@@ -131,17 +130,16 @@ describe('Game model', () => {
         });
 
         it('should call find one game with given id', () => {
-            expect(Game.findOne.calledOnce).to.equal(true);
             expect(Game.findOne.getCall(0).args[0]).to.containSubset({
                 _id: 'coolId'
             });
+            return expect(Game.findOne).have.been.calledOnce;
         });
 
         it('should update and save', (done) => {
             result.then((game) => {
                 expect(game).to.containSubset(newGame);
-                expect(game.save.calledOnce).to.equal(true);
-                done();
+                return expect(game.save).have.been.calledOnce && done();
             });
         });
     });
